@@ -68,7 +68,7 @@ INSTALLED_APPS = [
     'integrations',
     'rest_framework',
     'django.contrib.sitemaps',
-    'django_celery_beat',       
+         
 ]
 
 MIDDLEWARE = [
