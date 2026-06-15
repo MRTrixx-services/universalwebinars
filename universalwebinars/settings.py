@@ -33,8 +33,8 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "").split(",")
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://dailyrespond.com",
-    "https://www.dailyrespond.com",
+    "https://universalwebinars.com",
+    "https://www.universalwebinars.com",
     
 ]
 
@@ -68,8 +68,7 @@ INSTALLED_APPS = [
     'integrations',
     'rest_framework',
     'django.contrib.sitemaps',
-   
-       
+    'django_celery_beat',       
 ]
 
 MIDDLEWARE = [
@@ -136,49 +135,12 @@ PAYPAL_SECRET = os.getenv("PAYPAL_SECRET")
 PAYPAL_BASE = "https://api-m.paypal.com"
 
 
-# R2 Config
-# Static files
 
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
-if DEBUG:
-    # Local development
-    STATIC_URL = 'static/'
-    STATIC_ROOT = BASE_DIR / "staticfiles"
-    MEDIA_URL = "/media/"
-    MEDIA_ROOT = BASE_DIR / "media"
-else:
-    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
-
-    AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL")
-    AWS_S3_REGION_NAME = "auto"
-    AWS_S3_SIGNATURE_VERSION = "s3v4"
-
-    AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
-
-    AWS_DEFAULT_ACL = None
-    AWS_S3_FILE_OVERWRITE = False
-    AWS_QUERYSTRING_AUTH = False
-
-    STATIC_ROOT = BASE_DIR / "staticfiles"
-
-    STORAGES = {
-        "default": {
-            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
-        },
-        "staticfiles": {
-            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
-        },
-    }
-
-    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
-
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
-
-    AWS_LOCATION = "static"
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
@@ -241,7 +203,7 @@ CKEDITOR_CONFIGS = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": "redis://redis:6379/1",
 
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
@@ -254,7 +216,7 @@ ZOOM_ACCOUNT_ID = os.getenv("ZOOM_ACCOUNT_ID")
 ZOOM_CLIENT_ID = os.getenv("ZOOM_CLIENT_ID")
 ZOOM_CLIENT_SECRET = os.getenv("ZOOM_CLIENT_SECRET")
 
-CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+CELERY_BROKER_URL = "redis://redis:6379/0"
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 
@@ -296,8 +258,8 @@ if DEBUG:
     SESSION_COOKIE_DOMAIN = None
     CSRF_COOKIE_DOMAIN = None
 else:
-    SESSION_COOKIE_DOMAIN = ".dailyrespond.com"
-    CSRF_COOKIE_DOMAIN = ".dailyrespond.com"
+    SESSION_COOKIE_DOMAIN = ".universalwebinars.com"
+    CSRF_COOKIE_DOMAIN = ".universalwebinars.com"
 
 SESSION_SAVE_EVERY_REQUEST = True
 
@@ -336,8 +298,8 @@ if DEBUG:
     SESSION_COOKIE_DOMAIN = None
     CSRF_COOKIE_DOMAIN = None
 else:
-    SESSION_COOKIE_DOMAIN = ".dailyrespond.com"
-    CSRF_COOKIE_DOMAIN = ".dailyrespond.com"
+    SESSION_COOKIE_DOMAIN = ".universalwebinars.com"
+    CSRF_COOKIE_DOMAIN = ".universalwebinars.com"
 
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
