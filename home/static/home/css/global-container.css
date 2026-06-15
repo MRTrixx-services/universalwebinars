@@ -1,0 +1,164 @@
+/* ================= GLOBAL CONTAINER CONSISTENCY ================= */
+
+/* Base body styles for better scaling */
+html {
+  font-size: 16px;
+}
+
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Reset Bootstrap container widths for consistency */
+.container,
+.container-fluid {
+  max-width: 100% !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+/* Standard content container for all pages */
+.content-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+/* Hero sections - full width */
+.live-hero,
+.recorded-hero,
+.hero-section,
+.subscription-page .subscription-header {
+  width: 100%;
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Hero inner content - constrained */
+.hero-inner,
+.live-hero .container,
+.recorded-hero .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Main content areas */
+.main-container,
+.detail-main,
+.checkout-container,
+.cart-wrapper,
+.dashboard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+/* About page specific */
+.about-hero,
+.about-section {
+  width: 100%;
+}
+
+.about-hero .container,
+.about-section .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Subscription list page */
+.subscription-page {
+  width: 100%;
+}
+
+.plans-container,
+.info-sections {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Search results */
+.search-results-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Contact page */
+.contact-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Legal pages */
+.legal-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1440px) {
+  html {
+    font-size: 15px;
+  }
+  
+  .content-container,
+  .main-container,
+  .hero-inner,
+  .about-hero .container,
+  .about-section .container,
+  .plans-container,
+  .info-sections,
+  .search-results-container,
+  .contact-page,
+  .legal-container {
+    max-width: 1200px;
+  }
+}
+
+@media (max-width: 1200px) {
+  html {
+    font-size: 14px;
+  }
+  
+  .content-container,
+  .main-container,
+  .hero-inner,
+  .about-hero .container,
+  .about-section .container,
+  .plans-container,
+  .info-sections,
+  .search-results-container,
+  .contact-page,
+  .legal-container {
+    max-width: 100%;
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+  
+  .content-container,
+  .main-container,
+  .hero-inner,
+  .about-hero .container,
+  .about-section .container,
+  .plans-container,
+  .info-sections,
+  .search-results-container,
+  .contact-page,
+  .legal-container {
+    padding: 0 15px;
+  }
+}

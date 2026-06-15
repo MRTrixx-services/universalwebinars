@@ -1,0 +1,153 @@
+{% extends "adminpanel/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'home/css/instructor_detail.css' %}">
+
+<div class="instructor-detail-wrapper">
+
+<!-- Back Button -->
+<a href="#" class="btn-back">
+<i class="fas fa-arrow-left"></i> Back to Instructors
+</a>
+
+<!-- Header Card -->
+<div class="profile-header">
+
+<div class="profile-avatar-section">
+{% if instructor.photo %}
+<img src="{{ instructor.photo.url }}" alt="{{ instructor.name }}" class="profile-avatar">
+{% else %}
+<div class="profile-avatar-placeholder">
+<i class="fas fa-user"></i>
+</div>
+{% endif %}
+</div>
+
+<div class="profile-info">
+<h1 class="profile-name">{{ instructor.name }}</h1>
+<p class="profile-designation">
+<i class="fas fa-briefcase"></i> {{ instructor.designation }}
+</p>
+{% if instructor.organization %}
+<p class="profile-company">
+<i class="fas fa-building"></i> {{ instructor.organization }}
+</p>
+{% endif %}
+</div>
+
+<div class="profile-actions">
+<a href="{% url 'adminpanel:edit_instructor' instructor.id %}" class="btn-edit-profile">
+<i class="fas fa-edit"></i> Edit Profile
+</a>
+</div>
+
+</div>
+
+<!-- Contact Information Card -->
+<div class="profile-card">
+
+<h2 class="card-title">
+<i class="fas fa-address-card"></i> Contact Information
+</h2>
+
+<div class="contact-grid">
+
+{% if instructor.email %}
+<div class="contact-box">
+<div class="contact-icon">
+<i class="fas fa-envelope"></i>
+</div>
+<div class="contact-content">
+<strong>Email Address</strong>
+<p>
+<a href="mailto:{{ instructor.email }}" class="contact-link">
+{{ instructor.email }}
+</a>
+</p>
+</div>
+</div>
+{% endif %}
+
+{% if instructor.phone_number %}
+<div class="contact-box">
+<div class="contact-icon">
+<i class="fas fa-phone"></i>
+</div>
+<div class="contact-content">
+<strong>Phone Number</strong>
+<p>
+<a href="tel:{{ instructor.phone_number }}" class="contact-link">
+{{ instructor.phone_number }}
+</a>
+</p>
+</div>
+</div>
+{% endif %}
+
+{% if instructor.country %}
+<div class="contact-box">
+<div class="contact-icon">
+<i class="fas fa-globe"></i>
+</div>
+<div class="contact-content">
+<strong>Country</strong>
+<p>{{ instructor.country }}</p>
+</div>
+</div>
+{% endif %}
+
+</div>
+
+</div>
+
+<!-- Bio Section -->
+<div class="profile-card">
+
+<h2 class="card-title">
+<i class="fas fa-file-alt"></i> About Instructor
+</h2>
+
+{% if instructor.bio %}
+<div class="bio-content">
+{{ instructor.bio|safe }}
+</div>
+{% else %}
+<div class="bio-empty">
+<i class="fas fa-pen-fancy"></i>
+<p>No bio information added yet.</p>
+</div>
+{% endif %}
+
+</div>
+
+<!-- Action Footer -->
+<div class="profile-card">
+
+<div class="profile-actions-footer">
+
+<a href="{% url 'adminpanel:edit_instructor' instructor.id %}" class="btn-action btn-action-edit">
+<i class="fas fa-edit"></i> Edit Instructor
+</a>
+
+<a href="#" class="btn-action btn-action-back">
+<i class="fas fa-list"></i> View All Instructors
+</a>
+
+<button type="button" class="btn-action btn-action-delete" onclick="if(confirm('Are you sure you want to delete this instructor?')) { document.getElementById('deleteForm').submit(); }">
+<i class="fas fa-trash"></i> Delete Instructor
+</button>
+
+</div>
+
+</div>
+
+<!-- Hidden Delete Form -->
+<form id="deleteForm" method="POST" action="{% url 'adminpanel:delete_instructor' instructor.id %}" style="display:none;">
+{% csrf_token %}
+</form>
+
+</div>
+
+{% endblock %}

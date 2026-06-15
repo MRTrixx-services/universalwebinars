@@ -1,0 +1,127 @@
+from django.urls import path
+from . import views
+
+app_name = "adminpanel"
+
+urlpatterns = [
+
+    path("admin-panel/", views.dashboard, name="dashboard"),
+
+    path(
+        "webinars/",
+        views.webinar_management,
+        name="webinar_management"
+    ),
+    path(
+        "webinars/create/",
+        views.create_webinar,
+        name="create_webinar"
+    ),
+    path(
+    "api/webinar-status/",
+    views.webinar_status_api,
+    name="webinar_status_api"
+),
+    path(
+    "webinars/edit/<int:id>/",
+    views.edit_webinar,
+    name="edit_webinar"
+),
+
+path(
+    "webinars/delete/<int:id>/",
+    views.delete_webinar,
+    name="delete_webinar"
+),
+path(
+    "instructors/",
+    views.instructor_management,
+    name="instructor_management"
+),
+path(
+    "instructors/create/",
+    views.create_instructor,
+    name="create_instructor"
+),
+path(
+"instructors/edit/<int:id>/",
+views.edit_instructor,
+name="edit_instructor"
+),
+
+path(
+"instructors/delete/<int:id>/",
+views.delete_instructor,
+name="delete_instructor"
+),
+path(
+"instructors/<int:id>/",
+views.instructor_detail,
+name="instructor_detail"
+),
+path(
+    "payments/",
+    views.payment_history,
+    name="payment_history"
+),
+path(
+    "payments/<str:order_number>/",
+    views.payment_detail,
+    name="payment_detail"
+),
+path(
+    "payments/<str:order_number>/resend/",
+    views.resend_invoice,
+    name="resend_invoice"
+),
+path(
+    "payments/export/csv/",
+    views.export_payments_csv,
+    name="export_payments_csv"
+),
+path(
+    "payments/export/excel/",
+    views.export_payments_excel,
+    name="export_payments_excel"
+),
+path(
+    "subscriptions/",
+    views.subscription_management,
+    name="subscription_management"
+),
+path(
+    "users/",
+    views.user_management,
+    name="user_management"
+),
+path(
+    "users/<int:id>/",
+    views.user_detail,
+    name="user_detail"
+),
+path(
+    "users/<int:id>/edit/",
+    views.user_edit,
+    name="user_edit"
+),
+path(
+    "users/<int:id>/delete/",
+    views.user_delete,
+    name="user_delete"
+),
+path(
+    "webinars/recorded/edit/<int:id>/",
+    views.edit_recorded_webinar,
+    name="edit_recorded_webinar"
+),
+path(
+    "webinar/duplicate/<int:id>/",
+    views.duplicate_webinar,
+    name="duplicate_webinar"
+),
+path(
+    "recorded-webinar/duplicate/<int:id>/",
+    views.duplicate_recorded_webinar,
+    name="duplicate_recorded_webinar"
+),
+]

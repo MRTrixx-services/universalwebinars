@@ -1,0 +1,65 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'home/css/profile.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="profile-page">
+    <div class="container">
+        
+        <!-- Page Header -->
+        <!-- <div class="profile-header">
+            <h1><i class="bi bi-person-circle"></i> My Profile</h1>
+            <p>Manage your account and preferences</p>
+        </div> -->
+
+        <div class="profile-layout">
+            
+            <!-- Sidebar -->
+            <aside class="profile-sidebar">
+                <nav class="sidebar-nav">
+                    
+                    <a href="{% url 'profile:enrollments' %}" class="sidebar-link {% if active_tab == 'enrollments' %}active{% endif %}">
+                        <i class="bi bi-book"></i>
+                        <span>My Enrollments</span>
+                    </a>
+
+                    <!-- <a href="{% url 'profile:subscriptions' %}" class="sidebar-link {% if active_tab == 'subscriptions' %}active{% endif %}">
+                        <i class="bi bi-star"></i>
+                        <span>My Subscriptions</span>
+                    </a> -->
+
+                    <a href="{% url 'profile:orders' %}" class="sidebar-link {% if active_tab == 'orders' %}active{% endif %}">
+                        <i class="bi bi-receipt"></i>
+                        <span>My Orders</span>
+                    </a>
+
+                    <a href="{% url 'profile:edit' %}" class="sidebar-link {% if active_tab == 'edit' %}active{% endif %}">
+                        <i class="bi bi-pencil-square"></i>
+                        <span>Edit Profile</span>
+                    </a>
+
+                    <a href="{% url 'profile:change_password' %}" class="sidebar-link {% if active_tab == 'password' %}active{% endif %}">
+                        <i class="bi bi-key"></i>
+                        <span>Edit Password</span>
+                    </a>
+
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="profile-content">
+                {% block profile_content %}
+                <!-- Page specific content goes here -->
+                {% endblock %}
+            </main>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

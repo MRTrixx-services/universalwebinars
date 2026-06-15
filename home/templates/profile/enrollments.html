@@ -1,0 +1,836 @@
+{% extends "profile/base.html" %}
+
+{% block profile_content %}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg: #f0f4ff;
+    --surface: #ffffff;
+    --surface-2: #f8faff;
+    --border: #e2e8f8;
+    --text-primary: #0f1d3a;
+    --text-secondary: #5a6a8a;
+    --text-muted: #94a3c0;
+    --accent-blue: #2563eb;
+    --accent-blue-light: #eff6ff;
+    --accent-green: #059669;
+    --accent-green-light: #ecfdf5;
+    --accent-purple: #7c3aed;
+    --accent-purple-light: #f5f3ff;
+    --accent-amber: #d97706;
+    --accent-amber-light: #fffbeb;
+    --accent-red: #dc2626;
+    --accent-red-light: #fef2f2;
+    --shadow-sm: 0 1px 3px rgba(15,29,58,0.06), 0 1px 2px rgba(15,29,58,0.04);
+    --shadow-md: 0 4px 16px rgba(15,29,58,0.08), 0 2px 6px rgba(15,29,58,0.04);
+    --shadow-lg: 0 12px 40px rgba(15,29,58,0.12), 0 4px 12px rgba(15,29,58,0.06);
+    --radius: 14px;
+    --radius-sm: 8px;
+    --radius-lg: 20px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .enroll-page {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    padding: 28px 32px 48px;
+    color: var(--text-primary);
+  }
+
+  /* ── Header ── */
+  .page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .page-header-left h1 {
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--accent-blue);
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+  .page-header-left p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 5px;
+  }
+  .header-actions {
+    display: flex;
+    gap: 10px;
+  }
+  .btn-header {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 18px;
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text-primary);
+  }
+  .btn-header:hover {
+    background: var(--accent-blue-light);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+  }
+  .btn-header .badge {
+    background: var(--accent-red-light);
+    color: var(--accent-red);
+    border-radius: 20px;
+    padding: 1px 7px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  /* ── Stats Grid ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px 16px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .stat-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .stat-card.blue::before  { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+  .stat-card.green::before { background: linear-gradient(90deg, #059669, #34d399); }
+  .stat-card.purple::before{ background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+  .stat-card.amber::before { background: linear-gradient(90deg, #d97706, #fbbf24); }
+  .stat-card.red::before   { background: linear-gradient(90deg, #dc2626, #f87171); }
+
+  .stat-label {
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .stat-card.blue  .stat-label { color: var(--accent-blue); }
+  .stat-card.green .stat-label { color: var(--accent-green); }
+  .stat-card.purple.stat-label { color: var(--accent-purple); }
+  .stat-card.amber .stat-label { color: var(--accent-amber); }
+  .stat-card.red   .stat-label { color: var(--accent-red); }
+
+  .stat-icon-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .stat-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+  }
+  .stat-card.blue  .stat-icon { background: var(--accent-blue-light);   color: var(--accent-blue); }
+  .stat-card.green .stat-icon { background: var(--accent-green-light);  color: var(--accent-green); }
+  .stat-card.purple .stat-icon{ background: var(--accent-purple-light); color: var(--accent-purple); }
+  .stat-card.amber .stat-icon { background: var(--accent-amber-light);  color: var(--accent-amber); }
+  .stat-card.red   .stat-icon { background: var(--accent-red-light);    color: var(--accent-red); }
+
+  .stat-value {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+  .stat-card.blue   .stat-value { color: var(--text-primary); }
+  .stat-card.green  .stat-value { color: var(--accent-green); }
+  .stat-card.purple .stat-value { color: var(--accent-purple); }
+  .stat-card.amber  .stat-value { color: var(--accent-amber); }
+  .stat-card.red    .stat-value { color: var(--accent-red); }
+
+  .stat-sublabel {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* ── Main Panel ── */
+  .main-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+
+  /* ── Toolbar ── */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+  }
+  .search-box {
+    position: relative;
+    flex: 1;
+    max-width: 260px;
+  }
+  .search-box i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 14px;
+    pointer-events: none;
+  }
+  .search-box input {
+    width: 100%;
+    padding: 9px 12px 9px 36px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    font-family: 'Outfit', sans-serif;
+    background: var(--surface-2);
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .search-box input:focus {
+    border-color: var(--accent-blue);
+    background: #fff;
+  }
+  .search-box input::placeholder { color: var(--text-muted); }
+
+  .filter-select {
+    padding: 9px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    font-family: 'Outfit', sans-serif;
+    background: var(--surface-2);
+    color: var(--text-primary);
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .filter-select:focus { border-color: var(--accent-blue); }
+
+  .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .view-toggle {
+    display: flex;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .view-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    border: none;
+    background: var(--surface-2);
+    color: var(--text-secondary);
+    transition: all 0.15s;
+  }
+  .view-btn.active {
+    background: var(--accent-blue);
+    color: #fff;
+  }
+  .view-btn:hover:not(.active) {
+    background: var(--accent-blue-light);
+    color: var(--accent-blue);
+  }
+
+  /* ── Tabs ── */
+  .tabs-bar {
+    display: flex;
+    align-items: center;
+    padding: 0 22px;
+    border-bottom: 1px solid var(--border);
+    gap: 2px;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 14px 16px 12px;
+    font-size: 13.5px;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    border-bottom: 2.5px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    position: relative;
+    bottom: -1px;
+  }
+  .tab-btn.active {
+    color: var(--accent-blue);
+    border-bottom-color: var(--accent-blue);
+  }
+  .tab-btn:hover:not(.active) {
+    color: var(--text-secondary);
+  }
+  .tab-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--border);
+    color: var(--text-secondary);
+  }
+  .tab-btn.active .tab-count {
+    background: var(--accent-blue-light);
+    color: var(--accent-blue);
+  }
+
+  /* ── Content Area ── */
+  .panel-body { padding: 24px 22px; }
+
+  /* ── Cards View ── */
+  .webinar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 18px;
+  }
+  .webinar-card {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    background: var(--surface);
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .webinar-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    box-shadow: 0 0 0 0 rgba(37,99,235,0.15);
+    transition: box-shadow 0.25s;
+    pointer-events: none;
+  }
+  .webinar-card:hover {
+    border-color: #bfcfff;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .badge-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 11px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+  .badge-type.live {
+    background: #dcfce7;
+    color: #15803d;
+  }
+  .badge-type.recorded {
+    background: #fef3c7;
+    color: #b45309;
+  }
+  .badge-live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  .card-menu {
+    width: 28px; height: 28px;
+    border-radius: 7px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    color: var(--text-muted);
+    transition: all 0.15s;
+  }
+  .card-menu:hover { background: var(--surface-2); color: var(--text-primary); }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .meta-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .meta-chip i { font-size: 11px; color: var(--accent-blue); }
+
+  .card-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .btn-action {
+    flex: 1;
+    min-width: 110px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 9px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+  }
+  .btn-join {
+    background: var(--accent-blue);
+    color: #fff;
+  }
+  .btn-join:hover { background: #1d4ed8; color: #fff; transform: translateY(-1px); }
+  .btn-watch {
+    background: #0f4c81;
+    color: #fff;
+  }
+  .btn-watch:hover { background: #0a3a66; color: #fff; transform: translateY(-1px); }
+
+  /* ── Table View ── */
+  .webinar-table { width: 100%; border-collapse: collapse; }
+  .webinar-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    border-bottom: 1.5px solid var(--border);
+    background: var(--surface-2);
+  }
+  .webinar-table th:first-child { border-radius: var(--radius-sm) 0 0 0; }
+  .webinar-table th:last-child  { border-radius: 0 var(--radius-sm) 0 0; }
+  .webinar-table td {
+    padding: 14px 14px;
+    font-size: 13.5px;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .webinar-table tr:last-child td { border-bottom: none; }
+  .webinar-table tr:hover td { background: var(--surface-2); }
+  .tbl-title { font-weight: 600; }
+  .tbl-actions { display: flex; gap: 6px; }
+  .tbl-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+  }
+  .tbl-btn.join { background: var(--accent-blue-light); color: var(--accent-blue); }
+  .tbl-btn.join:hover { background: var(--accent-blue); color: #fff; }
+  .tbl-btn.watch { background: #e0eaf8; color: #0f4c81; }
+  .tbl-btn.watch:hover { background: #0f4c81; color: #fff; }
+
+  /* ── Empty State ── */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  .empty-icon {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: var(--accent-blue-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 34px;
+    margin-bottom: 20px;
+  }
+  .empty-state h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .empty-state p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    max-width: 320px;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 24px;
+    background: var(--accent-blue);
+    color: #fff;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-primary:hover {
+    background: #1d4ed8;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37,99,235,0.3);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .stats-grid { grid-template-columns: repeat(3, 1fr); }
+    .enroll-page { padding: 18px 16px 40px; }
+  }
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .webinar-grid { grid-template-columns: 1fr; }
+    .toolbar { flex-direction: column; align-items: stretch; }
+    .toolbar-left { flex-wrap: wrap; }
+    .search-box { max-width: 100%; }
+    .page-header { flex-direction: column; }
+  }
+</style>
+
+<div class="enroll-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="page-header-left">
+      <h1>My Enrollments</h1>
+      <p>Manage your enrolled webinars and track your learning journey</p>
+    </div>
+    <div class="header-actions">
+      <a href="{% url 'profile:orders' %}" class="btn-header">
+        <i class="bi bi-receipt"></i> Orders
+      </a>
+      <a href="#" class="btn-header">
+        <i class="bi bi-play-circle"></i> Recordings
+        <span class="badge">{{ recordings_count|default:"0" }}</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card blue">
+      <div class="stat-label">Total</div>
+      <div class="stat-icon-row">
+        <div class="stat-icon"><i class="bi bi-book"></i></div>
+        <div>
+          <div class="stat-value">{{ total_enrollments|default:"0" }}</div>
+          <div class="stat-sublabel">Enrollments</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-label">Rate</div>
+      <div class="stat-icon-row">
+        <div class="stat-icon"><i class="bi bi-graph-up-arrow"></i></div>
+        <div>
+          <div class="stat-value">{{ completion_rate|default:"0%" }}</div>
+          <div class="stat-sublabel">Completion</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card purple">
+      <div class="stat-label">Spent</div>
+      <div class="stat-icon-row">
+        <div class="stat-icon"><i class="bi bi-currency-dollar"></i></div>
+        <div>
+          <div class="stat-value">${{ total_spent|default:"0.00" }}</div>
+          <div class="stat-sublabel">Investment</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card amber">
+      <div class="stat-label">Upcoming</div>
+      <div class="stat-icon-row">
+        <div class="stat-icon"><i class="bi bi-calendar-event"></i></div>
+        <div>
+          <div class="stat-value">{{ upcoming_count|default:"0" }}</div>
+          <div class="stat-sublabel">Upcoming</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card red">
+      <div class="stat-label">Owned</div>
+      <div class="stat-icon-row">
+        <div class="stat-icon"><i class="bi bi-play-btn"></i></div>
+        <div>
+          <div class="stat-value">{{ recordings_count|default:"0" }}</div>
+          <div class="stat-sublabel">Recordings</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Panel -->
+  <div class="main-panel">
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <div class="input-group" style="max-width: 260px;">
+          <span class="input-group-text bg-light border-end-0"><i class="bi bi-search"></i></span>
+          <input type="text" class="form-control border-start-0 ps-0" id="enrollSearchInput" placeholder="Search webinars..." oninput="filterCards()">
+        </div>
+        <select class="form-select" id="enrollCategoryFilter" onchange="filterCards()" style="width: auto;">
+          <option value="">All Categories</option>
+          {% for category in categories %}
+          <option value="{{ category }}">{{ category }}</option>
+          {% endfor %}
+        </select>
+        <select class="form-select" id="enrollSortFilter" onchange="filterCards()" style="width: auto;">
+          <option>Sort by Date</option>
+          <option>Sort by Title</option>
+          <option>Sort by Type</option>
+        </select>
+      </div>
+      <div class="toolbar-right">
+        <div class="view-toggle">
+          <button class="view-btn active" id="btnCards" onclick="setView('cards')">
+            <i class="bi bi-grid"></i> Cards
+          </button>
+          <button class="view-btn" id="btnTable" onclick="setView('table')">
+            <i class="bi bi-list-ul"></i> Table
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-bar">
+      <button class="tab-btn active" onclick="setTab(this, 'all')">
+        All <span class="tab-count">{{ purchased_items|length|default:"0" }}</span>
+      </button>
+      <button class="tab-btn" onclick="setTab(this, 'upcoming')">
+        Upcoming <span class="tab-count">{{ upcoming_count|default:"0" }}</span>
+      </button>
+      <button class="tab-btn" onclick="setTab(this, 'recorded')">
+        Recorded <span class="tab-count">{{ recorded_count|default:"0" }}</span>
+      </button>
+      <button class="tab-btn" onclick="setTab(this, 'completed')">
+        Completed <span class="tab-count">{{ completed_count|default:"0" }}</span>
+      </button>
+      <button class="tab-btn" onclick="setTab(this, 'missed')">
+        Missed <span class="tab-count">{{ missed_count|default:"0" }}</span>
+      </button>
+    </div>
+
+    <!-- Panel Body -->
+    <div class="panel-body">
+      {% if purchased_items %}
+
+      <!-- Cards View -->
+      <div id="cardsView">
+        <div class="webinar-grid" id="cardsGrid">
+          {% for item in purchased_items %}
+          <div class="webinar-card" data-title="{{ item.title|lower }}" data-type="{{ item.type|lower }}" data-category="{{ item.category|lower }}">
+            <div class="card-top">
+              <span class="badge-type {% if item.type == 'LIVE' %}live{% else %}recorded{% endif %}">
+                {% if item.type == 'LIVE' %}
+                  <span class="badge-live-dot"></span> LIVE
+                {% else %}
+                  <i class="bi bi-play-fill"></i> RECORDED
+                {% endif %}
+              </span>
+              <button class="card-menu"><i class="bi bi-three-dots"></i></button>
+            </div>
+            <h3 class="card-title">{{ item.title }}</h3>
+            <div class="card-meta">
+              <span class="meta-chip"><i class="bi bi-tag"></i> {{ item.variant }}</span>
+              {% if item.instructor %}<span class="meta-chip"><i class="bi bi-person"></i> {{ item.instructor }}</span>{% endif %}
+              {% if item.date %}<span class="meta-chip"><i class="bi bi-calendar3"></i> {{ item.date }}</span>{% endif %}
+            </div>
+            <div class="card-actions">
+              {% if item.join_link %}
+              <a href="{{ item.join_link }}" target="_blank" class="btn-action btn-join">
+                <i class="bi bi-camera-video-fill"></i> Join Live
+              </a>
+              {% endif %}
+              {% if item.watch_link %}
+              <a href="{{ item.watch_link }}" target="_blank" class="btn-action btn-watch">
+                <i class="bi bi-play-circle-fill"></i> Watch
+              </a>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Table View -->
+      <div id="tableView" style="display:none; overflow-x:auto;">
+        <table class="webinar-table">
+          <thead>
+            <tr>
+              <th>Webinar</th>
+              <th>Type</th>
+              <th>Variant</th>
+              <th>Instructor</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in purchased_items %}
+            <tr>
+              <td class="tbl-title">{{ item.title }}</td>
+              <td>
+                <span class="badge-type {% if item.type == 'LIVE' %}live{% else %}recorded{% endif %}" style="font-size:11px;">
+                  {% if item.type == 'LIVE' %}<span class="badge-live-dot"></span> LIVE{% else %}<i class="bi bi-play-fill"></i> REC{% endif %}
+                </span>
+              </td>
+              <td>{{ item.variant }}</td>
+              <td>{{ item.instructor|default:"—" }}</td>
+              <td>
+                <div class="tbl-actions">
+                  {% if item.join_link %}<a href="{{ item.join_link }}" target="_blank" class="tbl-btn join"><i class="bi bi-camera-video"></i> Join</a>{% endif %}
+                  {% if item.watch_link %}<a href="{{ item.watch_link }}" target="_blank" class="tbl-btn watch"><i class="bi bi-play-circle"></i> Watch</a>{% endif %}
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      {% else %}
+      <!-- Empty State -->
+      <div class="empty-state">
+        <div class="empty-icon"><i class="bi bi-book"></i></div>
+        <h3>No enrollments yet</h3>
+        <p>Start learning by enrolling in webinars that interest you.</p>
+        <a href="{% url 'home:home' %}" class="btn-primary">
+          Browse Webinars <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  function setView(mode) {
+    document.getElementById('cardsView').style.display = mode === 'cards' ? '' : 'none';
+    document.getElementById('tableView').style.display  = mode === 'table'  ? '' : 'none';
+    document.getElementById('btnCards').classList.toggle('active', mode === 'cards');
+    document.getElementById('btnTable').classList.toggle('active', mode === 'table');
+  }
+
+  function setTab(btn, tab) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    // Filter logic: extend as needed per backend data
+    const cards = document.querySelectorAll('.webinar-card');
+    cards.forEach(card => {
+      if (tab === 'all') { card.style.display = ''; }
+      else if (tab === 'recorded') { card.style.display = card.dataset.type === 'recorded' ? '' : 'none'; }
+      else if (tab === 'upcoming') { card.style.display = card.dataset.type === 'live' ? '' : 'none'; }
+      else { card.style.display = ''; } // completed / missed — extend with backend data
+    });
+  }
+
+  function filterCards() {
+    const q = document.getElementById('enrollSearchInput').value.toLowerCase();
+    const cat = document.getElementById('enrollCategoryFilter').value.toLowerCase();
+    document.querySelectorAll('.webinar-card').forEach(card => {
+      const matchSearch = !q || card.dataset.title.includes(q);
+      const matchCategory = !cat || card.dataset.category === cat;
+      card.style.display = (matchSearch && matchCategory) ? '' : 'none';
+    });
+  }
+</script>
+
+{% endblock %}

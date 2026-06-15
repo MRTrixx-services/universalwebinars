@@ -1,0 +1,154 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block title %}Terms & Conditions — UniversalWebinars{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'home/css/legal.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="legal-wrapper">
+
+  <div class="legal-hero">
+    <div class="legal-hero-inner">
+      <div class="legal-hero-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        Legal Document
+      </div>
+      <div class="legal-title">Terms &amp; Conditions</div>
+      <div class="legal-updated">Last updated: January, 2026</div>
+      <nav class="legal-nav">
+        <a href="{% url 'home:terms' %}" class="active">Terms</a>
+        <a href="{% url 'home:privacy' %}">Privacy Policy</a>
+        <a href="{% url 'home:refund' %}">Refund Policy</a>
+        <a href="{% url 'home:shipping' %}">Shipping &amp; Return</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="legal-content">
+
+    <p>These terms constitute a binding legal agreement governing the use of the UniversalWebinars platform.</p>
+
+    <h2>1. Acceptance of Terms</h2>
+    <p>By accessing or using the services provided by UniversalWebinars, you explicitly acknowledge and agree to be legally bound by these Terms &amp; Conditions.</p>
+    <ul>
+      <li>Continuing to browse or use our services constitutes acceptance</li>
+      <li>These terms apply to all users, visitors, and customers</li>
+      <li>Supplemental terms may apply to specific services</li>
+    </ul>
+
+    <h2>2. Services</h2>
+    <p>UniversalWebinars delivers enterprise-grade online training, compliance webinars, professional development programs, and universalwebinars training services.</p>
+    <ul>
+      <li>Customizable corporate training solutions</li>
+      <li>Live and recorded expert-led webinars</li>
+      <li>Compliance monitoring and reporting tools</li>
+      <li>Dedicated account management for enterprise clients</li>
+    </ul>
+
+    <h2>3. Account Registration</h2>
+    <p>Access to premium features requires account registration. You warrant that all provided information is accurate, current, and complete.</p>
+    <ul>
+      <li>Minimum age requirement: 18 years</li>
+      <li>One account per individual user</li>
+      <li>Enterprise accounts may have multiple sub-users</li>
+      <li>Immediate notification required for security breaches</li>
+    </ul>
+
+    <h2>4. Use of Services</h2>
+    <p>You expressly agree not to engage in prohibited activities, including but not limited to:</p>
+    <ul>
+      <li>Utilizing services for unlawful or fraudulent purposes</li>
+      <li>Attempting unauthorized access to systems or data</li>
+      <li>Distributing harmful or disruptive content</li>
+      <li>Reproducing content without written authorization</li>
+    </ul>
+
+    <h3>Prohibited Activities</h3>
+    <ul>
+      <li>Commercial resale of platform content</li>
+      <li>Reverse engineering of platform systems</li>
+      <li>Automated scraping or data extraction</li>
+      <li>Intentional service disruption</li>
+    </ul>
+
+    <h2>5. Payment &amp; Subscriptions</h2>
+    <p>Selected services require payment processing. Subscription services automatically renew according to billing cycles until formally cancelled.</p>
+    <ul>
+      <li>Annual, quarterly, and monthly billing options available</li>
+      <li>Enterprise contracts may have custom payment terms</li>
+      <li>Failed payments may result in service suspension</li>
+      <li>Price changes communicated 30 days in advance</li>
+    </ul>
+
+    <h2>6. Intellectual Property</h2>
+    <p>All proprietary content constitutes intellectual property owned by UniversalWebinars and its licensors, protected under applicable laws.</p>
+    <ul>
+      <li>Limited license granted for personal/non-commercial use</li>
+      <li>No derivative works permitted without express consent</li>
+      <li>User-generated content licenses granted to UniversalWebinars</li>
+      <li>Infringement claims handled per DMCA procedures</li>
+    </ul>
+
+    <h2>7. Privacy</h2>
+    <p>Data collection, processing, and protection practices are detailed in our Privacy Policy, which is incorporated by reference.</p>
+    <ul>
+      <li>GDPR and CCPA compliance frameworks implemented</li>
+      <li>Data processing agreements available for review</li>
+      <li>User data rights clearly defined and accessible</li>
+      <li>Third-party data sharing disclosures provided</li>
+    </ul>
+
+    <h2>8. Limitation of Liability</h2>
+    <p>To the maximum extent permitted by law, UniversalWebinars shall not be liable for indirect, incidental, or consequential damages.</p>
+    <ul>
+      <li>No warranty of uninterrupted or error-free service</li>
+      <li>Service modifications may occur without liability</li>
+      <li>Third-party content and links disclaimed</li>
+      <li>Force majeure events excluded from liability</li>
+    </ul>
+
+    <h2>9. Termination</h2>
+    <p>We reserve the right to suspend or terminate accounts for violations of these terms or operational necessities.</p>
+    <ul>
+      <li>30-day cure period for minor violations</li>
+      <li>Immediate termination for severe breaches</li>
+      <li>Data export options available upon termination</li>
+      <li>Post-termination obligations may apply</li>
+    </ul>
+
+    <h2>10. Amendments</h2>
+    <p>UniversalWebinars may modify these terms to reflect evolving services or legal requirements.</p>
+    <ul>
+      <li>Major changes communicated 30 days in advance</li>
+      <li>Enterprise clients receive personalized notifications</li>
+      <li>Archived versions maintained for compliance</li>
+    </ul>
+
+    <h2>11. Governing Law</h2>
+    <p>These Terms &amp; Conditions are governed by the laws of the State of California, United States.</p>
+    <ul>
+      <li>Arbitration provisions for certain dispute types</li>
+      <li>Class action waivers included</li>
+      <li>Severability of provisions maintained</li>
+      <li>English language version controls</li>
+    </ul>
+
+    <h2>12. Contact Information</h2>
+    <p>For inquiries regarding these terms, legal notices, or compliance matters:</p>
+    <ul>
+      <li>Email: support@universalwebinars.com</li>
+      <li>Address: 8506 Madison Ave, Suite A, Fair Oaks, CA 95628, United States</li>
+      <li>Support hours: Mon–Fri, 9AM–6PM EST</li>
+    </ul>
+
+    <p>Terms &amp; Conditions last updated: January, 2026 &bull; UniversalWebinars &bull; All rights reserved</p>
+
+  </div>
+
+</div>
+
+{% endblock %}

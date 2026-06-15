@@ -1,0 +1,275 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block title %}{{ webinar.title }}{% endblock %}
+
+{% block extra_css %}
+<meta name="description" content="{{ webinar.title }} recorded webinar for professionals in the USA. Learn practical industry skills, improve productivity, and advance your career with expert training.">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+<link rel="stylesheet" href="{% static 'home/css/recorded-detail.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="live-detail-page">
+
+  <!-- ═══════════════════════════════════════
+       HERO SECTION
+  ═══════════════════════════════════════ -->
+  <section class="live-hero">
+    <div class="hero-inner">
+
+      <!-- Status Badge -->
+      <div class="hero-badge-row">
+        <span class="badge-status">
+          <span class="badge-dot"></span>
+          RECORDED WEBINAR — Available Now
+        </span>
+      </div>
+
+      <!-- Two-column: title left, instructor right -->
+      <div class="hero-layout">
+        <div class="hero-left">
+          <h1 class="hero-title">{{ webinar.title }}</h1>
+        </div>
+        <div class="hero-right">
+          <img src="{% if webinar.instructor.photo %}{{ webinar.instructor.photo.url }}{% else %}{% static 'home/images/default-avatar.png' %}{% endif %}"
+               class="hero-instructor-img" alt="{{ webinar.instructor.name }}">
+          <div class="hero-instructor-details">
+            <p class="hero-instructor-label">Instructor</p>
+            <h4 class="hero-instructor-name">{{ webinar.instructor.name }}</h4>
+            {% if webinar.instructor.designation %}
+            <p class="hero-instructor-meta">{{ webinar.instructor.designation }}</p>
+            {% endif %}
+            {% if webinar.instructor.organization %}
+            <p class="hero-instructor-meta">{{ webinar.instructor.organization }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Session meta grid — full width 2x2 -->
+      <div class="session-meta-grid">
+
+  <div class="meta-item">
+    <div class="meta-icon">
+      <i class="bi bi-broadcast-pin"></i>
+    </div>
+
+    <div class="meta-content">
+      <span class="meta-label">WEBINAR ID</span>
+      <span class="meta-value">
+        {{ webinar.webinar_id }}
+      </span>
+    </div>
+  </div>
+
+  <div class="meta-item">
+    <div class="meta-icon">
+      <i class="bi bi-hourglass-split"></i>
+    </div>
+
+    <div class="meta-content">
+      <span class="meta-label">DURATION</span>
+      <span class="meta-value">
+        {{ webinar.duration_minutes }} Minutes
+      </span>
+    </div>
+  </div>
+
+  <div class="meta-item">
+    <div class="meta-icon">
+      <i class="bi bi-camera-video"></i>
+    </div>
+
+    <div class="meta-content">
+      <span class="meta-label">FORMAT</span>
+      <span class="meta-value">
+        HD Streaming Access
+      </span>
+    </div>
+  </div>
+
+  <div class="meta-item">
+    <div class="meta-icon">
+      <i class="bi bi-unlock"></i>
+    </div>
+
+    <div class="meta-content">
+      <span class="meta-label">ACCESS</span>
+      <span class="meta-value">
+        6 Months Unlimited Viewing
+      </span>
+    </div>
+  </div>
+
+</div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       MAIN CONTENT
+  ═══════════════════════════════════════ -->
+  <div class="main-container">
+
+    <!-- ── PRICING CARD ── -->
+    <div class="pricing-card"
+      data-webinar-id="{{ webinar.id }}"
+      data-is-authenticated="{% if user.is_authenticated %}true{% else %}false{% endif %}"
+      data-login-url="/accounts/login/?next={{ request.path }}">
+
+      <p class="pricing-eyebrow">CHOOSE YOUR ACCESS</p>
+
+      <form method="post" class="pricing-form">
+        {% csrf_token %}
+
+        <!-- Tab switcher -->
+        <div class="pricing-tabs" role="tablist">
+          <button type="button" class="tab-btn active" data-tab="single">
+            <i class="bi bi-person"></i> Single
+          </button>
+          <button type="button" class="tab-btn" data-tab="multi">
+            <i class="bi bi-people"></i> Group
+          </button>
+        </div>
+
+        <!-- SINGLE -->
+        <div class="tab-panel active" data-panel="single">
+          <div class="options-row single-col">
+            <label class="option-card">
+              <input type="radio"
+                     name="pricing"
+                     class="pricing-option"
+                     value="recorded_single"
+                     data-variant="REC_SINGLE"
+                     data-price="{{ webinar.pricing.single_price }}"
+                     checked>
+              <div class="option-info">
+                <span class="option-title">Single recorded</span>
+                <span class="option-sub">1 participant, on-demand access</span>
+              </div>
+              <span class="option-price">${{ webinar.pricing.single_price }}</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- MULTI -->
+        <div class="tab-panel" data-panel="multi">
+          <div class="options-row single-col">
+            <label class="option-card">
+              <input type="radio"
+                     name="pricing"
+                     class="pricing-option"
+                     value="recorded_multi"
+                     data-variant="REC_MULTI"
+                     data-price="{{ webinar.pricing.multi_user_price }}">
+              <div class="option-info">
+                <span class="option-title">Group recorded</span>
+                <span class="option-sub">Unlimited participants, on-demand</span>
+              </div>
+              <span class="option-price">${{ webinar.pricing.multi_user_price }}</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Total + CTA -->
+        <div class="checkout-row">
+          <div class="total-block">
+            <span class="total-label">TOTAL</span>
+            <div class="total-value">
+              $<span id="totalAmount">0</span>
+              <small>USD</small>
+            </div>
+          </div>
+          <div class="cta-buttons">
+            <button type="button" class="btn-cta btn-outline" id="cartBtn">Add to cart</button>
+            <button type="button" class="btn-cta btn-primary" id="buyBtn">Buy now &rarr;</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+
+    <!-- ── WEBINAR DETAILS ── -->
+    <div class="details-container">
+      <div class="section-header">
+        <h4 class="section-title">
+          <span class="section-badge"><i class="bi bi-book"></i></span>
+          Webinar details
+        </h4>
+        <p class="section-subtitle">Everything you'll learn in this session</p>
+      </div>
+      <div class="description-box">
+        <h5>Webinar Description</h5>
+        <div class="description-content">
+          {{ webinar.description|safe }}
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── MEET YOUR SPEAKER ── -->
+    <div class="speaker-card">
+      <div class="speaker-header">
+        <h5><i class="bi bi-person-circle"></i> Meet your speaker</h5>
+      </div>
+      <div class="speaker-body speaker-body--centered">
+        <div class="speaker-image-wrapper">
+          <div class="speaker-image-frame">
+            <img src="{% if webinar.instructor.photo %}{{ webinar.instructor.photo.url }}{% endif %}"
+                 class="speaker-photo" alt="{{ webinar.instructor.name }}">
+            <span class="verified-badge"><i class="bi bi-check-lg"></i></span>
+          </div>
+        </div>
+        <div class="speaker-info speaker-info--centered">
+          <h4>{{ webinar.instructor.name }}</h4>
+          <div class="speaker-meta">
+            {% if webinar.instructor.designation %}
+            <span><i class="bi bi-briefcase"></i> {{ webinar.instructor.designation }}</span>
+            {% endif %}
+            {% if webinar.instructor.organization %}
+            <span><i class="bi bi-building"></i> {{ webinar.instructor.organization }}</span>
+            {% endif %}
+          </div>
+          <div class="speaker-bio">
+            {{ webinar.instructor.bio|linebreaks }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="{% static 'home/js/recorded_detail.js' %}"></script>
+
+<!-- Tab switcher -->
+<script>
+(function () {
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelector(`.tab-panel[data-panel="${target}"]`).classList.add('active');
+
+      const firstRadio = document.querySelector(`.tab-panel[data-panel="${target}"] .pricing-option`);
+      if (firstRadio) {
+        firstRadio.checked = true;
+        firstRadio.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+  });
+})();
+</script>
+
+{% endblock %}

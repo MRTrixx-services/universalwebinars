@@ -1,0 +1,123 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block title %}Privacy Policy — UniversalWebinars{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'home/css/legal.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="legal-wrapper">
+
+  <div class="legal-hero">
+    <div class="legal-hero-inner">
+      <div class="legal-hero-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        Legal Document
+      </div>
+      <div class="legal-title">Privacy Policy</div>
+      <div class="legal-updated">Last updated: January, 2026</div>
+      <nav class="legal-nav">
+        <a href="{% url 'home:terms' %}">Terms</a>
+        <a href="{% url 'home:privacy' %}" class="active">Privacy Policy</a>
+        <a href="{% url 'home:refund' %}">Refund Policy</a>
+        <a href="{% url 'home:shipping' %}">Shipping &amp; Return</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="legal-content">
+
+    <p>At UniversalWebinars, we value your privacy and are committed to protecting your personal information with enterprise-grade security measures.</p>
+
+    <h2>Information We Collect</h2>
+    <p>We collect information that you provide directly when registering for an account, joining webinars or training, or contacting us. Our approach follows data minimization principles — collecting only what is necessary for your learning experience.</p>
+
+    <h3>Personal Details</h3>
+    <ul>
+      <li>Name, email address, and phone number</li>
+      <li>Professional title and company name</li>
+      <li>Account credentials (encrypted)</li>
+    </ul>
+
+    <h3>Learning Data</h3>
+    <ul>
+      <li>Course progress and completion records</li>
+      <li>Assessment results and feedback</li>
+      <li>Platform interaction metrics</li>
+    </ul>
+
+    <h2>How We Use Your Information</h2>
+    <ul>
+      <li><strong>Service Delivery:</strong> Provide and improve training programs and resources</li>
+      <li><strong>Communication:</strong> Updates about courses, events, and platform improvements</li>
+      <li><strong>Personalization:</strong> Tailored learning recommendations and content</li>
+      <li><strong>Compliance:</strong> Meeting legal and regulatory obligations</li>
+    </ul>
+
+    <h2>Data Protection</h2>
+    <p>We employ enterprise-grade security measures to protect your personal information from unauthorized access, alteration, or disclosure.</p>
+    <ul>
+      <li>AES-256 encryption standards for data at rest and in transit</li>
+      <li>Regular third-party security audits</li>
+      <li>24/7 monitoring and threat detection</li>
+      <li>99.9% uptime service level objectives</li>
+    </ul>
+
+    <h2>Sharing Your Information</h2>
+    <p>We do not sell, rent, or trade your personal information. We may share data with trusted service providers who support platform operations under strict agreements.</p>
+    <ul>
+      <li>Payment processors</li>
+      <li>Cloud infrastructure providers</li>
+      <li>Analytics services</li>
+      <li>Email communication services</li>
+      <li>Customer support platforms</li>
+    </ul>
+
+    <h2>Cookies</h2>
+    <p>Our website uses cookies and similar technologies to enhance your learning experience, analyze usage, and personalize content. You can adjust cookie settings anytime via your browser settings. Essential cookies remain enabled for platform functionality.</p>
+
+    <h2>Your Rights</h2>
+    <p>You have comprehensive rights over your personal data. These can be exercised through your account settings or by contacting our support team.</p>
+
+    <h3>Data Subject Rights</h3>
+    <ul>
+      <li>Access and download your personal data</li>
+      <li>Request correction of inaccurate data</li>
+      <li>Withdraw consent at any time</li>
+      <li>Request deletion of your data</li>
+    </ul>
+
+    <h3>Additional Protections</h3>
+    <ul>
+      <li>Data portability in standard formats</li>
+      <li>Right to restrict processing</li>
+      <li>Right to be forgotten upon request</li>
+    </ul>
+
+    <h2>Changes to This Policy</h2>
+    <p>We may update this privacy policy periodically to reflect changes in practices, technology, or legal requirements.</p>
+    <ul>
+      <li>Email notification 30 days before major changes take effect</li>
+      <li>In-platform banner for significant updates</li>
+      <li>Continued use after updates signifies acceptance</li>
+    </ul>
+
+    <h2>Contact Information</h2>
+    <p>For questions, concerns, or data requests, our team is available:</p>
+    <ul>
+      <li>Email: support@universalwebinars.com</li>
+      <li>Address: 8506 Madison Ave, Suite A, Fair Oaks, CA 95628, United States</li>
+      <li>Support hours: Mon–Fri, 9AM–6PM EST</li>
+      <li>Response within 24 business hours</li>
+    </ul>
+
+    <p>Privacy Policy last updated: January, 2026 &bull; UniversalWebinars</p>
+
+  </div>
+
+</div>
+
+{% endblock %}

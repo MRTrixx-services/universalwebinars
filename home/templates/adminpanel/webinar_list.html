@@ -1,0 +1,291 @@
+{% extends "adminpanel/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'home/css/webinar_list.css' %}">
+
+<div class="webinar-list-container">
+
+<!-- HEADER -->
+<div class="page-header">
+<div class="header-left">
+<h1><i class="fas fa-video"></i> Webinar Management</h1>
+<p>{{ count }} webinar(s) found</p>
+</div>
+<div class="header-right">
+<a href="{% url 'adminpanel:create_webinar' %}" class="btn-create">
+<i class="fas fa-plus"></i> Create Webinar
+</a>
+</div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+<div class="toolbar-left">
+<!-- STATUS FILTERS -->
+<div class="filter-tabs">
+<a href="?status=all&search={{ search|default:'' }}" class="filter-tab {% if status_filter == 'all' %}active{% endif %}">
+<i class="fas fa-th"></i> All
+</a>
+<a href="?status=LIVE&search={{ search|default:'' }}" class="filter-tab live {% if status_filter == 'LIVE' %}active{% endif %}">
+<i class="fas fa-circle"></i> Live
+</a>
+<a href="?status=RECORDED&search={{ search|default:'' }}" class="filter-tab recorded {% if status_filter == 'RECORDED' %}active{% endif %}">
+<i class="fas fa-video"></i> Recorded
+</a>
+<a href="?status=UPCOMING&search={{ search|default:'' }}" class="filter-tab upcoming {% if status_filter == 'UPCOMING' %}active{% endif %}">
+<i class="fas fa-clock"></i> Upcoming
+</a>
+<a href="?status=ENDED&search={{ search|default:'' }}" class="filter-tab ended {% if status_filter == 'ENDED' %}active{% endif %}">
+<i class="fas fa-check-circle"></i> Completed
+</a>
+<a href="?" class="filter-tab clear-filter">
+<i class="fas fa-times-circle"></i> Clear Filters
+</a>
+</div>
+</div>
+
+<div class="toolbar-right">
+<!-- SEARCH -->
+<form method="get" class="search-form">
+<input type="hidden" name="status" value="{{ status_filter }}">
+<input type="text" name="search" value="{{ search|default:'' }}" placeholder="Search webinars..." class="search-input">
+<button type="submit" class="search-btn">
+<i class="fas fa-search"></i>
+</button>
+</form>
+</div>
+</div>
+
+<!-- BULK ACTIONS -->
+<form method="post" id="bulkForm">
+{% csrf_token %}
+
+<div class="bulk-actions">
+<div class="bulk-actions-left">
+<label class="checkbox-label">
+<input type="checkbox" id="selectAll">
+<span>Select All</span>
+</label>
+<span class="selected-count" id="selectedCount">0 selected</span>
+</div>
+
+<div class="bulk-actions-right">
+<button type="submit" name="action" value="delete" class="action-btn delete" onclick="return confirm('Delete selected webinars?')">
+<i class="fas fa-trash"></i> Delete
+</button>
+<button type="submit" name="action" value="export" class="action-btn export">
+<i class="fas fa-download"></i> Export CSV
+</button>
+</div>
+</div>
+
+<!-- TABLE -->
+<div class="table-container">
+<table class="webinar-table">
+<thead>
+<tr>
+<th width="40"></th>
+<th width="280">Webinar Details</th>
+<th width="200">Instructor</th>
+<th width="140">Schedule</th>
+<th width="120">Status</th>
+<th width="100">Type</th>
+<th width="100">Enrolled</th>
+<th width="100">Revenue</th>
+<th width="100">Actions</th>
+</tr>
+</thead>
+
+<tbody>
+{% for row in webinars %}
+{% with webinar=row.obj webinar_type=row.type %}
+<tr>
+<td>
+<input type="checkbox" name="selected" value="{{ webinar.id }}" class="row-checkbox">
+<input type="hidden" name="selected_type" value="{{ webinar_type }}">
+</td>
+
+<td>
+<div class="webinar-info">
+<h4>{{ webinar.title }}</h4>
+<span class="category-badge">{{ webinar.category.name }}</span>
+</div>
+</td>
+
+<td>
+<div class="instructor-cell">
+<img src="{% if webinar.instructor.photo %}{{ webinar.instructor.photo.url }}{% endif %}" alt="{{ webinar.instructor.name }}">
+<div class="instructor-details">
+<strong>{{ webinar.instructor.name }}</strong>
+<small>{{ webinar.instructor.designation }}</small>
+</div>
+</div>
+</td>
+
+<td>
+<div class="schedule-cell">
+{% if webinar_type == "live" %}
+<div class="date">{{ webinar.start_datetime|date:"M d, Y" }}</div>
+<div class="time">{{ webinar.start_datetime|date:"h:i A" }}</div>
+{% else %}
+<div class="date">On Demand</div>
+<div class="time">{{ webinar.duration_minutes }} min</div>
+{% endif %}
+</div>
+</td>
+
+<td>
+<span id="status-{{ webinar.id }}">
+{% if row.dynamic_status == "LIVE" %}
+<span class="status-badge live">
+<i class="fas fa-circle"></i> LIVE
+</span>
+{% elif row.dynamic_status == "UPCOMING" %}
+<span class="status-badge upcoming">
+<i class="fas fa-clock"></i> Scheduled
+</span>
+{% elif row.dynamic_status == "RECORDED" %}
+<span class="status-badge recorded">
+<i class="fas fa-play-circle"></i> Available
+</span>
+{% else %}
+<span class="status-badge ended">
+<i class="fas fa-check"></i> Completed
+</span>
+{% endif %}
+</span>
+</td>
+
+<td>
+{% if webinar_type == "live" %}
+<span class="type-badge live-type">
+<i class="fas fa-broadcast-tower"></i> Live
+</span>
+{% else %}
+<span class="type-badge recorded-type">
+<i class="fas fa-video"></i> Recorded
+</span>
+{% endif %}
+</td>
+
+<td>
+<div class="stat-cell">
+<i class="fas fa-users"></i>
+<strong>{{ row.enrolled }}</strong>
+</div>
+</td>
+
+<td>
+<div class="stat-cell revenue">
+<i class="fas fa-dollar-sign"></i>
+<strong>{{ row.revenue }}</strong>
+</div>
+</td>
+
+<td>
+<div class="action-buttons">
+
+{% if webinar_type == "live" %}
+
+<a href="{% url 'adminpanel:edit_webinar' webinar.id %}"
+   class="action-icon edit"
+   title="Edit">
+   <i class="fas fa-edit"></i>
+</a>
+
+<a href="{% url 'adminpanel:duplicate_webinar' webinar.id %}"
+   class="action-icon duplicate"
+   title="Duplicate">
+   <i class="fas fa-copy"></i>
+</a>
+
+<a href="{% url 'adminpanel:delete_webinar' webinar.id %}"
+   class="action-icon delete"
+   title="Delete"
+   onclick="return confirm('Delete this webinar?')">
+   <i class="fas fa-trash"></i>
+</a>
+
+{% else %}
+
+<a href="{% url 'adminpanel:edit_recorded_webinar' webinar.id %}"
+   class="action-icon edit"
+   title="Edit Recorded">
+   <i class="fas fa-edit"></i>
+</a>
+
+<a href="{% url 'adminpanel:duplicate_recorded_webinar' webinar.id %}"
+   class="action-icon duplicate"
+   title="Duplicate Recorded">
+   <i class="fas fa-copy"></i>
+</a>
+
+<a href="#"
+   class="action-icon delete"
+   title="Delete"
+   onclick="if(confirm('Delete this recorded webinar?')) { /* Add delete logic */ } return false;">
+   <i class="fas fa-trash"></i>
+</a>
+
+{% endif %}
+
+</div>
+</td>
+</tr>
+{% endwith %}
+{% empty %}
+<tr>
+<td colspan="9" class="empty-state">
+<i class="fas fa-inbox"></i>
+<p>No webinars found</p>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+</form>
+
+<!-- PAGINATION -->
+{% if page_obj.paginator.num_pages > 1 %}
+<div class="pagination-container">
+<div class="pagination-info">
+Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+</div>
+
+<ul class="pagination">
+{% if page_obj.has_previous %}
+<li>
+<a href="?page={{ page_obj.previous_page_number }}&status={{ status_filter }}&search={{ search|default:'' }}" class="page-link">
+<i class="fas fa-chevron-left"></i>
+</a>
+</li>
+{% endif %}
+
+{% for num in page_obj.paginator.page_range %}
+{% if num == page_obj.number %}
+<li><span class="page-link active">{{ num }}</span></li>
+{% else %}
+<li><a href="?page={{ num }}&status={{ status_filter }}&search={{ search|default:'' }}" class="page-link">{{ num }}</a></li>
+{% endif %}
+{% endfor %}
+
+{% if page_obj.has_next %}
+<li>
+<a href="?page={{ page_obj.next_page_number }}&status={{ status_filter }}&search={{ search|default:'' }}" class="page-link">
+<i class="fas fa-chevron-right"></i>
+</a>
+</li>
+{% endif %}
+</ul>
+</div>
+{% endif %}
+
+</div>
+
+<script src="{% static 'home/js/webinar_list.js' %}"></script>
+
+{% endblock %}

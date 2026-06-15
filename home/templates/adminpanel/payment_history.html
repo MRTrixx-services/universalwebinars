@@ -1,0 +1,210 @@
+{% extends "adminpanel/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'home/css/payment_history.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<div class="payment-container">
+
+<!-- Header Section -->
+<div class="payment-header">
+    <div class="header-content">
+        <h1><i class="fas fa-chart-line"></i> Payment Management</h1>
+        <p class="header-subtitle">Monitor transactions, process refunds, and manage payouts</p>
+    </div>
+</div>
+
+<!-- Revenue Statistics Cards -->
+<div class="revenue-stats">
+
+    <!-- Today's Revenue -->
+    <div class="stat-card">
+        <div class="stat-header">
+            <h3>Today's Revenue</h3>
+            <i class="fas fa-calendar-day"></i>
+        </div>
+        <div class="stat-value">${{ today_revenue|floatformat:2 }}</div>
+        <div class="stat-meta">{{ today_count }} transaction{{ today_count|pluralize }}</div>
+    </div>
+
+    <!-- This Week -->
+    <div class="stat-card">
+        <div class="stat-header">
+            <h3>This Week</h3>
+            <i class="fas fa-calendar-alt"></i>
+        </div>
+        <div class="stat-value">${{ week_revenue|floatformat:2 }}</div>
+        <div class="stat-meta">{{ week_count }} transaction{{ week_count|pluralize }}</div>
+    </div>
+
+    <!-- This Month -->
+    <div class="stat-card">
+        <div class="stat-header">
+            <h3>This Month</h3>
+            <i class="fas fa-calendar-check"></i>
+        </div>
+        <div class="stat-value">${{ month_revenue|floatformat:2 }}</div>
+        <div class="stat-meta">{{ month_count }} transaction{{ month_count|pluralize }}</div>
+    </div>
+
+    <!-- Total Revenue -->
+    <div class="stat-card stat-card-primary">
+        <div class="stat-header">
+            <h3>Total Revenue</h3>
+            <i class="fas fa-calculator"></i>
+        </div>
+        <div class="stat-value">${{ total_revenue|floatformat:2 }}</div>
+        <div class="stat-meta">{{ total_count }} transaction{{ total_count|pluralize }}</div>
+    </div>
+
+</div>
+
+<!-- Filter Section -->
+<form method="GET" class="filter-section" id="filterForm"
+    data-csv-url="{% url 'adminpanel:export_payments_csv' %}"
+    data-excel-url="{% url 'adminpanel:export_payments_excel' %}">
+    <div class="filter-group">
+        <label>Date Range</label>
+        <div class="date-range-wrapper">
+            <div class="date-input-group">
+                <input 
+                    type="text" 
+                    class="date-input" 
+                    id="fromDate"
+                    name="from_date"
+                    placeholder="dd-mm-yyyy" 
+                    value="{{ from_date }}"
+                    aria-label="From date"
+                    readonly>
+                <button type="button" class="calendar-btn" id="fromDateBtn" title="Select From Date">
+                    <i class="fas fa-calendar-alt"></i>
+                </button>
+            </div>
+            <span class="date-separator">to</span>
+            <div class="date-input-group">
+                <input 
+                    type="text" 
+                    class="date-input" 
+                    id="toDate"
+                    name="to_date"
+                    placeholder="dd-mm-yyyy" 
+                    value="{{ to_date }}"
+                    aria-label="To date"
+                    readonly>
+                <button type="button" class="calendar-btn" id="toDateBtn" title="Select To Date">
+                    <i class="fas fa-calendar-alt"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="filter-actions">
+        <button type="submit" class="btn btn-filter" title="Apply Filter">
+            <i class="fas fa-search"></i> Filter
+        </button>
+        <button type="button" class="btn btn-clear-filters" title="Clear Filters">
+            <i class="fas fa-times"></i> Clear Filters
+        </button>
+        <button type="button" class="btn btn-list-view" title="List View">
+            <i class="fas fa-list"></i> List View
+        </button>
+        <button type="button" class="btn btn-export btn-export-excel" title="Export to Excel">
+            <i class="fas fa-file-excel"></i> Export Excel
+        </button>
+        <button type="button" class="btn btn-export btn-export-csv" title="Export to CSV">
+            <i class="fas fa-file-csv"></i> Export CSV
+        </button>
+    </div>
+</form>
+
+<!-- Active Filter Badge -->
+{% if from_date and to_date %}
+<div class="filter-badge">
+    <i class="fas fa-filter"></i>
+    Showing payments from <strong>{{ from_date }}</strong> to <strong>{{ to_date }}</strong>
+    <a href="?">Clear filter</a>
+</div>
+{% endif %}
+
+<!-- Transactions Table -->
+<div class="table-container">
+
+<table class="payment-table">
+
+<thead>
+<tr>
+    <th>Date</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Webinar</th>
+    <th>Amount</th>
+    <th>Access Type</th>
+    <th>Status</th>
+    <th>Actions</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for payment in payments %}
+
+<tr>
+    <td class="date-cell">
+        {{ payment.date|date:"M d, Y" }}<br>
+        <small>{{ payment.date|date:"h:i A" }}</small>
+    </td>
+    <td>{{ payment.name }}</td>
+    <td>{{ payment.email }}</td>
+    <td><span class="webinar-badge">{{ payment.webinar }}</span></td>
+    <td class="amount-cell">$ {{ payment.amount }}</td>
+    <td>{{ payment.variant }}</td>
+    <td>
+        <span class="
+    {% if payment.status == 'PAID' %}badge-success
+    {% elif payment.status == 'PENDING' %}badge-warning
+    {% elif payment.status == 'FAILED' %}badge-danger
+    {% endif %} ">
+    {{ payment.status }}
+</span>
+    </td>
+    <td>
+        <a href="{% url 'adminpanel:payment_detail' payment.order_number %}" 
+        class="btn-details" title="View Details">
+    <i class="fas fa-eye"></i>
+    </a>
+
+<a href="{% url 'adminpanel:resend_invoice' payment.order_number %}" 
+   class="btn-resend" 
+   title="Resend Invoice"
+   onclick="return confirm('Resend invoice email to customer?')">
+<i class="fas fa-paper-plane"></i>
+</a>
+
+    </td>
+</tr>
+
+{% empty %}
+
+<tr>
+    <td colspan="8" class="empty">
+        <i class="fas fa-inbox"></i>
+        <p>No payments found</p>
+    </td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script src="{% static 'home/js/payment_history.js' %}"></script>
+
+{% endblock %}

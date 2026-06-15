@@ -1,0 +1,152 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block title %}Shipping & Return Policy — UniversalWebinars{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'home/css/legal.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="legal-wrapper">
+
+  <div class="legal-hero">
+    <div class="legal-hero-inner">
+      <div class="legal-hero-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+        Legal Document
+      </div>
+      <div class="legal-title">Shipping &amp; Return Policy</div>
+      <div class="legal-updated">Last updated: January, 2026</div>
+      <nav class="legal-nav">
+        <a href="{% url 'home:terms' %}">Terms</a>
+        <a href="{% url 'home:privacy' %}">Privacy Policy</a>
+        <a href="{% url 'home:refund' %}">Refund Policy</a>
+        <a href="{% url 'home:shipping' %}" class="active">Shipping &amp; Return</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="legal-content">
+
+    <p>UniversalWebinars provides digital delivery and hassle-free returns for your learning journey. All products are delivered instantly through your account — no waiting, no shipping fees.</p>
+
+    <h2>1. Shipping Policy (Digital Delivery)</h2>
+    <p>UniversalWebinars specializes in digital education products including online courses, webinars, downloadable resources, and interactive training modules.</p>
+
+    <h3>Instant Access</h3>
+    <ul>
+      <li>Immediate access after payment confirmation</li>
+      <li>Access via your account dashboard</li>
+      <li>Direct download links where applicable</li>
+    </ul>
+
+    <h3>Global Availability</h3>
+    <ul>
+      <li>Available worldwide 24/7</li>
+      <li>No geographical restrictions</li>
+      <li>Multi-language support where available</li>
+    </ul>
+
+    <p>For access issues, contact support@universalwebinars.com with your order details for resolution within 24 hours.</p>
+    <p><strong>Digital delivery only &bull; No shipping fees &bull; No waiting periods</strong></p>
+
+    <h2>2. Return &amp; Refund Policy</h2>
+    <p>We stand behind the quality of our digital education products with a satisfaction guarantee.</p>
+
+    <h3>Refund Window</h3>
+    <ul>
+      <li>Full refund within 5 working days of purchase</li>
+      <li>No questions asked within the first 5 days</li>
+      <li>Processed within 5–10 business days</li>
+    </ul>
+
+    <h3>Refund Eligibility</h3>
+    <ul>
+      <li>Content not downloaded or accessed beyond preview</li>
+      <li>Request submitted within the eligible period</li>
+      <li>Valid payment method used for original purchase</li>
+    </ul>
+
+    <h2>3. Cancellations</h2>
+
+    <h3>Webinar Cancellations</h3>
+    <ul>
+      <li>48+ hours notice — full refund issued</li>
+      <li>24–48 hours notice — 50% refund</li>
+      <li>Within 24 hours — non-refundable</li>
+    </ul>
+
+    <h3>Subscription Cancellations</h3>
+    <ul>
+      <li>Cancellation effective at end of current billing cycle</li>
+      <li>No refunds for unused partial periods</li>
+      <li>Downloadable resources may be non-refundable once accessed</li>
+    </ul>
+
+    <p>Requests can be submitted via email or your account dashboard. Emergency situations reviewed case-by-case.</p>
+
+    <h2>4. Technical Issues</h2>
+    <p>Our support team is available to help with any access problems you experience.</p>
+    <ul>
+      <li>Initial response within 2 hours during business hours</li>
+      <li>Most issues resolved within 24 hours</li>
+      <li>Contact support@universalwebinars.com with your order number and device details</li>
+    </ul>
+
+    <h3>Common Solutions</h3>
+    <ul>
+      <li>Clear browser cache and cookies</li>
+      <li>Try another browser or device</li>
+      <li>Check your internet connection</li>
+      <li>Disable ad-blockers temporarily</li>
+    </ul>
+
+    <h2>5. How to Request a Return</h2>
+    <ol>
+      <li>Email support@universalwebinars.com with subject "Return Request"</li>
+      <li>Provide your order number, product name, and reason</li>
+      <li>Our team will review and process within 5–10 business days</li>
+    </ol>
+
+    <h3>Required Information</h3>
+    <ul>
+      <li>Full name and account email address</li>
+      <li>Order number or transaction ID</li>
+      <li>Date of purchase</li>
+      <li>Reason for the return request</li>
+      <li>Screenshots if applicable</li>
+    </ul>
+
+    <h2>6. Exceptions</h2>
+    <ul>
+      <li>Content downloaded, streamed, or accessed beyond preview</li>
+      <li>Requests submitted after the eligible window</li>
+      <li>Policy violations or fraudulent activity</li>
+    </ul>
+    <p>Exceptions for technical access issues are reviewed individually with documentation.</p>
+
+    <h2>7. Policy Amendments</h2>
+    <ul>
+      <li>Email notification 30 days before changes take effect</li>
+      <li>Website banner announcements for major updates</li>
+      <li>Updated date displayed on this page</li>
+    </ul>
+    <p>Continued use after updates constitutes acceptance of the revised policy.</p>
+
+    <h2>8. Contact Information</h2>
+    <ul>
+      <li>Email: support@universalwebinars.com</li>
+      <li>Address: 8506 Madison Ave, Suite A, Fair Oaks, CA 95628, United States</li>
+      <li>Business hours: Mon–Fri, 9AM–6PM EST</li>
+      <li>Emergency technical support available 24/7</li>
+    </ul>
+
+    <p>Shipping &amp; Return Policy last updated: January, 2026 &bull; UniversalWebinars &bull; Digital products only &bull; No physical shipping</p>
+
+  </div>
+
+</div>
+
+{% endblock %}

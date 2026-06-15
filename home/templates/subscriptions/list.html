@@ -1,0 +1,217 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block title %}Subscription Plans{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'home/css/subscription-list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="subscription-page">
+  
+  <div class="subscription-header">
+    <h1>⭐ Choose Your Plan</h1>
+    <p>Get unlimited access to all live webinars</p>
+  </div>
+
+  <div class="plans-container">
+    {% for plan in plans %}
+    <div class="plan-card {% if plan.is_popular %}popular{% endif %}">
+      {% if plan.is_popular %}
+      <div class="popular-badge">MOST POPULAR</div>
+      {% endif %}
+      
+      <h2 class="plan-name">{{ plan.name }}</h2>
+      <div class="plan-duration">{{ plan.get_duration_months_display }}</div>
+      
+      <div class="plan-price">
+        <span class="currency">$</span>
+        <span class="amount">{{ plan.price|floatformat:0 }}</span>
+      </div>
+      
+      <ul class="plan-features">
+        <li><i class="bi bi-check-circle-fill"></i> Unlimited live webinars access</li>
+        <li><i class="bi bi-check-circle-fill"></i> Expert instructors</li>
+        <li><i class="bi bi-check-circle-fill"></i> Interactive Q&A sessions</li>
+        <li><i class="bi bi-check-circle-fill"></i> Priority support</li>
+        <li><i class="bi bi-check-circle-fill"></i> Exclusive member community</li>
+      </ul>
+      
+      <button class="plan-btn pay-btn"
+        data-plan-id="{{ plan.id }}"
+        data-plan-name="{{ plan.name }}"
+        data-price="{{ plan.price }}"
+        data-paypal-plan="{{ plan.paypal_plan_id }}">
+        Choose Plan
+      </button>
+    </div>
+    {% empty %}
+    <div class="no-plans">
+      <i class="bi bi-inbox"></i>
+      <p>No subscription plans available</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="payment-section text-center mt-5">
+
+  <h3 id="selected-plan">Select a plan to continue</h3>
+  <h2 id="selected-price" class="fw-bold"></h2>
+
+  <button id="proceed-payment" class="btn btn-dark mt-3" disabled>
+    Proceed to Payment
+  </button>
+
+  <div id="paypal-wrapper" style="display:none; margin-top:20px;">
+    <div id="paypal-button-container"></div>
+  </div>
+
+</div>
+
+</div>
+
+  <!-- INFO SECTIONS -->
+  <div class="info-sections">
+    <div class="info-card">
+      <div class="info-icon">
+        <i class="bi bi-broadcast"></i>
+      </div>
+      <h3>Unlimited Live Access</h3>
+      <p>Join all live webinars during your subscription period</p>
+    </div>
+
+    <div class="info-card">
+      <div class="info-icon">
+        <i class="bi bi-calendar-check"></i>
+      </div>
+      <h3>6 & 12 Month Plans</h3>
+      <p>Choose the duration that fits your learning goals</p>
+    </div>
+
+    <div class="info-card">
+      <div class="info-icon">
+        <i class="bi bi-shield-check"></i>
+      </div>
+      <h3>Secure Checkout</h3>
+      <p>Safe and reliable payment experience</p>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=USD"></script>
+
+<script>
+const IS_AUTHENTICATED = {{ user.is_authenticated|yesno:"true,false" }};
+
+let selectedPrice = null;
+let selectedPlanId = null;
+let selectedPlanPaypalId = null;
+
+// when plan clicked
+document.querySelectorAll(".pay-btn").forEach(btn => {
+
+  btn.addEventListener("click", function(){
+
+    // Remove selected class from all cards
+    document.querySelectorAll(".plan-card").forEach(card => {
+      card.classList.remove("selected");
+    });
+
+    // Add selected class to clicked card
+    this.closest(".plan-card").classList.add("selected");
+
+    // Change button text
+    document.querySelectorAll(".pay-btn").forEach(b => {
+      b.innerText = "Choose Plan";
+    });
+    this.innerText = "✓ Selected";
+
+    const name = this.dataset.planName;
+    selectedPrice = this.dataset.price;
+    selectedPlanId = this.dataset.planId;
+    selectedPlanPaypalId = this.dataset.paypalPlan;
+
+    document.getElementById("selected-plan").innerText =
+      name + " selected";
+
+    document.getElementById("selected-price").innerText =
+      "$" + selectedPrice;
+
+    // enable proceed button
+    document.getElementById("proceed-payment").disabled = false;
+
+  });
+
+});
+
+// Auto-select plan if coming from home page
+const urlParams = new URLSearchParams(window.location.search);
+const preSelectedPlanId = urlParams.get('plan') || '{{ selected_plan_id }}';
+
+if (preSelectedPlanId && preSelectedPlanId !== 'None') {
+  const preSelectedBtn = document.querySelector(`.pay-btn[data-plan-id="${preSelectedPlanId}"]`);
+  if (preSelectedBtn) {
+    preSelectedBtn.click();
+    setTimeout(() => {
+      document.getElementById('proceed-payment').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
+  }
+}
+
+// proceed payment click
+document.getElementById("proceed-payment").addEventListener("click", function(){
+
+  if(!selectedPlanId){
+    alert("Select plan");
+    return;
+  }
+
+  // ❌ NOT LOGGED → redirect
+  if(!IS_AUTHENTICATED){
+
+    window.location.href =
+      "/accounts/login/?next=" +
+      encodeURIComponent(`/subscriptions/?plan=${selectedPlanId}`);
+
+    return;
+  }
+
+  // ✅ LOGGED → show PayPal
+  const wrapper = document.getElementById("paypal-wrapper");
+  wrapper.style.display = "block";
+
+  const container = document.getElementById("paypal-button-container");
+  container.innerHTML = "";
+
+  paypal.Buttons({
+
+      createOrder: function(){
+      return fetch(`/subscriptions/paypal/create/${selectedPlanId}/`)
+        .then(r=>r.json())
+        .then(d=>{
+          window.currentPaymentId = d.payment_db_id;
+          return d.id;
+        });
+    },
+
+
+      onApprove: function(data){
+        return fetch(`/subscriptions/paypal/capture/${selectedPlanId}/${data.orderID}/`)
+          .then(r=>r.json())
+          .then(d=>{
+            if(d.success){
+              alert("Subscription Activated ✅");
+              location.reload();
+            }
+          });
+      }
+
+    }).render("#paypal-button-container");
+
+});
+</script>
+
+{% endblock %}

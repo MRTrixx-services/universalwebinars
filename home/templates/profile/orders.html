@@ -1,0 +1,477 @@
+{% extends "profile/base.html" %}
+
+{% block profile_content %}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #f0f4ff;
+    --surface: #ffffff;
+    --surface-2: #f8faff;
+    --border: #e2e8f8;
+    --text-primary: #0f1d3a;
+    --text-secondary: #5a6a8a;
+    --text-muted: #94a3c0;
+    --blue: #2563eb;
+    --blue-light: #eff6ff;
+    --green: #059669;
+    --green-light: #ecfdf5;
+    --amber: #d97706;
+    --amber-light: #fffbeb;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --gray-light: #f1f5f9;
+    --shadow-sm: 0 1px 3px rgba(15,29,58,0.06);
+    --shadow-md: 0 4px 16px rgba(15,29,58,0.09);
+    --radius: 14px;
+    --radius-sm: 9px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .orders-page {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    padding: 28px 32px 56px;
+    color: var(--text-primary);
+  }
+
+  /* ── Header ── */
+  .orders-header {
+    margin-bottom: 24px;
+  }
+  .orders-header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--blue);
+    letter-spacing: -0.4px;
+  }
+  .orders-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* ── Filter Panel ── */
+  .filter-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+  }
+  .search-wrap {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .search-wrap i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 15px;
+    pointer-events: none;
+  }
+  .search-wrap input {
+    width: 100%;
+    padding: 11px 14px 11px 40px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: 'Outfit', sans-serif;
+    background: var(--surface-2);
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .search-wrap input:focus {
+    border-color: var(--blue);
+    background: #fff;
+  }
+  .search-wrap input::placeholder { color: var(--text-muted); }
+
+  .filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 13.5px;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    border: 1.5px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text-secondary);
+    transition: all 0.2s;
+  }
+  .chip:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+  .chip.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .chip .chip-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: 11px;
+    font-size: 11px;
+    font-weight: 700;
+    background: rgba(255,255,255,0.25);
+  }
+  .chip:not(.active) .chip-count {
+    background: var(--border);
+    color: var(--text-secondary);
+  }
+
+  /* ── Order Cards ── */
+  .orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .order-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 22px 18px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+  }
+  .order-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    border-color: #c7d7ff;
+  }
+
+  /* Top row */
+  .order-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .order-id {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+  }
+  .order-date-row {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+
+  /* Status + Amount row */
+  .order-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .status-badge.completed { background: var(--green-light); color: var(--green); }
+  .status-badge.pending   { background: var(--amber-light); color: var(--amber); }
+  .status-badge.failed    { background: var(--red-light);   color: var(--red); }
+  .status-badge.refunded  { background: #f1f5f9; color: #64748b; }
+
+  .order-amount-wrap { text-align: right; }
+  .order-amount {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+  }
+  .order-payment {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* Item row */
+  .order-items { margin-bottom: 18px; }
+  .order-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-top: 1px solid var(--border);
+  }
+  .item-thumb {
+    width: 56px;
+    height: 44px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: var(--gray-light);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--blue);
+    overflow: hidden;
+  }
+  .item-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+  .item-info { flex: 1; min-width: 0; }
+  .item-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .item-variant {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+  .item-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+
+  /* Action buttons */
+  .order-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .btn-order {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: 1.5px solid var(--border);
+  }
+  .btn-order.details {
+    background: var(--blue-light);
+    color: var(--blue);
+    border-color: #c7d7ff;
+  }
+  .btn-order.details:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .btn-order.invoice {
+    background: var(--surface-2);
+    color: var(--text-secondary);
+  }
+  .btn-order.invoice:hover { background: var(--gray-light); color: var(--text-primary); }
+
+  /* ── Empty State ── */
+  .empty-orders {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 60px 24px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+  }
+  .empty-icon {
+    width: 72px; height: 72px;
+    background: var(--blue-light);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px;
+    color: var(--blue);
+    margin: 0 auto 18px;
+  }
+  .empty-orders h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .empty-orders p  { font-size: 14px; color: var(--text-secondary); max-width: 280px; margin: 0 auto 22px; line-height: 1.6; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 24px;
+    background: var(--blue); color: #fff;
+    border-radius: var(--radius-sm);
+    font-size: 14px; font-weight: 700; font-family: 'Outfit', sans-serif;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: #1d4ed8; color: #fff; transform: translateY(-2px); box-shadow: 0 6px 18px rgba(37,99,235,0.3); }
+
+  @media (max-width: 600px) {
+    .orders-page { padding: 16px 14px 40px; }
+    .order-top { flex-direction: column; }
+    .order-amount-wrap { text-align: left; }
+  }
+</style>
+
+<div class="orders-page">
+
+  <div class="orders-header">
+    <h1><i class="bi bi-receipt"></i> My Orders</h1>
+    <p>View your order history and payment details</p>
+  </div>
+
+  <!-- Filter Panel -->
+  <div class="filter-panel">
+    <div class="search-wrap">
+      <i class="bi bi-search"></i>
+      <input type="text" id="orderSearch" placeholder="Search orders by ID or webinar name…" oninput="filterOrders()">
+    </div>
+    <div class="filter-chips">
+      <button class="chip active" onclick="setFilter(this,'all')">
+        All Orders <span class="chip-count">{{ orders|length|default:"0" }}</span>
+      </button>
+      <button class="chip" onclick="setFilter(this,'paid')">
+        Completed <span class="chip-count">{{ completed_count|default:"0" }}</span>
+      </button>
+      <button class="chip" onclick="setFilter(this,'pending')">
+        Pending
+      </button>
+      <button class="chip" onclick="setFilter(this,'failed')">
+        Failed
+      </button>
+    </div>
+  </div>
+
+  <!-- Orders List -->
+  <div class="orders-list" id="ordersList">
+    {% if orders %}
+      {% for order in orders %}
+      <div class="order-card" data-status="{{ order.status|lower }}" data-search="{{ order.order_number|lower }}">
+
+        <div class="order-top">
+          <div class="order-id">Order #{{ order.order_number }}</div>
+        </div>
+
+        <div class="order-date-row">
+          Placed on {{ order.created_at|date:"M d, Y \a\t h:i A" }}<br>
+        {% if order.status == "PAID" %}
+        Completed: {{ order.created_at|date:"M d, Y" }}
+        {% endif %}
+        </div>
+
+        <div class="order-status-row">
+          <span class="status-badge
+            {% if order.status == 'PAID' %}completed
+            {% elif order.status == 'PENDING' %}pending
+            {% elif order.status == 'FAILED' %}failed
+            {% endif %}">
+
+            {% if order.status == 'PAID' %}
+                <i class="bi bi-check-circle-fill"></i> Completed
+            {% elif order.status == 'PENDING' %}
+                <i class="bi bi-clock-fill"></i> Pending
+            {% elif order.status == 'FAILED' %}
+                <i class="bi bi-x-circle-fill"></i> Failed
+            {% endif %}
+        </span>
+          <div class="order-amount-wrap">
+            <div class="order-amount">${{ order.total_amount }}</div>
+            <div class="order-payment">{% if order.payment_id %}
+                                                PayPal
+                                            {% else %}
+                                                N/A
+                                            {% endif %}</div>
+          </div>
+        </div>
+
+        {% if order.items.all %}
+            <div class="order-items">
+            {% for item in order.items.all %}
+           <div class="order-item">
+    <div class="item-thumb">
+        <i class="bi bi-camera-video"></i>
+    </div>
+
+    <div class="item-info">
+        <div class="item-title">{{ item.webinar_title }}</div>
+
+        <div class="item-variant">
+            {{ item.variant }}
+            {% if item.instructor_name %}
+                • {{ item.instructor_name }}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="item-price">${{ item.price }}</div>
+</div>
+            {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="order-actions">
+          <a href="{% url 'orders:order_detail' order.order_number %}" class="btn-order details">
+              <i class="bi bi-eye"></i> View Details
+          </a>
+          <a href="{% url 'orders:download_invoice' order.order_number %}" 
+            class="btn-order invoice">
+                <i class="bi bi-download"></i> Download Invoice
+        </a>
+        </div>
+
+      </div>
+      {% endfor %}
+
+    {% else %}
+    <div class="empty-orders">
+      <div class="empty-icon"><i class="bi bi-receipt"></i></div>
+      <h3>No orders yet</h3>
+      <p>Your order history will appear here once you make a purchase.</p>
+      <a href="{% url 'home:home' %}" class="btn-primary">
+        Browse Webinars <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+
+<script>
+  let activeFilter = 'all';
+
+  function setFilter(btn, status) {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = status;
+    applyFilter();
+  }
+
+  function filterOrders() { applyFilter(); }
+
+  function applyFilter() {
+    const q = document.getElementById('orderSearch').value.toLowerCase();
+    document.querySelectorAll('.order-card').forEach(card => {
+      const matchStatus = activeFilter === 'all' || card.dataset.status === activeFilter;
+      const matchSearch = !q || card.dataset.search.includes(q);
+      card.style.display = (matchStatus && matchSearch) ? '' : 'none';
+    });
+  }
+</script>
+
+{% endblock %}

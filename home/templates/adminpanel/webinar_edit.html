@@ -1,0 +1,279 @@
+{% extends "adminpanel/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'home/css/webinar_create.css' %}">
+
+<div class="admin-container">
+
+<!-- TOP BAR -->
+<div class="top-bar">
+<div class="breadcrumb">
+<a href="{% url 'adminpanel:dashboard' %}"><i class="fas fa-home"></i> Dashboard</a>
+<span>/</span>
+<a href="#">Webinars</a>
+<span>/</span>
+<span class="current">Edit Webinar</span>
+</div>
+<div class="top-actions">
+<a href="#" class="btn-outline">
+<i class="fas fa-list"></i> All Webinars
+</a>
+</div>
+</div>
+
+<!-- STATS ROW -->
+<div class="stats-row">
+<div class="stat-box">
+<div class="stat-icon blue">
+<i class="fas fa-video"></i>
+</div>
+<div class="stat-info">
+<div class="stat-value">{{ total_webinars|default:"0" }}</div>
+<div class="stat-label">Total Webinars</div>
+</div>
+</div>
+
+<div class="stat-box">
+<div class="stat-icon green">
+<i class="fas fa-folder"></i>
+</div>
+<div class="stat-info">
+<div class="stat-value">{{ categories|length }}</div>
+<div class="stat-label">Categories</div>
+</div>
+</div>
+
+<div class="stat-box">
+<div class="stat-icon purple">
+<i class="fas fa-user-tie"></i>
+</div>
+<div class="stat-info">
+<div class="stat-value">{{ instructors|length }}</div>
+<div class="stat-label">Instructors</div>
+</div>
+</div>
+
+<div class="stat-box">
+<div class="stat-icon orange">
+<i class="fas fa-edit"></i>
+</div>
+<div class="stat-info">
+<div class="stat-value">Edit</div>
+<div class="stat-label">Mode</div>
+</div>
+</div>
+</div>
+
+<!-- STEPPER -->
+<div class="progress-stepper">
+<div class="step-item active" data-step="1">
+<div class="step-number">1</div>
+<div class="step-info">
+<div class="step-title">Basic Info</div>
+<div class="step-desc">Title, Type, Category</div>
+</div>
+</div>
+
+<div class="step-connector"></div>
+
+<div class="step-item" data-step="2">
+<div class="step-number">2</div>
+<div class="step-info">
+<div class="step-title">Content</div>
+<div class="step-desc">Schedule & Details</div>
+</div>
+</div>
+
+<div class="step-connector"></div>
+
+<div class="step-item" data-step="3">
+<div class="step-number">3</div>
+<div class="step-info">
+<div class="step-title">Review</div>
+<div class="step-desc">Update Webinar</div>
+</div>
+</div>
+</div>
+
+<!-- FORM CONTAINER -->
+<div class="form-container">
+
+<form method="post">
+{% csrf_token %}
+
+<!-- STEP 1 -->
+<div class="form-step active" id="step1">
+
+<div class="section-title">
+<h2>Basic Information</h2>
+<p>Update the fundamental details of your webinar</p>
+</div>
+
+<div class="form-grid">
+<div class="input-group full-width">
+<label>Webinar Title</label>
+<input name="title" value="{{ webinar.title }}" placeholder="Enter an engaging title...">
+</div>
+
+<div class="input-group">
+<label>Category</label>
+<select name="category">
+{% for c in categories %}
+<option value="{{ c.id }}" {% if c.id == webinar.category.id %}selected{% endif %}>{{ c.name }}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="input-group">
+<label>Instructor</label>
+<select name="instructor" id="instructorSelect">
+{% for i in instructors %}
+<option value="{{ i.id }}" data-photo="{% if i.photo %}{{ i.photo.url }}{% endif %}" {% if i.id == webinar.instructor.id %}selected{% endif %}>{{ i.name }}</option>
+{% endfor %}
+</select>
+</div>
+</div>
+
+<div class="instructor-card" id="instructorCard" style="display:flex;">
+<img id="instructorPhoto" src="{% if webinar.instructor.photo %}{{ webinar.instructor.photo.url }}{% endif %}">
+<div class="instructor-details">
+<span class="instructor-label">Selected Instructor</span>
+<span class="instructor-name" id="instructorNameDisplay">{{ webinar.instructor.name }}</span>
+</div>
+</div>
+
+<div class="form-actions">
+<button type="button" class="btn-next" onclick="nextStep()">
+Continue <i class="fas fa-arrow-right"></i>
+</button>
+</div>
+
+</div>
+
+<!-- STEP 2 -->
+<div class="form-step" id="step2" style="display:none">
+
+<div class="section-title">
+<h2>Content Setup</h2>
+<p>Update the content and schedule of your webinar</p>
+</div>
+
+<div class="form-grid">
+<div class="input-group">
+<label>Duration (minutes)</label>
+<input name="duration" type="number" value="{{ webinar.duration_minutes }}" placeholder="e.g., 60">
+</div>
+
+<div class="input-group">
+<label>Date & Time</label>
+<input type="datetime-local" name="start_datetime" id="startTime" value="{{ webinar.start_datetime|date:'Y-m-d\TH:i' }}">
+</div>
+</div>
+
+<div id="timezonePreview"></div>
+
+<div class="editor-sections">
+<div class="editor-group full-width">
+  <label>Webinar Description</label>
+
+  <textarea name="description" class="ckeditor">
+    {{ webinar.description|default:"" }}
+  </textarea>
+
+  <small class="helper-text">
+    Add full webinar content (overview, benefits, coverage etc.)
+  </small>
+</div>
+</div>
+
+<div class="form-actions">
+<button type="button" class="btn-back" onclick="prevStep()">
+<i class="fas fa-arrow-left"></i> Back
+</button>
+<button type="button" class="btn-next" onclick="nextStep()">
+Continue <i class="fas fa-arrow-right"></i>
+</button>
+</div>
+
+</div>
+
+<!-- STEP 3 -->
+<div class="form-step" id="step3" style="display:none">
+
+<div class="section-title">
+<h2>Review & Update</h2>
+<p>Review all details before updating</p>
+</div>
+
+<div class="review-container">
+<div class="review-row">
+<div class="review-field">
+<span class="field-label">Title</span>
+<span class="field-value" id="reviewTitle">{{ webinar.title }}</span>
+</div>
+<div class="review-field">
+<span class="field-label">Instructor</span>
+<span class="field-value" id="reviewInstructor">{{ webinar.instructor.name }}</span>
+</div>
+</div>
+
+<div class="review-row">
+<div class="review-field">
+<span class="field-label">Category</span>
+<span class="field-value" id="reviewCategory">{{ webinar.category.name }}</span>
+</div>
+<div class="review-field">
+<span class="field-label">Duration</span>
+<span class="field-value"><span id="reviewDuration">{{ webinar.duration_minutes }}</span> minutes</span>
+</div>
+</div>
+
+<div class="review-row">
+<div class="review-field">
+<span class="field-label">Date & Time</span>
+<span class="field-value" id="reviewDate">{{ webinar.start_datetime|date:"M d, Y h:i A" }}</span>
+</div>
+</div>
+</div>
+
+<div class="zoom-integration">
+<h3>Zoom Meeting</h3>
+
+<button type="button" class="btn-zoom" onclick="searchZoomMeetings()">
+<i class="fas fa-search"></i> Search Zoom Meetings
+</button>
+
+<div id="zoomResults"></div>
+
+<input type="hidden" name="selected_zoom_meeting" id="selectedZoomMeeting">
+
+{% if webinar.zoom_meeting %}
+<div class="zoom-selected">
+Current: {{ webinar.zoom_meeting.topic }}
+</div>
+{% endif %}
+
+</div>
+
+<div class="form-actions">
+<button type="button" class="btn-back" onclick="prevStep()">
+<i class="fas fa-arrow-left"></i> Back
+</button>
+<button type="submit" class="btn-publish">
+<i class="fas fa-save"></i> Update Webinar
+</button>
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<script src="{% static 'home/js/webinar_edit.js' %}"></script>
+
+{% endblock %}

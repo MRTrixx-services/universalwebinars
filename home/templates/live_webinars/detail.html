@@ -1,0 +1,389 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% load tz %}
+
+{% block title %}{{ webinar.title }}{% endblock %}
+
+{% block extra_css %}
+<meta name="description" content="{{ webinar.title }} webinar for professionals in the USA. Learn practical industry skills, improve productivity, and advance your career with expert training.">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+<link rel="stylesheet" href="{% static 'home/css/live-detail.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="live-detail-page">
+
+  <!-- ═══════════════════════════════════════
+       HERO SECTION
+  ═══════════════════════════════════════ -->
+  <section class="live-hero">
+    <div class="hero-inner">
+
+      <!-- Status Badge -->
+      <div class="hero-badge-row">
+        <span class="badge-status">
+          <span class="badge-dot"></span>
+          {% if webinar.dynamic_status == "UPCOMING" %}UPCOMING WEBINAR
+          {% elif webinar.dynamic_status == "LIVE" %}LIVE NOW
+          {% elif webinar.recently_ended %}WEBINAR ENDED
+          {% endif %}
+        </span>
+      </div>
+
+      <!-- Two-column hero layout: title left, instructor right -->
+      <div class="hero-layout">
+        <div class="hero-left">
+          <h1 class="hero-title">{{ webinar.title }}</h1>
+        </div>
+        <div class="hero-right">
+          <img src="{% if webinar.instructor.photo %}{{ webinar.instructor.photo.url }}{% else %}{% static 'home/images/default-avatar.png' %}{% endif %}"
+               class="hero-instructor-img" alt="{{ webinar.instructor.name }}">
+          <div class="hero-instructor-details">
+            <p class="hero-instructor-label">Instructor</p>
+            <h4 class="hero-instructor-name">{{ webinar.instructor.name }}</h4>
+            {% if webinar.instructor.designation %}
+            <p class="hero-instructor-meta">{{ webinar.instructor.designation }}</p>
+            {% endif %}
+            {% if webinar.instructor.organization %}
+            <p class="hero-instructor-meta">{{ webinar.instructor.organization }}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Session meta grid — full width below title+instructor -->
+      <div class="session-meta-grid">
+
+  <div class="meta-item">
+    <div class="meta-icon">
+      <i class="bi bi-calendar-event"></i>
+    </div>
+
+    <div class="meta-content">
+      <span class="meta-label">DATE</span>
+      <span class="meta-value">
+        {{ webinar.est_time|date:"l, F d, Y" }}
+      </span>
+    </div>
+  </div>
+
+  <div class="meta-item">
+    <div class="meta-icon">
+      <i class="bi bi-clock-history"></i>
+    </div>
+
+    <div class="meta-content">
+      <span class="meta-label">TIME</span>
+      <span class="meta-value">
+        {% timezone "America/Los_Angeles" %}
+          {{ webinar.start_datetime|date:"h:i A T" }}
+        {% endtimezone %}
+        |
+        {% timezone "America/New_York" %}
+          {{ webinar.start_datetime|date:"h:i A T" }}
+        {% endtimezone %}
+      </span>
+    </div>
+  </div>
+
+  <div class="meta-item">
+    <div class="meta-icon">
+      <i class="bi bi-hourglass-split"></i>
+    </div>
+
+    <div class="meta-content">
+      <span class="meta-label">DURATION</span>
+      <span class="meta-value">
+        {{ webinar.duration_minutes }} Minutes
+      </span>
+    </div>
+  </div>
+
+  <div class="meta-item">
+    <div class="meta-icon">
+      <i class="bi bi-broadcast-pin"></i>
+    </div>
+
+    <div class="meta-content">
+      <span class="meta-label">WEBINAR ID</span>
+      <span class="meta-value">
+        {{ webinar.webinar_id }}
+      </span>
+    </div>
+  </div>
+
+</div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════
+       MAIN CONTENT
+  ═══════════════════════════════════════ -->
+  <div class="main-container">
+
+    <!-- ── PRICING CARD ── -->
+    <div class="pricing-card">
+
+      <p class="pricing-eyebrow">CHOOSE YOUR ACCESS</p>
+
+      <form method="post" class="pricing-form"
+        data-webinar-id="{{ webinar.id }}"
+        data-recently-ended="{{ webinar.recently_ended|yesno:'true,false' }}"
+        data-is-authenticated="{% if user.is_authenticated %}true{% else %}false{% endif %}"
+        data-login-url="/accounts/login/?next={{ request.path }}">
+        {% csrf_token %}
+
+        <!-- Tab switcher -->
+        <div class="pricing-tabs" role="tablist">
+          <button type="button" class="tab-btn active" data-tab="live">
+            <i class="bi bi-broadcast"></i> Live
+          </button>
+          <button type="button" class="tab-btn" data-tab="recorded">
+            <i class="bi bi-camera-video"></i> Recorded
+          </button>
+          <button type="button" class="tab-btn" data-tab="combo">
+            <i class="bi bi-layers"></i> Combo
+          </button>
+        </div>
+
+        <!-- LIVE OPTIONS -->
+        <div class="tab-panel active" data-panel="live">
+          <div class="options-row">
+
+            <label class="option-card {% if webinar.recently_ended %}option-disabled-card{% endif %}">
+              <input type="radio"
+                     id="defaultLiveSingle"
+                     name="pricing"
+                     class="pricing-option live-option {% if webinar.recently_ended %}option-disabled{% endif %}"
+                     value="live_single"
+                     data-variant="LIVE_SINGLE"
+                     data-price="{% if is_subscribed %}0{% else %}{{ webinar.pricing.live_single_price }}{% endif %}"
+                     checked>
+              <div class="option-info">
+                <span class="option-title">Single attendee</span>
+                <span class="option-sub">1 participant, live session</span>
+              </div>
+              <span class="option-price">
+                {% if is_subscribed %}$0{% else %}${{ webinar.pricing.live_single_price }}{% endif %}
+              </span>
+            </label>
+
+            <label class="option-card {% if webinar.recently_ended %}option-disabled-card{% endif %}">
+              <input type="radio"
+                     name="pricing"
+                     class="pricing-option live-option {% if webinar.recently_ended %}option-disabled{% endif %}"
+                     value="live_multi"
+                     data-variant="LIVE_MULTI"
+                     data-price="{% if is_subscribed %}0{% else %}{{ webinar.pricing.live_multi_price }}{% endif %}">
+              <div class="option-info">
+                <span class="option-title">Multi attendees</span>
+                <span class="option-sub">Unlimited participants, live session</span>
+              </div>
+              <span class="option-price">
+                {% if is_subscribed %}$0{% else %}${{ webinar.pricing.live_multi_price }}{% endif %}
+              </span>
+            </label>
+
+          </div>
+        </div>
+
+        <!-- RECORDED OPTIONS -->
+        <div class="tab-panel" data-panel="recorded">
+          <div class="options-row">
+
+            <label class="option-card">
+              <input type="radio"
+                     name="pricing"
+                     class="pricing-option recorded-option"
+                     value="recorded_single"
+                     data-variant="REC_SINGLE"
+                     data-price="{{ webinar.pricing.recorded_single_price }}">
+              <div class="option-info">
+                <span class="option-title">Single recorded</span>
+                <span class="option-sub">1 participant, on-demand access</span>
+              </div>
+              <span class="option-price">${{ webinar.pricing.recorded_single_price }}</span>
+            </label>
+
+            <label class="option-card">
+              <input type="radio"
+                     name="pricing"
+                     class="pricing-option recorded-option"
+                     value="recorded_multi"
+                     data-variant="REC_MULTI"
+                     data-price="{{ webinar.pricing.recorded_multi_price }}">
+              <div class="option-info">
+                <span class="option-title">Group recorded</span>
+                <span class="option-sub">Unlimited participants, on-demand</span>
+              </div>
+              <span class="option-price">${{ webinar.pricing.recorded_multi_price }}</span>
+            </label>
+
+          </div>
+        </div>
+
+        <!-- COMBO OPTIONS -->
+        <div class="tab-panel" data-panel="combo">
+          <div class="options-row">
+
+            <label class="option-card {% if webinar.recently_ended %}option-disabled-card{% endif %}">
+              <input type="radio"
+                     name="pricing"
+                     class="pricing-option combo-option {% if webinar.recently_ended %}option-disabled{% endif %}"
+                     value="combo_single"
+                     data-variant="COMBO_SINGLE"
+                     data-price="{{ webinar.pricing.combo_single_price }}">
+              <div class="option-info">
+                <span class="option-title">Live + recorded</span>
+                <span class="option-sub">1 participant, both formats</span>
+              </div>
+              <span class="option-price">${{ webinar.pricing.combo_single_price }}</span>
+            </label>
+
+            <label class="option-card {% if webinar.recently_ended %}option-disabled-card{% endif %}">
+              <input type="radio"
+                     name="pricing"
+                     class="pricing-option combo-option {% if webinar.recently_ended %}option-disabled{% endif %}"
+                     value="combo_multi"
+                     data-variant="COMBO_MULTI"
+                     data-price="{{ webinar.pricing.combo_multi_price }}">
+              <div class="option-info">
+                <span class="option-title">Group + recorded</span>
+                <span class="option-sub">Unlimited participants, both formats</span>
+              </div>
+              <span class="option-price">${{ webinar.pricing.combo_multi_price }}</span>
+            </label>
+
+          </div>
+        </div>
+
+        <!-- Total + CTA row -->
+        <div class="checkout-row">
+          <div class="total-block">
+            <span class="total-label">TOTAL</span>
+            <div class="total-value">
+              $<span id="totalAmount">0</span>
+              <small>USD</small>
+            </div>
+          </div>
+
+          <div class="cta-buttons">
+            {% if is_subscribed and webinar.dynamic_status == "LIVE" %}
+            <a href="{% url 'live_webinars:join_live' webinar.webinar_id %}"
+               class="btn-cta btn-primary">
+              Join Live Webinar
+            </a>
+            {% elif is_subscribed and webinar.dynamic_status == "UPCOMING" %}
+            <button class="btn-cta btn-primary" disabled>Starts Soon</button>
+            {% endif %}
+
+            <button type="button" class="btn-cta btn-outline">Add to cart</button>
+            <button type="button" class="btn-cta btn-primary buy-now">
+              Buy now &rarr;
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <!-- /pricing-card -->
+
+
+    <!-- ── WEBINAR DETAILS ── -->
+    <div class="details-container">
+      <div class="section-header">
+        <h4 class="section-title">
+          <span class="section-badge"><i class="bi bi-book"></i></span>
+          Webinar details
+        </h4>
+        <p class="section-subtitle">Everything you'll learn in this session</p>
+      </div>
+
+      <div class="description-box">
+        <h5>Webinar Description</h5>
+        <div class="description-content">
+          {{ webinar.description|safe }}
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ── MEET YOUR SPEAKER ── -->
+    <div class="speaker-card">
+      <div class="speaker-header">
+        <h5>
+          <i class="bi bi-person-circle"></i>
+          Meet your speaker
+        </h5>
+      </div>
+
+      <div class="speaker-body speaker-body--centered">
+        <div class="speaker-image-wrapper">
+          <div class="speaker-image-frame">
+            <img src="{% if webinar.instructor.photo %}{{ webinar.instructor.photo.url }}{% endif %}"
+                 class="speaker-photo"
+                 alt="{{ webinar.instructor.name }}">
+            <span class="verified-badge"><i class="bi bi-check-lg"></i></span>
+          </div>
+        </div>
+
+        <div class="speaker-info speaker-info--centered">
+          <h4>{{ webinar.instructor.name }}</h4>
+          <div class="speaker-meta">
+            {% if webinar.instructor.designation %}
+            <span><i class="bi bi-briefcase"></i> {{ webinar.instructor.designation }}</span>
+            {% endif %}
+            {% if webinar.instructor.organization %}
+            <span><i class="bi bi-building"></i> {{ webinar.instructor.organization }}</span>
+            {% endif %}
+          </div>
+          <div class="speaker-bio">
+            {{ webinar.instructor.bio|linebreaks }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /main-container -->
+
+</div>
+<!-- /live-detail-page -->
+
+<div id="webinarEndedToast" class="webinar-ended-toast">
+  This live session has ended. You can still purchase the recording.
+</div>
+
+<script src="{% static 'home/js/live_detail.js' %}"></script>
+
+<!-- Tab switcher script (no backend changes) -->
+<script>
+(function () {
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      document.querySelector(`.tab-panel[data-panel="${target}"]`).classList.add('active');
+
+      // Auto-select first radio in new panel and update total
+      const firstRadio = document.querySelector(`.tab-panel[data-panel="${target}"] .pricing-option:not(.option-disabled)`);
+      if (firstRadio) {
+        firstRadio.checked = true;
+        firstRadio.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+  });
+})();
+</script>
+
+{% endblock %}

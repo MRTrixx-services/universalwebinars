@@ -1,0 +1,416 @@
+{% extends "adminpanel/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'home/css/webinar_create.css' %}">
+
+<div class="admin-container">
+
+<!-- TOP BAR -->
+<div class="top-bar">
+<div class="breadcrumb">
+<a href="{% url 'adminpanel:dashboard' %}"><i class="fas fa-home"></i> Dashboard</a>
+<span>/</span>
+<span class="current">Create Webinar</span>
+</div>
+<div class="top-actions">
+<a href="#" class="btn-outline">
+<i class="fas fa-list"></i> All Webinars
+</a>
+</div>
+</div>
+
+<!-- STATS ROW -->
+<div class="stats-row">
+<div class="stat-box">
+<div class="stat-icon blue">
+<i class="fas fa-video"></i>
+</div>
+<div class="stat-info">
+<div class="stat-value">{{ total_webinars|default:"0" }}</div>
+<div class="stat-label">Total Webinars</div>
+</div>
+</div>
+
+<div class="stat-box">
+<div class="stat-icon green">
+<i class="fas fa-folder"></i>
+</div>
+<div class="stat-info">
+<div class="stat-value">{{ categories|length }}</div>
+<div class="stat-label">Categories</div>
+</div>
+</div>
+
+<div class="stat-box">
+<div class="stat-icon purple">
+<i class="fas fa-user-tie"></i>
+</div>
+<div class="stat-info">
+<div class="stat-value">{{ instructors|length }}</div>
+<div class="stat-label">Instructors</div>
+</div>
+</div>
+
+<div class="stat-box">
+<div class="stat-icon orange">
+<i class="fas fa-clock"></i>
+</div>
+<div class="stat-info">
+<div class="stat-value" id="currentStep">1/4</div>
+<div class="stat-label">Progress</div>
+</div>
+</div>
+</div>
+
+<!-- STEPPER -->
+<div class="progress-stepper">
+<div class="step-item active" data-step="1">
+<div class="step-number">1</div>
+<div class="step-info">
+<div class="step-title">Basic Info</div>
+<div class="step-desc">Title, Type, Category</div>
+</div>
+</div>
+
+<div class="step-connector"></div>
+
+<div class="step-item" data-step="2">
+<div class="step-number">2</div>
+<div class="step-info">
+<div class="step-title">Content</div>
+<div class="step-desc">Schedule & Details</div>
+</div>
+</div>
+
+<div class="step-connector"></div>
+
+<div class="step-item" data-step="3">
+<div class="step-number">3</div>
+<div class="step-info">
+<div class="step-title">Pricing</div>
+<div class="step-desc">Set Prices</div>
+</div>
+</div>
+
+<div class="step-connector"></div>
+
+<div class="step-item" data-step="4">
+<div class="step-number">4</div>
+<div class="step-info">
+<div class="step-title">Review</div>
+<div class="step-desc">Publish Webinar</div>
+</div>
+</div>
+</div>
+
+<!-- FORM CONTAINER -->
+<div class="form-container">
+
+<form method="post">
+{% csrf_token %}
+
+<!-- STEP 1 -->
+<div class="form-step active" id="step1">
+
+<div class="section-title">
+<h2>Basic Information</h2>
+<p>Enter the fundamental details of your webinar</p>
+</div>
+
+<div class="form-grid">
+<div class="input-group">
+<label>Webinar Type</label>
+<select name="type" id="webinarType">
+<option value="live">🔴 Live Webinar</option>
+<option value="recorded">📹 Recorded Webinar</option>
+</select>
+</div>
+
+<div class="input-group full-width">
+<label>Webinar Title</label>
+<input name="title" placeholder="Enter an engaging title...">
+</div>
+
+<div class="input-group">
+<label>Category</label>
+<select name="category">
+<option value="" selected disabled>Select Category</option>
+{% for c in categories %}
+<option value="{{ c.id }}">{{ c.name }}</option>
+{% endfor %}
+</select>
+</div>
+
+<div class="input-group">
+<label>Instructor</label>
+<select name="instructor" id="instructorSelect">
+<option value="" selected disabled>Select Instructor</option>
+{% for i in instructors %}
+<option value="{{ i.id }}" data-photo="{% if i.photo %}{{ i.photo.url }}{% endif %}">{{ i.name }}</option>
+{% endfor %}
+</select>
+</div>
+</div>
+
+<div class="instructor-card" id="instructorCard" style="display:none;">
+<img id="instructorPhoto" src="">
+<div class="instructor-details">
+<span class="instructor-label">Selected Instructor</span>
+<span class="instructor-name" id="instructorNameDisplay"></span>
+</div>
+</div>
+
+<div class="form-actions">
+<button type="button" class="btn-next" onclick="nextStep()">
+Continue <i class="fas fa-arrow-right"></i>
+</button>
+</div>
+
+</div>
+
+<!-- STEP 2 -->
+<div class="form-step" id="step2" style="display:none">
+
+<div class="section-title">
+<h2>Content Setup</h2>
+<p>Configure the content and schedule of your webinar</p>
+</div>
+
+<div class="form-grid">
+<div class="input-group">
+<label>Duration (minutes)</label>
+<input name="duration" type="number" placeholder="e.g., 60">
+</div>
+
+<div class="input-group" id="liveFields">
+<label>Date & Time</label>
+<input type="datetime-local" name="start_datetime" id="startTime">
+</div>
+
+<div id="recordedFields" style="display:none">
+
+<label>Zoom Recording</label>
+
+<button type="button" class="btn-zoom" onclick="searchZoomRecordings()">
+<i class="fas fa-search"></i> Search Zoom Recordings
+</button>
+
+<div id="zoomRecordingResults"></div>
+
+<input type="hidden" name="selected_zoom_recording" id="selectedZoomRecording">
+
+</div>
+</div>
+
+<div id="timezonePreview"></div>
+
+<div class="editor-sections">
+
+  <div class="editor-group full-width">
+    <label>Webinar Description</label>
+    <textarea name="description" class="ckeditor"></textarea>
+    <small class="helper-text">
+      Add full webinar content (overview, benefits, coverage etc.) in one place
+    </small>
+  </div>
+
+</div>
+
+<div class="form-actions">
+<button type="button" class="btn-back" onclick="prevStep()">
+<i class="fas fa-arrow-left"></i> Back
+</button>
+<button type="button" class="btn-next" onclick="nextStep()">
+Continue <i class="fas fa-arrow-right"></i>
+</button>
+</div>
+
+</div>
+
+<!-- STEP 3 -->
+<div class="form-step" id="step3" style="display:none">
+
+<div class="section-title">
+<h2>Pricing Configuration</h2>
+<p>Set custom pricing or use global defaults</p>
+</div>
+
+<div class="pricing-layout">
+
+<div class="pricing-section">
+<h3>Override Pricing</h3>
+<p class="pricing-note">Leave blank to use global pricing</p>
+
+<div id="livePricingFields" class="price-grid">
+<div class="price-field">
+<label>Live Single</label>
+<input name="live_single_price" placeholder="$">
+</div>
+<div class="price-field">
+<label>Live Multi</label>
+<input name="live_multi_price" placeholder="$">
+</div>
+<div class="price-field">
+<label>Recorded Single</label>
+<input name="recorded_single_price" placeholder="$">
+</div>
+<div class="price-field">
+<label>Recorded Multi</label>
+<input name="recorded_multi_price" placeholder="$">
+</div>
+<div class="price-field">
+<label>Combo Single</label>
+<input name="combo_single_price" placeholder="$">
+</div>
+<div class="price-field">
+<label>Combo Multi</label>
+<input name="combo_multi_price" placeholder="$">
+</div>
+</div>
+
+<div id="recordedPricingFields" class="price-grid" style="display:none">
+<div class="price-field">
+<label>Single User</label>
+<input name="recorded_single_price_only" placeholder="$">
+</div>
+<div class="price-field">
+<label>Multi User</label>
+<input name="recorded_multi_price_only" placeholder="$">
+</div>
+</div>
+</div>
+
+<div class="pricing-section global">
+<h3>Global Pricing</h3>
+<p class="pricing-note">Current default pricing</p>
+
+<div id="liveGlobalPricing" class="global-price-list">
+<div class="global-price-item">
+<span>Live Single</span>
+<strong>${{ pricing.live_single_price }}</strong>
+</div>
+<div class="global-price-item">
+<span>Live Multi</span>
+<strong>${{ pricing.live_multi_price }}</strong>
+</div>
+<div class="global-price-item">
+<span>Recorded Single</span>
+<strong>${{ pricing.recorded_single_price }}</strong>
+</div>
+<div class="global-price-item">
+<span>Recorded Multi</span>
+<strong>${{ pricing.recorded_multi_price }}</strong>
+</div>
+<div class="global-price-item">
+<span>Combo Single</span>
+<strong>${{ pricing.combo_single_price }}</strong>
+</div>
+<div class="global-price-item">
+<span>Combo Multi</span>
+<strong>${{ pricing.combo_multi_price }}</strong>
+</div>
+</div>
+
+<div id="recordedGlobalPricing" class="global-price-list" style="display:none">
+<div class="global-price-item">
+<span>Recorded Single</span>
+<strong>${{ pricing.recorded_single_price }}</strong>
+</div>
+<div class="global-price-item">
+<span>Recorded Multi</span>
+<strong>${{ pricing.recorded_multi_price }}</strong>
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="form-actions">
+<button type="button" class="btn-back" onclick="prevStep()">
+<i class="fas fa-arrow-left"></i> Back
+</button>
+<button type="button" class="btn-next" onclick="nextStep()">
+Continue <i class="fas fa-arrow-right"></i>
+</button>
+</div>
+
+</div>
+
+<!-- STEP 4 -->
+<div class="form-step" id="step4" style="display:none">
+
+<div class="section-title">
+<h2>Review & Publish</h2>
+<p>Review all details before publishing</p>
+</div>
+
+<div class="review-container">
+<div class="review-row">
+<div class="review-field">
+<span class="field-label">Title</span>
+<span class="field-value" id="reviewTitle">-</span>
+</div>
+<div class="review-field">
+<span class="field-label">Instructor</span>
+<span class="field-value" id="reviewInstructor">-</span>
+</div>
+</div>
+
+<div class="review-row">
+<div class="review-field">
+<span class="field-label">Category</span>
+<span class="field-value" id="reviewCategory">-</span>
+</div>
+<div class="review-field">
+<span class="field-label">Type</span>
+<span class="field-value" id="reviewType">-</span>
+</div>
+</div>
+
+<div class="review-row">
+<div class="review-field">
+<span class="field-label">Duration</span>
+<span class="field-value"><span id="reviewDuration">-</span> minutes</span>
+</div>
+<div class="review-field" id="reviewDateRow">
+<span class="field-label">Date & Time</span>
+<span class="field-value" id="reviewDate">-</span>
+</div>
+<div class="review-field" id="reviewRecordingRow" style="display:none">
+<span class="field-label">Recording Link</span>
+<span class="field-value" id="reviewRecording">-</span>
+</div>
+</div>
+</div>
+
+<div id="liveZoomSection" class="zoom-integration" style="display:none;">
+<h3>Zoom Meeting Integration</h3>
+<button type="button" class="btn-zoom" onclick="searchZoomMeetings()">
+<i class="fas fa-search"></i> Search Zoom Meetings
+</button>
+<div id="zoomResults"></div>
+<input type="hidden" name="selected_zoom_meeting" id="selectedZoomMeeting">
+</div>
+
+<div class="form-actions">
+<button type="button" class="btn-back" onclick="prevStep()">
+<i class="fas fa-arrow-left"></i> Back
+</button>
+<button type="submit" class="btn-publish">
+<i class="fas fa-rocket"></i> Publish Webinar
+</button>
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<script src="{% static 'home/js/webinar_create.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,598 @@
+/* ============================================
+   INSTRUCTOR LIST - MODERN DESIGN
+   ============================================ */
+
+/* Main Container */
+.instructor-list-wrapper {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    margin: 20px auto;
+    max-width: 1400px;
+}
+
+/* ============================================
+   HEADER SECTION
+   ============================================ */
+
+.instructor-header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.instructor-header-left h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a202c;
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.instructor-header-left h1 i {
+    color: #4f46e5;
+}
+
+.instructor-header-left p {
+    color: #718096;
+    font-size: 14px;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* Add Instructor Button */
+.btn-add-instructor {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.btn-add-instructor:hover {
+    background: linear-gradient(135deg, #3730a3 0%, #2e1065 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+}
+
+.btn-add-instructor i {
+    font-size: 16px;
+}
+
+/* Instructor Badge */
+.instructor-badge {
+    display: inline-block;
+    background: #eef2ff;
+    color: #4f46e5;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ============================================
+   SEARCH & FILTER SECTION
+   ============================================ */
+
+.search-filter-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.search-form {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    gap: 10px;
+}
+
+.search-wrapper {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-wrapper i {
+    position: absolute;
+    left: 14px;
+    color: #a0aec0;
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 14px 10px 40px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #2d3748;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.search-input:hover {
+    border-color: #cbd5e0;
+    background-color: #f9fafb;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #4f46e5;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.search-input::placeholder {
+    color: #a0aec0;
+}
+
+.search-submit {
+    padding: 10px 20px;
+    background: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.search-submit:hover {
+    background: #3730a3;
+    transform: translateY(-1px);
+}
+
+.search-submit:active {
+    transform: translateY(0);
+}
+
+.result-info {
+    white-space: nowrap;
+}
+
+.result-badge {
+    display: inline-block;
+    background: #f0fdf4;
+    color: #15803d;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* ============================================
+   TABLE SECTION
+   ============================================ */
+
+.table-wrapper {
+    margin-bottom: 20px;
+}
+
+.instructor-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+/* Table Header */
+.instructor-table thead {
+    background: linear-gradient(to right, #f9fafb 0%, #f3f4f6 100%);
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.instructor-table th {
+    text-align: left;
+    padding: 16px 14px;
+    font-weight: 700;
+    color: #2d3748;
+    letter-spacing: 0.5px;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.col-photo {
+    width: 70px;
+}
+
+.col-name {
+    width: 25%;
+}
+
+.col-designation {
+    width: 25%;
+}
+
+.col-organization {
+    width: 25%;
+}
+
+.col-actions {
+    width: 100px;
+    text-align: center;
+}
+
+/* Table Body */
+.instructor-table tbody tr {
+    border-bottom: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.instructor-table tbody tr:hover {
+    background-color: #f9fafb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.instructor-table td {
+    padding: 16px 14px;
+    vertical-align: middle;
+}
+
+/* Instructor Photo */
+.instructor-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.instructor-row:hover .instructor-photo {
+    border-color: #4f46e5;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.2);
+}
+
+.instructor-placeholder {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4f46e5;
+    font-size: 20px;
+}
+
+/* Instructor Name */
+.instructor-name {
+    color: #1a202c;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* Designation */
+.col-designation {
+    color: #4b5563;
+    font-weight: 500;
+}
+
+/* Organization */
+.col-organization {
+    color: #718096;
+    font-weight: 400;
+}
+
+/* ============================================
+   ACTION BUTTONS
+   ============================================ */
+
+.action-buttons-group {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+/* View Button */
+.btn-view {
+    background: #eef2ff;
+    color: #4f46e5;
+}
+
+.btn-view:hover {
+    background: #4f46e5;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.btn-view:active {
+    transform: translateY(0);
+}
+
+/* Delete Button */
+.btn-delete {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+.btn-delete:hover {
+    background: #ef4444;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.btn-delete:active {
+    transform: translateY(0);
+}
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+
+.empty-state-section {
+    text-align: center;
+    padding: 60px 40px;
+    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+    border-radius: 12px;
+    border: 2px dashed #e2e8f0;
+}
+
+.empty-state-icon {
+    font-size: 64px;
+    color: #cbd5e0;
+    margin-bottom: 16px;
+}
+
+.empty-state-section h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a202c;
+    margin: 0 0 8px 0;
+}
+
+.empty-state-section p {
+    font-size: 14px;
+    color: #718096;
+    margin: 0 0 24px 0;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 1200px) {
+    .instructor-list-wrapper {
+        padding: 32px 24px;
+    }
+
+    .col-name {
+        width: 20%;
+    }
+
+    .col-designation {
+        width: 20%;
+    }
+
+    .col-organization {
+        width: 25%;
+    }
+}
+
+@media (max-width: 992px) {
+    .instructor-header-section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-add-instructor {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .search-filter-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-form {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .result-info {
+        width: 100%;
+        text-align: right;
+    }
+
+    .instructor-table {
+        font-size: 13px;
+    }
+
+    .instructor-table th,
+    .instructor-table td {
+        padding: 12px 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .instructor-list-wrapper {
+        padding: 24px 16px;
+        border-radius: 12px;
+    }
+
+    .instructor-header-left h1 {
+        font-size: 22px;
+    }
+
+    .btn-add-instructor {
+        width: 100%;
+    }
+
+    .search-input {
+        font-size: 16px;
+    }
+
+    .instructor-table {
+        font-size: 12px;
+    }
+
+    .col-photo {
+        width: 60px;
+    }
+
+    .col-name {
+        width: 25%;
+    }
+
+    .col-designation {
+        width: 20%;
+    }
+
+    .col-organization {
+        display: none;
+    }
+
+    .col-actions {
+        width: 80px;
+    }
+
+    .instructor-table th,
+    .instructor-table td {
+        padding: 10px 8px;
+    }
+
+    .instructor-photo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .instructor-placeholder {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+
+    .empty-state-section {
+        padding: 40px 20px;
+    }
+
+    .empty-state-icon {
+        font-size: 48px;
+        margin-bottom: 12px;
+    }
+
+    .empty-state-section h3 {
+        font-size: 18px;
+    }
+
+    .empty-state-section p {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .instructor-list-wrapper {
+        padding: 16px 12px;
+    }
+
+    .instructor-header-left h1 {
+        font-size: 20px;
+    }
+
+    .search-submit {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+
+    .col-name {
+        width: 40%;
+    }
+
+    .col-designation {
+        display: none;
+    }
+
+    .col-actions {
+        width: 70px;
+    }
+
+    .btn-action {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    .result-badge {
+        font-size: 12px;
+        padding: 4px 10px;
+    }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+.instructor-row {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+    .instructor-list-wrapper {
+        box-shadow: none;
+        padding: 0;
+    }
+
+    .instructor-header-section,
+    .search-filter-section,
+    .btn-add-instructor,
+    .col-actions,
+    .action-buttons-group {
+        display: none;
+    }
+}

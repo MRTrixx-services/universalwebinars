@@ -1,0 +1,134 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block title %}Refund & Cancellation Policy — UniversalWebinars{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'home/css/legal.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="legal-wrapper">
+
+  <div class="legal-hero">
+    <div class="legal-hero-inner">
+      <div class="legal-hero-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+        Legal Document
+      </div>
+      <div class="legal-title">Refund &amp; Cancellation Policy</div>
+      <div class="legal-updated">Last updated: January, 2026</div>
+      <nav class="legal-nav">
+        <a href="{% url 'home:terms' %}">Terms</a>
+        <a href="{% url 'home:privacy' %}">Privacy Policy</a>
+        <a href="{% url 'home:refund' %}" class="active">Refund Policy</a>
+        <a href="{% url 'home:shipping' %}">Shipping &amp; Return</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="legal-content">
+
+    <p>Transparent, fair, and customer-focused refund procedures for all UniversalWebinars services.</p>
+
+    <h2>1. Training &amp; Course Subscriptions</h2>
+    <p>Our training programs are designed to provide maximum value. We offer a straightforward refund policy for online courses and subscriptions.</p>
+
+    <h3>Eligible for Refund</h3>
+    <ul>
+      <li>Within 5 working days of purchase</li>
+      <li>Course not yet started or completed</li>
+      <li>Technical issues preventing access</li>
+    </ul>
+
+    <h3>Non-Refundable</h3>
+    <ul>
+      <li>After the 5 working day period</li>
+      <li>Course partially or fully completed</li>
+      <li>Downloadable resources already accessed</li>
+    </ul>
+
+    <h3>Subscription Cancellation</h3>
+    <p>Subscriptions may be cancelled anytime after the initial 5-day period. Cancellation takes effect at the end of the current billing cycle. No refunds for prior payments.</p>
+
+    <h2>2. Webinars &amp; Events</h2>
+
+    <h3>48+ Hours Before Event</h3>
+    <ul>
+      <li>Full refund of registration fee</li>
+      <li>Cancel via your dashboard or contact support</li>
+    </ul>
+
+    <h3>Within 48 Hours</h3>
+    <ul>
+      <li>No refunds within 48 hours of the event</li>
+      <li>Transfer to a colleague available with 24h notice when possible</li>
+    </ul>
+
+    <p>If UniversalWebinars cancels or reschedules an event, you will receive a full refund or credit within 3 business days.</p>
+
+    <h2>3. Consulting Services</h2>
+    <ul>
+      <li>No session conducted — full refund issued</li>
+      <li>48+ hours notice — no charge applied</li>
+      <li>Within 48 hours — 50% cancellation fee applies</li>
+    </ul>
+    <p>Cancellation requests must be submitted in writing. Emergency situations are reviewed case-by-case with documentation.</p>
+
+    <h2>4. General Terms</h2>
+    <ul>
+      <li>Refund processing time: 5–10 business days</li>
+      <li>Refunds issued to original payment method only</li>
+      <li>Downloadable resources non-refundable once accessed</li>
+      <li>Bulk purchases follow contract-specific terms</li>
+      <li>International transactions may incur conversion fees</li>
+    </ul>
+
+    <h2>5. How to Request a Refund</h2>
+    <ol>
+      <li>Email support@universalwebinars.com with subject "Refund Request"</li>
+      <li>Provide your order number, reason, and any supporting documentation</li>
+      <li>Our team will review and process within 5 business days</li>
+    </ol>
+
+    <h3>Required Information</h3>
+    <ul>
+      <li>Full name and account email address</li>
+      <li>Order number or transaction ID</li>
+      <li>Date of purchase</li>
+      <li>Reason for the refund request</li>
+      <li>Screenshots or supporting documents if applicable</li>
+    </ul>
+
+    <h2>6. Exceptions</h2>
+    <ul>
+      <li>Fraudulent activity or chargebacks</li>
+      <li>Policy violations or platform misuse</li>
+      <li>Service used after refund request was submitted</li>
+    </ul>
+    <p>Exceptions may be reviewed individually with appropriate documentation.</p>
+
+    <h2>7. Policy Amendments</h2>
+    <ul>
+      <li>Email notification 30 days before changes take effect</li>
+      <li>Website banner announcements for major updates</li>
+      <li>Updated date displayed on this page</li>
+    </ul>
+    <p>Continued use after updates constitutes acceptance of the revised policy.</p>
+
+    <h2>8. Contact Information</h2>
+    <ul>
+      <li>Email: support@universalwebinars.com</li>
+      <li>Address: 8506 Madison Ave, Suite A, Fair Oaks, CA 95628, United States</li>
+      <li>Business hours: Mon–Fri, 9AM–6PM EST</li>
+      <li>Response within 24 business hours</li>
+    </ul>
+
+    <p>Refund &amp; Cancellation Policy last updated: January, 2026 &bull; UniversalWebinars</p>
+
+  </div>
+
+</div>
+
+{% endblock %}

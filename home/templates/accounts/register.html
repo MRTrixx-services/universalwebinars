@@ -1,0 +1,175 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block title %}Register - ComplianceTrainned{% endblock %}
+
+{% block extra_css %}
+<!-- Select2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Intl Tel Input CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css"/>
+
+<!-- Register CSS -->
+<link rel="stylesheet" href="{% static 'home/css/register.css' %}">
+
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+<style>
+  .select2-container {
+    width: 100% !important;
+  }
+
+  .iti {
+    width: 100%;
+  }
+
+  .iti input {
+    height: 45px;
+    border-radius: 8px;
+  }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="register-page">
+  <div class="register-wrapper">
+
+    <!-- LEFT SECTION - REGISTER FORM -->
+    <div class="register-form-section">
+      <div class="register-form-header">
+        <h2>Create Account</h2>
+        <div class="social-icons">
+          
+        </div>
+      </div>
+
+      <!-- Error Messages -->
+      {% if form.errors %}
+        <div class="register-error-alert">
+          <div class="error-header">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>Please fix the errors below</span>
+          </div>
+          <ul class="error-list">
+            {% for field in form %}
+              {% for error in field.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      <!-- Registration Form -->
+      <form method="post" id="registerForm" class="register-form">
+        {% csrf_token %}
+
+        <!-- Name Row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">{{ form.first_name.label }}</label>
+            {{ form.first_name }}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ form.last_name.label }}</label>
+            {{ form.last_name }}
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label">{{ form.email.label }}</label>
+          {{ form.email }}
+        </div>
+
+        <!-- Company -->
+        <div class="form-group">
+          <label class="form-label">{{ form.company.label }}</label>
+          {{ form.company }}
+        </div>
+
+        <!-- Country & Phone Row -->
+      
+          <div class="form-group">
+            <label class="form-label">{{ form.country.label }}</label>
+            {{ form.country }}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ form.phone_number.label }}</label>
+            {{ form.phone_number }}
+          </div>
+       
+
+        <!-- Password Row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">{{ form.password.label }}</label>
+            <div style="position: relative;">
+              {{ form.password }}
+              <i class="fas fa-eye-slash" id="togglePassword" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #666;"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">{{ form.confirm_password.label }}</label>
+            <div style="position: relative;">
+              {{ form.confirm_password }}
+              <i class="fas fa-eye-slash" id="toggleConfirmPassword" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #666;"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terms -->
+        <div class="terms-section">
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+            <input type="checkbox" id="termsCheckbox" style="width:16px;height:16px;cursor:pointer;">
+            <p style="margin:0;">Agree to our <a href="{% url 'home:terms' %}">Terms of Service</a> and <a href="{% url 'home:privacy' %}">Privacy Policy</a></p>
+          </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-register" id="registerBtn" disabled style="opacity:0.5;cursor:not-allowed;">Create Account</button>
+      </form>
+    </div>
+
+    <!-- RIGHT SECTION - TOGGLE PANEL -->
+    <div class="toggle-section">
+      <div class="toggle-content">
+        <h2>Welcome Back!</h2>
+        <p>Already have an account?</p>
+        <a href="{% url 'accounts:login' %}" class="btn-signin">Sign In</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<!-- Intl Tel Input -->
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+<script src="{% static 'home/js/register.js' %}"></script>
+
+<script>
+
+</script>
+
+{% endblock %}

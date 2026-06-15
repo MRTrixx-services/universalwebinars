@@ -1,0 +1,215 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% load tz %}
+
+{% block title %}Search Results - {{ query }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'home/css/search-results.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="search-results-page">
+  
+  <!-- HEADER -->
+  <div class="search-header">
+    <div class="search-header-content">
+      <h1 class="search-title">
+        <i class="bi bi-search"></i>
+        Search Results
+      </h1>
+      
+      {% if query %}
+        <p class="search-query">
+          Showing results for: <strong>"{{ query }}"</strong>
+        </p>
+        <p class="search-count">
+          <span class="count-badge">{{ total_results }}</span> 
+          result{{ total_results|pluralize }} found
+        </p>
+        {% if instructor_name %}
+        <p class="instructor-filter-info">
+          <i class="bi bi-person-circle"></i>
+          Webinars by <strong>{{ instructor_name }}</strong>
+        </p>
+        {% endif %}
+      {% else %}
+        <p class="search-query">Enter a search term to find webinars</p>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if query %}
+    <!-- FILTER BUTTONS -->
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all">
+        <i class="bi bi-grid-3x3-gap"></i>
+        All Results
+        <span class="filter-count">{{ total_results }}</span>
+      </button>
+      
+      <button class="filter-btn" data-filter="live">
+        <i class="bi bi-broadcast"></i>
+        Live Webinars
+        <span class="filter-count">{{ live_results|length }}</span>
+      </button>
+      
+      <button class="filter-btn" data-filter="recorded">
+        <i class="bi bi-camera-video"></i>
+        Recorded Webinars
+        <span class="filter-count">{{ recorded_results|length }}</span>
+      </button>
+    </div>
+
+    <!-- LIVE WEBINARS SECTION -->
+    {% if live_results %}
+    <div class="results-section" data-type="live">
+      <div class="section-header">
+        <h2>
+          <i class="bi bi-broadcast"></i>
+          Live Webinars
+        </h2>
+        <span class="section-count">{{ live_results|length }} result{{ live_results|length|pluralize }}</span>
+      </div>
+
+      <div class="webinar-grid">
+        {% for webinar in live_results %}
+        <div class="webinar-card live-card">
+          <div class="card-badge live-badge">
+            <i class="bi bi-broadcast"></i>
+            LIVE
+          </div>
+          
+          <div class="card-date">
+            <div class="date-day">{{ webinar.start_datetime|date:"d" }}</div>
+            <div class="date-month">{{ webinar.start_datetime|date:"M" }}</div>
+          </div>
+
+          <h3 class="card-title">{{ webinar.title }}</h3>
+
+          <div class="card-instructor">
+            <img src="{{ webinar.instructor.photo.url }}" alt="{{ webinar.instructor.name }}">
+            <div>
+              <p class="instructor-name">{{ webinar.instructor.name }}</p>
+              <p class="instructor-role">{{ webinar.instructor.designation }}</p>
+            </div>
+          </div>
+
+          <div class="card-meta">
+            <span class="meta-item">
+              <i class="bi bi-clock"></i>
+              {% timezone "America/Los_Angeles" %}
+    {{ webinar.start_datetime|date:"h:i A T" }}
+{% endtimezone %}
+
+|
+
+{% timezone "America/New_York" %}
+    {{ webinar.start_datetime|date:"h:i A T" }}
+{% endtimezone %}
+
+            </span>
+            <span class="meta-item">
+              <i class="bi bi-hourglass"></i>
+              {{ webinar.duration_minutes }} min
+            </span>
+          </div>
+
+          <div class="card-footer">
+            <span class="card-price">
+              {% if webinar.pricing.live_single_price == 0 %}
+                <span class="price-free">FREE</span>
+              {% else %}
+                ${{ webinar.pricing.live_single_price }}
+              {% endif %}
+            </span>
+            <a href="{% url 'live_webinars:detail' webinar.webinar_id webinar.slug %}" class="card-btn">
+              View Details
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- RECORDED WEBINARS SECTION -->
+    {% if recorded_results %}
+    <div class="results-section" data-type="recorded">
+      <div class="section-header">
+        <h2>
+          <i class="bi bi-camera-video"></i>
+          Recorded Webinars
+        </h2>
+        <span class="section-count">{{ recorded_results|length }} result{{ recorded_results|length|pluralize }}</span>
+      </div>
+
+      <div class="webinar-grid">
+        {% for webinar in recorded_results %}
+        <div class="webinar-card recorded-card">
+          <div class="card-badge recorded-badge">
+            <i class="bi bi-camera-video"></i>
+            ON DEMAND
+          </div>
+
+          <h3 class="card-title">{{ webinar.title }}</h3>
+
+          <div class="card-instructor">
+            <img src="{{ webinar.instructor.photo.url }}" alt="{{ webinar.instructor.name }}">
+            <div>
+              <p class="instructor-name">{{ webinar.instructor.name }}</p>
+              <p class="instructor-role">{{ webinar.instructor.designation }}</p>
+            </div>
+          </div>
+
+          <div class="card-meta">
+            <span class="meta-item">
+              <i class="bi bi-hourglass"></i>
+              {{ webinar.duration_minutes }} min
+            </span>
+            <span class="meta-item">
+              <i class="bi bi-check-circle"></i>
+              24/7 Available
+            </span>
+          </div>
+
+          <div class="card-footer">
+            <span class="card-price">
+              {% if webinar.pricing.single_price == 0 %}
+                <span class="price-free">FREE</span>
+              {% else %}
+                ${{ webinar.pricing.single_price }}
+              {% endif %}
+            </span>
+            <a href="{% url 'recorded_webinars:detail' webinar.webinar_id %}" class="card-btn">
+              View Details
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- NO RESULTS -->
+    {% if not live_results and not recorded_results %}
+    <div class="no-results">
+      <i class="bi bi-search"></i>
+      <h3>No results found</h3>
+      <p>Try searching with different keywords</p>
+    </div>
+    {% endif %}
+
+  {% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'home/js/search-results.js' %}"></script>
+{% endblock %}

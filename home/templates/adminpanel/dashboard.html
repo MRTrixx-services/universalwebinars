@@ -1,0 +1,345 @@
+{% extends "adminpanel/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'home/css/dashboard.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="dashboard-container">
+
+    <!-- Header Section -->
+    <div class="dashboard-header">
+        <div class="header-content">
+            <h1><i class="fas fa-chart-pie"></i> Dashboard</h1>
+            <p class="header-subtitle">Monitor your business metrics and performance</p>
+        </div>
+    </div>
+
+    <!-- Statistics Cards Row -->
+    <div class="stats-grid">
+        
+        <!-- Total Webinars Card -->
+        <div class="stat-card stat-card-blue">
+            <div class="card-header">
+                <div class="card-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="card-info">
+                    <h3>Total Webinars</h3>
+                    <p class="card-value">{{ total_webinars }}</p>
+                    <span class="card-subtitle">Active Sessions</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <i class="fas fa-arrow-up"></i> All Time
+            </div>
+        </div>
+
+        <!-- Total Instructors Card -->
+        <div class="stat-card stat-card-purple">
+            <div class="card-header">
+                <div class="card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="card-info">
+                    <h3>Total Instructors</h3>
+                    <p class="card-value">{{ total_instructors }}</p>
+                    <span class="card-subtitle">Expert Trainers</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <i class="fas fa-arrow-up"></i> All Time
+            </div>
+        </div>
+
+        <!-- Total Orders Card -->
+        <div class="stat-card stat-card-green">
+            <div class="card-header">
+                <div class="card-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="card-info">
+                    <h3>Total Orders</h3>
+                    <p class="card-value">{{ total_orders }}</p>
+                    <span class="card-subtitle">Completed Sales</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <i class="fas fa-arrow-up"></i> All Time
+            </div>
+        </div>
+
+        <!-- Total Revenue Card -->
+        <div class="stat-card stat-card-gold">
+            <div class="card-header">
+                <div class="card-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="card-info">
+                    <h3>Total Revenue</h3>
+                    <p class="card-value">${{ total_revenue|floatformat:2 }}</p>
+                    <span class="card-subtitle">Gross Income</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <i class="fas fa-arrow-up"></i> All Time
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section">
+
+        <!-- Revenue Comparison Chart -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h2><i class="fas fa-chart-bar"></i> Revenue Comparison</h2>
+                <span class="chart-subtitle">This Month vs Last Month</span>
+            </div>
+            <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+            </div>
+            <div class="chart-stats">
+                <div class="stat">
+                    <span class="stat-label">This Month</span>
+                    <span class="stat-value text-primary">${{ this_month_revenue|floatformat:2 }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Last Month</span>
+                    <span class="stat-value text-secondary">${{ last_month_revenue|floatformat:2 }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Growth Chart -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h2><i class="fas fa-chart-line"></i> Attendee Growth</h2>
+                <span class="chart-subtitle">Last 6 Months</span>
+            </div>
+            <div class="chart-container">
+                <canvas id="growthChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Second Row Charts -->
+    <div class="charts-section">
+
+        <!-- Instructor Growth Chart -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h2><i class="fas fa-user-tie"></i> Instructor Growth</h2>
+                <span class="chart-subtitle">Cumulative Stats</span>
+            </div>
+            <div class="chart-container">
+                <canvas id="instructorChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Revenue Breakdown -->
+        <div class="chart-card">
+            <div class="chart-header">
+                <h2><i class="fas fa-pie-chart"></i> Summary</h2>
+                <span class="chart-subtitle">Quick Statistics</span>
+            </div>
+            <div class="summary-list">
+                <div class="summary-item">
+                    <i class="fas fa-video text-blue"></i>
+                    <div class="summary-content">
+                        <p>Total Webinars</p>
+                        <h3>{{ total_webinars }}</h3>
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <i class="fas fa-users text-purple"></i>
+                    <div class="summary-content">
+                        <p>Total Instructors</p>
+                        <h3>{{ total_instructors }}</h3>
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <i class="fas fa-shopping-cart text-green"></i>
+                    <div class="summary-content">
+                        <p>Total Orders</p>
+                        <h3>{{ total_orders }}</h3>
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <i class="fas fa-dollar-sign text-gold"></i>
+                    <div class="summary-content">
+                        <p>Total Revenue</p>
+                        <h3>${{ total_revenue|floatformat:2 }}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+// Chart.js configuration and data
+
+// 1. Revenue Comparison Chart
+const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+new Chart(revenueCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Last Month', 'This Month'],
+        datasets: [{
+            label: 'Revenue ($)',
+            data: [{{ last_month_revenue }}, {{ this_month_revenue }}],
+            backgroundColor: [
+                'rgba(99, 102, 241, 0.6)',
+                'rgba(79, 70, 229, 0.8)'
+            ],
+            borderColor: [
+                'rgba(99, 102, 241, 1)',
+                'rgba(79, 70, 229, 1)'
+            ],
+            borderWidth: 2,
+            borderRadius: 6,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: 'rgba(0, 0, 0, 0.05)',
+                    drawBorder: false
+                },
+                ticks: {
+                    callback: function(value) {
+                        return '$' + value.toLocaleString();
+                    }
+                }
+            },
+            x: {
+                grid: {
+                    display: false
+                }
+            }
+        }
+    }
+});
+
+// 2. Attendee Growth Chart
+const growthCtx = document.getElementById('growthChart').getContext('2d');
+new Chart(growthCtx, {
+    type: 'line',
+    data: {
+        labels: {{ growth_months|safe }},
+        datasets: [{
+            label: 'Orders',
+            data: {{ growth_orders }},
+            borderColor: '#4f46e5',
+            backgroundColor: 'rgba(79, 70, 229, 0.1)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4,
+            pointRadius: 5,
+            pointBackgroundColor: '#4f46e5',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointHoverRadius: 7
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: {
+                display: false
+            },
+            filler: {
+                propagate: true
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: 'rgba(0, 0, 0, 0.05)',
+                    drawBorder: false
+                },
+                ticks: {
+                    stepSize: 1
+                }
+            },
+            x: {
+                grid: {
+                    display: false
+                }
+            }
+        }
+    }
+});
+
+// 3. Instructor Growth Chart
+const instructorCtx = document.getElementById('instructorChart').getContext('2d');
+new Chart(instructorCtx, {
+    type: 'line',
+    data: {
+        labels: {{ instructor_months|safe }},
+        datasets: [{
+            label: 'Total Instructors',
+            data: {{ instructor_counts }},
+            borderColor: '#9333ea',
+            backgroundColor: 'rgba(147, 51, 234, 0.1)',
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4,
+            pointRadius: 5,
+            pointBackgroundColor: '#9333ea',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointHoverRadius: 7
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+            legend: {
+                display: false
+            },
+            filler: {
+                propagate: true
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: 'rgba(0, 0, 0, 0.05)',
+                    drawBorder: false
+                },
+                ticks: {
+                    stepSize: 1
+                }
+            },
+            x: {
+                grid: {
+                    display: false
+                }
+            }
+        }
+    }
+});
+</script>
+
+{% endblock %}

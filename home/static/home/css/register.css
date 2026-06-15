@@ -1,0 +1,660 @@
+/* ==================== GENERAL ==================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background: linear-gradient(135deg, #e8f1ff 0%, #f0f4ff 50%, #e8f0fe 100%);
+  padding: 40px 20px;
+}
+
+.register-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  min-height: 600px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 60px rgba(13,110,253,0.15);
+}
+
+/* ==================== LEFT SECTION - REGISTER FORM ==================== */
+.register-form-section {
+  background: white;
+  padding: 50px 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.register-form-header {
+  margin-bottom: 30px;
+}
+
+.register-form-header h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 12px;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0d6efd;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 16px;
+}
+
+.social-icon:hover {
+  border-color: #0d6efd;
+  background: linear-gradient(135deg, #0a3d62 0%, #0d6efd 100%);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(13,110,253,0.3);
+}
+
+/* ==================== ERROR ALERT ==================== */
+.register-error-alert {
+  background: #fff5f5;
+  border: 2px solid #ffebee;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 20px;
+  border-left: 4px solid #ff4757;
+}
+
+.error-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #d32f2f;
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.error-header i {
+  font-size: 16px;
+}
+
+.error-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.error-list li {
+  color: #c62828;
+  font-size: 12px;
+  margin-bottom: 5px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.error-list li:before {
+  content: '•';
+  position: absolute;
+  left: 8px;
+}
+
+.error-list li:last-child {
+  margin-bottom: 0;
+}
+
+/* ==================== REGISTER FORM ==================== */
+.register-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 7px;
+}
+
+/* ==================== INPUT FIELDS (SCOPED TO REGISTER FORM) ==================== */
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="password"],
+.register-form input[type="tel"],
+.register-form select {
+  width: 100%;
+  padding: 11px 13px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  background: #f8f9fa;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #1a1a1a;
+}
+
+.register-form input[type="text"]::placeholder,
+.register-form input[type="email"]::placeholder,
+.register-form input[type="password"]::placeholder,
+.register-form input[type="tel"]::placeholder {
+  color: #adb5bd;
+}
+
+.register-form input[type="text"]:focus,
+.register-form input[type="email"]:focus,
+.register-form input[type="password"]:focus,
+.register-form input[type="tel"]:focus,
+.register-form select:focus {
+  outline: none;
+  border-color: #0d6efd;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(13,110,253,0.1);
+}
+
+.register-form select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230d6efd' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+/* ==================== SELECT2 SEARCH BOX OVERRIDE ==================== */
+.select2-search__field {
+  border: 2px solid #e9ecef !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  font-size: 13px !important;
+  font-family: 'Inter', sans-serif !important;
+  background: #f8f9fa !important;
+  transition: all 0.3s !important;
+}
+
+.select2-search__field:focus {
+  outline: none !important;
+  border-color: #0d6efd !important;
+  background: white !important;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1) !important;
+}
+
+/* ==================== SELECT2 OVERRIDE ==================== */
+.select2-container--default .select2-selection--single {
+  border: 2px solid #e9ecef !important;
+  border-radius: 8px !important;
+  height: 43px !important;
+  background: #f8f9fa !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: #1a1a1a;
+  line-height: 41px;
+  padding: 0 11px;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 41px;
+  right: 8px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+  margin-top: 2px;
+}
+
+.select2-container--default.select2-container--open .select2-selection--single {
+  border-color: #0d6efd !important;
+  box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1) !important;
+}
+
+.select2-dropdown {
+  border-radius: 8px !important;
+  border: 2px solid #e9ecef !important;
+  margin-top: 4px;
+}
+
+.select2-results__option {
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #1a1a1a;
+}
+
+.select2-results__option--highlighted[aria-selected] {
+  background: linear-gradient(135deg, #0a3d62 0%, #0d6efd 100%) !important;
+  color: white !important;
+}
+
+/* ==================== INTL TEL INPUT OVERRIDE ==================== */
+.iti--separate-dial-code .iti__selected-flag {
+  background: #f8f9fa;
+}
+
+.iti input {
+  
+  height: 43px !important;
+  border: 2px solid #e9ecef !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  font-family: 'Inter', sans-serif !important;
+  background: #f8f9fa !important;
+  transition: all 0.3s !important;
+  color: #1a1a1a !important;
+}
+
+/* IMPORTANT FIX */
+.iti--separate-dial-code input {
+  padding-left: 90px !important;
+}
+
+.iti input:focus {
+  border-color: #0d6efd !important;
+  background: white !important;
+  box-shadow: 0 0 0 4px rgba(13,110,253,0.1) !important;
+  outline: none !important;
+}
+
+.iti__country-list {
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  max-height: 300px;
+}
+
+.iti__country:hover,
+.iti__country.iti__highlight {
+  background: #f0f3f7;
+}
+
+/* ==================== TERMS SECTION ==================== */
+.terms-section {
+  margin-bottom: 20px;
+  padding-bottom: 0;
+}
+
+.terms-section p {
+  font-size: 12px;
+  color: #6c757d;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.terms-section a {
+  color: #0d6efd;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.terms-section a:hover {
+  color: #1a7ed9;
+  text-decoration: underline;
+}
+
+/* ==================== REGISTER BUTTON - BLUE ONLY ==================== */
+.btn-register {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, #0a3d62 0%, #0d6efd 55%, #1a7ed9 100%);
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Inter', sans-serif;
+  box-shadow: 0 4px 15px rgba(13,110,253,0.25);
+  text-transform: capitalize;
+}
+
+.btn-register:hover {
+  background: linear-gradient(135deg, #0d6efd 0%, #1a7ed9 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(13,110,253,0.35);
+}
+
+.btn-register:active {
+  transform: translateY(0);
+}
+
+/* ==================== RIGHT SECTION - TOGGLE PANEL - BLUE ONLY ==================== */
+.toggle-section {
+  background: linear-gradient(135deg, #0a3d62 0%, #0d6efd 55%, #1a7ed9 100%);
+  color: white;
+  padding: 50px 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  min-height: 600px;
+}
+
+.toggle-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 300px;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+.toggle-content {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.toggle-content h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: -0.3px;
+}
+
+.toggle-content p {
+  font-size: 15px;
+  margin-bottom: 25px;
+  opacity: 0.95;
+  font-weight: 400;
+}
+.form-group input[type="password"] {
+  padding-right: 40px !important;
+}
+
+#togglePassword,
+#toggleConfirmPassword {
+  z-index: 10;
+  font-size: 14px;
+}
+
+.btn-signin {
+  display: inline-block;
+  padding: 11px 30px;
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 13px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-signin:hover {
+  background: white;
+  color: #0d6efd;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(255,255,255,0.3);
+}
+
+/* ==================== RESPONSIVE - TABLET ==================== */
+@media (max-width: 1024px) {
+  .register-wrapper {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    max-width: 100%;
+  }
+
+  .register-form-section {
+    padding: 40px 35px;
+    max-height: none;
+  }
+
+  .toggle-section {
+    padding: 40px 35px;
+    min-height: 300px;
+  }
+
+  .register-form-header h2 {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .toggle-content h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+
+  .toggle-content p {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group {
+    margin-bottom: 14px;
+  }
+}
+
+/* ==================== RESPONSIVE - MOBILE ==================== */
+@media (max-width: 768px) {
+  .register-page {
+    padding: 30px 16px;
+  }
+
+  .register-wrapper {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    border-radius: 16px;
+  }
+
+  .register-form-section {
+    padding: 35px 25px;
+    max-height: none;
+  }
+
+  .toggle-section {
+    padding: 35px 25px;
+    min-height: 250px;
+  }
+
+  .register-form-header h2 {
+    font-size: 26px;
+    margin-bottom: 14px;
+  }
+
+  .social-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+  .form-label {
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+
+  .register-form input[type="text"],
+  .register-form input[type="email"],
+  .register-form input[type="password"],
+  .register-form input[type="tel"],
+  .register-form select {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .btn-register {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .toggle-content h2 {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .toggle-content p {
+    font-size: 13px;
+    margin-bottom: 18px;
+  }
+
+  .btn-signin {
+    padding: 10px 26px;
+    font-size: 12px;
+  }
+}
+
+/* ==================== RESPONSIVE - SMALL MOBILE ==================== */
+@media (max-width: 480px) {
+  .register-page {
+    padding: 20px 12px;
+  }
+
+  .register-wrapper {
+    min-height: auto;
+    border-radius: 14px;
+  }
+
+  .register-form-section {
+    padding: 28px 20px;
+    max-height: none;
+  }
+
+  .toggle-section {
+    padding: 28px 20px;
+    min-height: 220px;
+  }
+
+  .register-form-header h2 {
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+
+  .register-form-header {
+    margin-bottom: 20px;
+  }
+
+  .social-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+  }
+
+  .form-row {
+    gap: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 12px;
+  }
+
+  .form-label {
+    font-size: 10px;
+    margin-bottom: 5px;
+  }
+
+  .register-form input[type="text"],
+  .register-form input[type="email"],
+  .register-form input[type="password"],
+  .register-form input[type="tel"],
+  .register-form select {
+    padding: 9px 11px;
+    font-size: 12px;
+    border-radius: 6px;
+  }
+
+  .btn-register {
+    padding: 11px;
+    font-size: 12px;
+    border-radius: 6px;
+  }
+
+  .toggle-content h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .toggle-content p {
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+
+  .btn-signin {
+    padding: 9px 22px;
+    font-size: 11px;
+  }
+
+  .terms-section p {
+    font-size: 11px;
+  }
+
+  .register-error-alert {
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+
+  .error-header {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
+  .error-list li {
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+
+  .select2-container--default .select2-selection--single {
+    height: 41px !important;
+  }
+
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 39px;
+    font-size: 12px;
+  }
+}

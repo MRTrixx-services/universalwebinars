@@ -1,0 +1,713 @@
+/* ============================================
+   PAYMENT HISTORY - PROFESSIONAL DESIGN
+   ============================================ */
+
+:root {
+    --color-primary: #4f46e5;
+    --color-primary-dark: #3730a3;
+    --color-primary-light: #eef2ff;
+    --color-text-primary: #1a202c;
+    --color-text-secondary: #4b5563;
+    --color-text-tertiary: #718096;
+    --color-bg-white: #ffffff;
+    --color-bg-light: #f9fafb;
+    --color-bg-lighter: #f3f4f6;
+    --color-border: #e2e8f0;
+    --color-border-dark: #d1d5db;
+    --color-green: #15803d;
+    --color-blue: #2563eb;
+    
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.1);
+    
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   MAIN CONTAINER
+   ============================================ */
+
+.payment-container {
+    background: var(--color-bg-white);
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* ============================================
+   HEADER SECTION
+   ============================================ */
+
+.payment-header {
+    padding: 18px 40px;
+    background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+    color: white;
+    border-radius: 0;
+    margin-bottom: 0;
+    box-shadow: var(--shadow-md);
+}
+
+.header-content h1 {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0 0 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    letter-spacing: -0.5px;
+}
+
+.header-content h1 i {
+    font-size: 30px;
+}
+
+.header-subtitle {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.95;
+    font-weight: 500;
+}
+
+/* ============================================
+   REVENUE STATISTICS
+   ============================================ */
+
+.revenue-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    padding: 18px 40px;
+    background: var(--color-bg-lighter);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.stat-card {
+    background: var(--color-bg-white);
+    padding: 16px;
+    border-radius: 14px;
+    border: 1.5px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #cbd5e1, #e2e8f0);
+}
+
+.stat-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary-light);
+    transform: translateY(-2px);
+}
+
+.stat-card-primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.25);
+}
+
+.badge-success {
+    background: #dcfce7;
+    color: #16a34a;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.badge-warning {
+    background: #fef3c7;
+    color: #d97706;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.badge-danger {
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.stat-card-primary::before {
+    height: 0;
+}
+
+.stat-card-primary:hover {
+    box-shadow: 0 10px 28px rgba(79, 70, 229, 0.35);
+}
+
+.stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.stat-header h3 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-text-secondary);
+}
+
+.stat-card-primary .stat-header h3 {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.stat-header i {
+    font-size: 20px;
+    color: var(--color-primary);
+    opacity: 0.6;
+}
+
+.stat-card-primary .stat-header i {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0 0 4px 0;
+    color: var(--color-text-primary);
+    letter-spacing: -0.5px;
+}
+
+.stat-card-primary .stat-value {
+    color: white;
+}
+
+.stat-meta {
+    font-size: 12px;
+    color: var(--color-text-tertiary);
+    margin: 0;
+    font-weight: 500;
+}
+
+.stat-card-primary .stat-meta {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================
+   FILTER SECTION
+   ============================================ */
+
+.filter-section {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    padding: 14px 40px;
+    background: var(--color-bg-white);
+    border-bottom: 2px solid var(--color-border);
+    flex-wrap: nowrap;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.filter-group label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.date-range-wrapper {
+    display: flex;
+    gap: 0;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.date-input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.date-input {
+    padding: 8px 12px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 8px 0 0 8px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    background: var(--color-bg-white);
+    transition: var(--transition);
+    min-width: 120px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.date-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    background: var(--color-primary-light);
+}
+
+.date-input::placeholder {
+    color: var(--color-text-tertiary);
+}
+
+.calendar-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border: 1.5px solid var(--color-border);
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    background: var(--color-bg-lighter);
+    color: var(--color-primary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+    height: 100%;
+}
+
+.calendar-btn:hover {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+.calendar-btn:active {
+    transform: scale(0.98);
+}
+
+.date-separator {
+    color: var(--color-text-tertiary);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    margin: 0 6px;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 7px;
+    margin-left: auto;
+    flex-wrap: nowrap;
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn-list-view {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.btn-list-view:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+}
+
+.btn-clear-filters {
+    background: var(--color-bg-lighter);
+    color: var(--color-text-secondary);
+    border: 1.5px solid var(--color-border);
+}
+
+.btn-clear-filters:hover {
+    background: var(--color-border);
+    color: var(--color-text-primary);
+    border-color: var(--color-text-secondary);
+}
+
+.btn-export {
+    background: var(--color-bg-lighter);
+    color: var(--color-text-secondary);
+    border: 1.5px solid var(--color-border);
+}
+
+.btn-export:hover {
+    background: var(--color-bg-white);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.btn-export-excel:hover {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-color: #059669;
+}
+
+.btn-export-csv:hover {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    border-color: #d97706;
+}
+
+.btn-filter {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.btn-filter:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+}
+
+.btn i {
+    font-size: 12px;
+}
+
+/* ============================================
+   FILTER BADGE
+   ============================================ */
+
+.filter-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+    border-left: 4px solid var(--color-primary);
+    margin: 0 40px 12px 40px;
+    border-radius: 7px;
+    font-size: 12px;
+    color: var(--color-text-primary);
+    font-weight: 500;
+}
+
+.filter-badge i {
+    color: var(--color-primary);
+    font-size: 14px;
+}
+
+.filter-badge strong {
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+.filter-badge a {
+    margin-left: auto;
+    color: var(--color-primary);
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 4px 10px;
+    background: rgba(79, 70, 229, 0.1);
+    border-radius: 4px;
+}
+
+.filter-badge a:hover {
+    background: rgba(79, 70, 229, 0.2);
+}
+
+
+/* ============================================
+   TABLE STYLES
+   ============================================ */
+
+.table-container {
+    padding: 0;
+    background: var(--color-bg-white);
+    overflow-x: auto;
+}
+
+.payment-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-bg-white);
+}
+
+.payment-table thead {
+    background: linear-gradient(135deg, var(--color-primary-light) 0%, #ddd6fe 100%);
+    border-bottom: 2px solid var(--color-primary);
+}
+
+.payment-table th {
+    padding: 12px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+    color: var(--color-primary-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.payment-table tbody tr {
+    border-bottom: 1px solid var(--color-border);
+    transition: var(--transition);
+}
+
+.payment-table tbody tr:hover {
+    background: var(--color-bg-light);
+}
+
+.payment-table td {
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+}
+
+.date-cell small {
+    color: var(--color-text-tertiary);
+    font-size: 11px;
+    display: block;
+    margin-top: 3px;
+}
+
+.webinar-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.amount-cell {
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.badge-success {
+    display: inline-block;
+    background: linear-gradient(135deg, #15803d 0%, #059669 100%);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(21, 128, 61, 0.2);
+}
+
+.btn-details {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 13px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.15);
+}
+
+.btn-details:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
+}
+
+.empty {
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--color-text-tertiary);
+}
+
+.empty i {
+    font-size: 44px;
+    display: block;
+    margin-bottom: 10px;
+    color: var(--color-border);
+}
+
+.empty p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .payment-header {
+        padding: 28px 32px;
+    }
+
+    .revenue-stats {
+        padding: 24px 32px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .filter-section {
+        padding: 20px 32px;
+        gap: 16px;
+    }
+
+    .table-container {
+        padding: 0 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .payment-header {
+        padding: 24px 20px;
+    }
+
+    .header-content h1 {
+        font-size: 24px;
+    }
+
+    .revenue-stats {
+        padding: 20px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .stat-card {
+        padding: 18px;
+    }
+
+    .stat-value {
+        font-size: 22px;
+    }
+
+    .filter-section {
+        padding: 16px 20px;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .date-inputs {
+        width: 100%;
+    }
+
+    .date-input {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .filter-actions {
+        width: 100%;
+        margin-left: 0;
+        gap: 8px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    .payment-table th {
+        padding: 12px;
+        font-size: 12px;
+    }
+
+    .payment-table td {
+        padding: 12px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .payment-header {
+        padding: 20px 16px;
+    }
+
+    .header-content h1 {
+        font-size: 22px;
+        gap: 8px;
+    }
+
+    .header-content h1 i {
+        font-size: 28px;
+    }
+
+    .header-subtitle {
+        font-size: 13px;
+    }
+
+    .revenue-stats {
+        padding: 16px;
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .stat-value {
+        font-size: 20px;
+    }
+
+    .filter-section {
+        padding: 12px 16px;
+        gap: 8px;
+    }
+
+    .date-inputs {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .date-input {
+        width: 100%;
+    }
+
+    .date-separator {
+        display: none;
+    }
+
+    .filter-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .payment-table {
+        font-size: 12px;
+    }
+
+    .payment-table th,
+    .payment-table td {
+        padding: 10px;
+    }
+}

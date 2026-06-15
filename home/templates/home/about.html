@@ -1,0 +1,419 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block title %}About Us — UniversalWebinars | Professional Compliance Training Platform{% endblock %}
+
+{% block extra_css %}
+<meta name="description" content="UniversalWebinars is a premium compliance training and professional development platform trusted by 500+ organizations across the USA. Expert-led webinars, unlimited access, and enterprise-grade solutions.">
+<meta name="keywords" content="compliance training, webinar platform, professional development, OSHA training, HR compliance, workforce training">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+<link rel="stylesheet" href="{% static 'home/css/about.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<!-- ================================================
+     HERO SECTION - FRESH MODERN DESIGN
+================================================ -->
+<section class="ab-hero">
+  <div class="ab-hero-bg-shape"></div>
+  <div class="ab-hero-bg-shape-2"></div>
+  <div class="dr-container">
+    <div class="ab-hero-grid">
+      <div class="ab-hero-content">
+        <span class="ab-hero-badge">
+          <i class="bi bi-patch-check-fill"></i> Trusted by 500+ Organizations
+        </span>
+        <h1 class="ab-hero-title">
+          Empowering Teams Through<br>
+          <span class="gradient-text">Professional Learning</span>
+        </h1>
+        <p class="ab-hero-desc">UniversalWebinars is your trusted partner for compliance training, workforce development, and expert-led webinars — built for organizations that take learning seriously across the United States.</p>
+        <div class="ab-hero-buttons">
+          <a href="{% url 'live_webinars:list' %}" class="btn-primary">
+            <i class="bi bi-play-circle"></i> Explore Webinars
+          </a>
+          <a href="{% url 'accounts:register' %}" class="btn-outline-light">
+            <i class="bi bi-rocket-takeoff"></i> Get Started Free
+          </a>
+        </div>
+      </div>
+      <div class="ab-hero-stats">
+        <div class="ab-stats-card">
+          <div class="ab-stat">
+            <span class="ab-stat-number">50K+</span>
+            <span class="ab-stat-label">Users Trained</span>
+          </div>
+          <div class="ab-stat-divider"></div>
+          <div class="ab-stat">
+            <span class="ab-stat-number">500+</span>
+            <span class="ab-stat-label">Companies</span>
+          </div>
+          <div class="ab-stat-divider"></div>
+          <div class="ab-stat">
+            <span class="ab-stat-number">25+</span>
+            <span class="ab-stat-label">Industries</span>
+          </div>
+          <div class="ab-stat-divider"></div>
+          <div class="ab-stat">
+            <span class="ab-stat-number">99.8%</span>
+            <span class="ab-stat-label">Satisfaction</span>
+          </div>
+        </div>
+        <div class="ab-feature-grid">
+          <div class="ab-feature-card">
+            <div class="ab-feature-icon"><i class="bi bi-broadcast"></i></div>
+            <div>
+              <strong>Live Webinars</strong>
+              <p>Real-time expert sessions</p>
+            </div>
+          </div>
+          <div class="ab-feature-card">
+            <div class="ab-feature-icon blue"><i class="bi bi-camera-video"></i></div>
+            <div>
+              <strong>Recorded Library</strong>
+              <p>Watch anytime, anywhere</p>
+            </div>
+          </div>
+          <div class="ab-feature-card">
+            <div class="ab-feature-icon purple"><i class="bi bi-shield-check"></i></div>
+            <div>
+              <strong>Compliance Focused</strong>
+              <p>OSHA, HR, DEI & more</p>
+            </div>
+          </div>
+          <div class="ab-feature-card">
+            <div class="ab-feature-icon teal"><i class="bi bi-infinity"></i></div>
+            <div>
+              <strong>Unlimited Access</strong>
+              <p>Subscribe once, learn forever</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================
+     WHO WE ARE SECTION
+================================================ -->
+<section class="ab-who">
+  <div class="dr-container">
+    <div class="ab-who-grid">
+      <div class="ab-who-content">
+        <span class="section-tag"><i class="bi bi-emoji-sunglasses"></i> Who We Are</span>
+        <h2 class="section-title">Your Partner in <span class="gradient-text">Continuous Learning</span></h2>
+        <p class="section-text">We are an online learning platform dedicated to delivering expert-led webinars across compliance, career development, HR, and workforce management. Whether you're a working professional or an organization looking to upskill your team, UniversalWebinars provides accessible and affordable learning tailored to your goals.</p>
+        <p class="section-text">Our webinars are engaging, actionable, and result-driven — not just theory. We collaborate with experienced trainers, industry leaders, and subject matter experts to ensure every session delivers real-world insights your team can apply immediately.</p>
+        <a href="{% url 'accounts:register' %}" class="btn-primary">
+          <i class="bi bi-arrow-right-circle"></i> Get Started Free
+        </a>
+      </div>
+      <div class="ab-value-grid">
+        <div class="ab-value-card">
+          <div class="ab-value-icon"><i class="bi bi-book"></i></div>
+          <h6>Skill-Based Learning</h6>
+          <p>Gain skills that matter in today's job market</p>
+        </div>
+        <div class="ab-value-card">
+          <div class="ab-value-icon green"><i class="bi bi-people"></i></div>
+          <h6>Expert Guidance</h6>
+          <p>Learn from professionals with hands-on experience</p>
+        </div>
+        <div class="ab-value-card">
+          <div class="ab-value-icon purple"><i class="bi bi-play-circle"></i></div>
+          <h6>Flexible Access</h6>
+          <p>Attend live or watch recordings anytime</p>
+        </div>
+        <div class="ab-value-card">
+          <div class="ab-value-icon orange"><i class="bi bi-graph-up-arrow"></i></div>
+          <h6>Career Growth</h6>
+          <p>Supporting your journey toward professional success</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================
+     WHY CHOOSE US SECTION
+================================================ -->
+<section class="ab-why">
+  <div class="dr-container">
+    <div class="section-header">
+      <span class="section-tag"><i class="bi bi-stars"></i> Why UniversalWebinars</span>
+      <h2 class="section-title">Everything You Need to <span class="gradient-text">Upskill Your Workforce</span></h2>
+      <p class="section-subtitle">One powerful platform for live webinars, recorded sessions, compliance training, and unlimited learning.</p>
+    </div>
+    <div class="ab-why-grid">
+      <div class="ab-why-card">
+        <div class="ab-why-icon"><i class="bi bi-broadcast"></i></div>
+        <h5>Live Zoom Webinars</h5>
+        <p>Join real-time expert-led sessions. Ask questions, participate in polls, and learn interactively from industry leaders.</p>
+        <a href="#" class="card-link">Learn more <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="ab-why-card">
+        <div class="ab-why-icon green"><i class="bi bi-collection-play"></i></div>
+        <h5>Recorded Webinar Library</h5>
+        <p>Access a growing library of recorded sessions anytime, anywhere. Pause, rewind, and revisit content at your own pace.</p>
+        <a href="#" class="card-link">Learn more <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="ab-why-card">
+        <div class="ab-why-icon purple"><i class="bi bi-person-badge"></i></div>
+        <h5>Industry Expert Instructors</h5>
+        <p>Learn from certified professionals with decades of real-world experience in HR, compliance, safety, and workforce management.</p>
+        <a href="#" class="card-link">Learn more <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="ab-why-card">
+        <div class="ab-why-icon orange"><i class="bi bi-infinity"></i></div>
+        <h5>Unlimited Access Plans</h5>
+        <p>Subscribe once and get unlimited access to all live and recorded webinars. No per-session fees, no hidden charges.</p>
+        <a href="#" class="card-link">Learn more <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="ab-why-card">
+        <div class="ab-why-icon red"><i class="bi bi-shield-check"></i></div>
+        <h5>Compliance Focused Content</h5>
+        <p>Every session is designed around real regulatory requirements — OSHA, DEI, HR compliance, and more — keeping your team audit-ready.</p>
+        <a href="#" class="card-link">Learn more <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="ab-why-card">
+        <div class="ab-why-icon teal"><i class="bi bi-headset"></i></div>
+        <h5>24/7 Dedicated Support</h5>
+        <p>Our support team is always available to help with access, technical issues, or content queries — so your learning never stops.</p>
+        <a href="#" class="card-link">Learn more <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================
+     SERVICES SECTION - ENHANCED
+================================================ -->
+<section class="ab-services">
+  <div class="dr-container">
+    <div class="section-header">
+      <span class="section-tag"><i class="bi bi-grid-3x3-gap-fill"></i> Our Services</span>
+      <h2 class="section-title">Professional <span class="gradient-text">Training Services</span></h2>
+      <p class="section-subtitle">Enterprise compliance solutions powered by industry expertise.</p>
+    </div>
+    <div class="ab-services-grid">
+      <div class="ab-service-card">
+        <div class="ab-service-header">
+          <div class="ab-service-icon"><i class="bi bi-cone-striped"></i></div>
+          <span class="ab-service-badge">500+ Programs</span>
+        </div>
+        <h5>Workplace Safety</h5>
+        <p>Comprehensive safety programs with real-time monitoring and OSHA compliance automation.</p>
+        <ul class="ab-service-features">
+          <li><i class="bi bi-check-circle-fill"></i> OSHA Compliance</li>
+          <li><i class="bi bi-check-circle-fill"></i> Real-time monitoring</li>
+          <li><i class="bi bi-check-circle-fill"></i> Automated reporting</li>
+        </ul>
+      </div>
+      <div class="ab-service-card">
+        <div class="ab-service-header">
+          <div class="ab-service-icon green"><i class="bi bi-people"></i></div>
+          <span class="ab-service-badge green">100K+ Trained</span>
+        </div>
+        <h5>Harassment Prevention</h5>
+        <p>Behavioral training and DEI programs for creating respectful, inclusive work environments.</p>
+        <ul class="ab-service-features">
+          <li><i class="bi bi-check-circle-fill"></i> Behavioral training</li>
+          <li><i class="bi bi-check-circle-fill"></i> DEI programs</li>
+          <li><i class="bi bi-check-circle-fill"></i> Anonymous reporting</li>
+        </ul>
+      </div>
+      <div class="ab-service-card">
+        <div class="ab-service-header">
+          <div class="ab-service-icon purple"><i class="bi bi-shield-check"></i></div>
+          <span class="ab-service-badge purple">25+ Industries</span>
+        </div>
+        <h5>Regulatory Compliance</h5>
+        <p>Compliance tracking for multiple industries with real-time regulatory updates and audit support.</p>
+        <ul class="ab-service-features">
+          <li><i class="bi bi-check-circle-fill"></i> Multi-industry coverage</li>
+          <li><i class="bi bi-check-circle-fill"></i> Real-time updates</li>
+          <li><i class="bi bi-check-circle-fill"></i> Compliance tracking</li>
+        </ul>
+      </div>
+      <div class="ab-service-card">
+        <div class="ab-service-header">
+          <div class="ab-service-icon orange"><i class="bi bi-bar-chart-line"></i></div>
+          <span class="ab-service-badge orange">1,000+ Audits</span>
+        </div>
+        <h5>Risk Management</h5>
+        <p>Predictive risk analysis with actionable insights and mitigation protocols for your organization.</p>
+        <ul class="ab-service-features">
+          <li><i class="bi bi-check-circle-fill"></i> Predictive analysis</li>
+          <li><i class="bi bi-check-circle-fill"></i> Risk assessment</li>
+          <li><i class="bi bi-check-circle-fill"></i> Mitigation plans</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================
+     IMPACT STATS BANNER
+================================================ -->
+<section class="ab-impact">
+  <div class="dr-container">
+    <div class="ab-impact-grid">
+      <div class="ab-impact-item">
+        <strong>99.8%</strong>
+        <span>Client Satisfaction</span>
+      </div>
+      <div class="ab-impact-item">
+        <strong>50K+</strong>
+        <span>Users Trained</span>
+      </div>
+      <div class="ab-impact-item">
+        <strong>500+</strong>
+        <span>Companies</span>
+      </div>
+      <div class="ab-impact-item">
+        <strong>25+</strong>
+        <span>Industries Served</span>
+      </div>
+      <div class="ab-impact-item">
+        <strong>100K+</strong>
+        <span>Professionals Trained</span>
+      </div>
+      <div class="ab-impact-item">
+        <strong>24/7</strong>
+        <span>Dedicated Support</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================
+     TESTIMONIALS SECTION
+================================================ -->
+<section class="ab-testimonials">
+  <div class="dr-container">
+    <div class="section-header">
+      <span class="section-tag"><i class="bi bi-chat-heart-fill"></i> Testimonials</span>
+      <h2 class="section-title">Loved by <span class="gradient-text">Thousands of Teams</span></h2>
+      <p class="section-subtitle">Hear from organizations transforming their training with UniversalWebinars.</p>
+    </div>
+    <div class="ab-testimonial-grid">
+      <div class="ab-testimonial-card">
+        <div class="ab-quote-icon"><i class="bi bi-quote"></i></div>
+        <div class="ab-stars">★★★★★</div>
+        <p>"UniversalWebinars transformed how we onboard new hires. Completion rates jumped from 42% to 91% within the first quarter. The compliance content is exactly what our team needed."</p>
+        <div class="ab-author">
+          <div class="ab-avatar">SJ</div>
+          <div>
+            <strong>Sarah Johnson</strong>
+            <span>VP of HR, TechCorp — Austin, TX</span>
+          </div>
+        </div>
+      </div>
+      <div class="ab-testimonial-card featured">
+        <div class="ab-quote-icon"><i class="bi bi-quote"></i></div>
+        <div class="ab-stars">★★★★★</div>
+        <p>"We've seen a 3× increase in training completion rates since switching. The live webinars are engaging and the recorded library is a goldmine for our team."</p>
+        <div class="ab-author">
+          <div class="ab-avatar">MC</div>
+          <div>
+            <strong>Michael Chen</strong>
+            <span>Training Director — Seattle, WA</span>
+          </div>
+        </div>
+      </div>
+      <div class="ab-testimonial-card">
+        <div class="ab-quote-icon"><i class="bi bi-quote"></i></div>
+        <div class="ab-stars">★★★★★</div>
+        <p>"Setup took less than a day. Our first live webinar had 800 attendees without a single technical hiccup. The support team was outstanding throughout."</p>
+        <div class="ab-author">
+          <div class="ab-avatar">TR</div>
+          <div>
+            <strong>Tom Reeves</strong>
+            <span>COO, Financial Services — Chicago, IL</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================
+     FAQ SECTION - ENHANCED
+================================================ -->
+<section class="ab-faq">
+  <div class="dr-container">
+    <div class="section-header">
+      <span class="section-tag"><i class="bi bi-question-circle-fill"></i> FAQ</span>
+      <h2 class="section-title">Common <span class="gradient-text">Questions</span></h2>
+      <p class="section-subtitle">Everything you need to know about getting started with UniversalWebinars.</p>
+    </div>
+    <div class="ab-faq-grid">
+      <details class="ab-faq-item">
+        <summary>
+          <span><i class="bi bi-lightning-charge"></i> How quickly can we get up and running?</span>
+          <i class="bi bi-plus-lg faq-icon"></i>
+        </summary>
+        <p>Most organizations are live within a single business day. Our onboarding team will guide you through setup, and your first webinar session can go live in under 5 minutes.</p>
+      </details>
+      <details class="ab-faq-item">
+        <summary>
+          <span><i class="bi bi-shield-check"></i> What types of compliance training do you offer?</span>
+          <i class="bi bi-plus-lg faq-icon"></i>
+        </summary>
+        <p>We cover OSHA workplace safety, harassment prevention, DEI training, HR compliance, regulatory compliance across 25+ industries, and risk management — all delivered by certified industry experts.</p>
+      </details>
+      <details class="ab-faq-item">
+        <summary>
+          <span><i class="bi bi-camera-video"></i> Can I access recorded webinars after the live session?</span>
+          <i class="bi bi-plus-lg faq-icon"></i>
+        </summary>
+        <p>Yes. All live webinars are recorded and added to our on-demand library. Subscribers get 24/7 access to the full library — pause, rewind, and revisit any session at your convenience.</p>
+      </details>
+      <details class="ab-faq-item">
+        <summary>
+          <span><i class="bi bi-graph-up"></i> How does compliance training tracking work?</span>
+          <i class="bi bi-plus-lg faq-icon"></i>
+        </summary>
+        <p>Our compliance dashboard gives managers real-time visibility into team attendance, progress, and completion status. You can generate audit-ready reports at any time to stay ahead of regulatory requirements.</p>
+      </details>
+      <details class="ab-faq-item">
+        <summary>
+          <span><i class="bi bi-infinity"></i> What subscription plans are available?</span>
+          <i class="bi bi-plus-lg faq-icon"></i>
+        </summary>
+        <p>We offer flexible subscription plans that give you unlimited access to all live and recorded webinars — no per-session fees, no hidden charges. Visit our pricing page to find the plan that fits your organization.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================
+     CTA SECTION - ENHANCED
+================================================ -->
+<section class="ab-cta">
+  <div class="dr-container">
+    <div class="ab-cta-content">
+      <span class="section-tag light"><i class="bi bi-rocket-takeoff"></i> Start Today</span>
+      <h2>Ready to Transform<br>Your Team's Training?</h2>
+      <p>Join 500+ organizations delivering world-class compliance learning with UniversalWebinars. No credit card required.</p>
+      <div class="ab-cta-buttons">
+        <a href="{% url 'accounts:register' %}" class="btn-primary-light">
+          <i class="bi bi-arrow-right-circle"></i> Get Started Free
+        </a>
+        <a href="{% url 'home:contact' %}" class="btn-outline-white">
+          <i class="bi bi-chat-dots"></i> Talk to Us
+        </a>
+      </div>
+      <div class="ab-cta-trust">
+        <span><i class="bi bi-headset"></i> 24/7 Support</span>
+        <span><i class="bi bi-lock"></i> Secure Platform</span>
+        <span><i class="bi bi-credit-card"></i> No Credit Card</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

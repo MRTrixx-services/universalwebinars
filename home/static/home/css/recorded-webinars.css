@@ -1,0 +1,133 @@
+/* ============================================================
+   RECORDED WEBINARS — card overrides
+   Base layout & top-bar come from live-webinars.css
+   ============================================================ */
+
+/* Header: same gradient as live webinar */
+.rec-card .rec-header {
+    background: linear-gradient(135deg, #0f4c81 0%, #0d6efd 100%);
+    padding: 16px 16px 14px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 8px;
+    min-height: unset;
+    flex-wrap: nowrap;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* ── Top row: photo left, ON DEMAND right ── */
+.rec-header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* Instructor photo */
+.rec-header .instructor-photo {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 2.5px solid rgba(255, 255, 255, 0.85);
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.22);
+}
+
+/* ON DEMAND badge */
+.rec-ondemand-badge {
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 5px 11px;
+    border-radius: 20px;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.rec-ondemand-badge i {
+    font-size: 10px;
+    color: #86efac;
+}
+
+/* ── Second row: duration + availability in ONE line ── */
+.rec-header-badges {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+.rec-header-top,
+.rec-header-badges {
+    display: contents;  
+}
+
+.rec-ondemand-badge,
+.rec-badge-dur,
+.rec-badge-avail {
+    display: flex;
+    align-items: center;
+    gap: 4px;            
+    padding: 3px 8px;     
+    font-size: 9px;       
+    border-radius: 16px;  
+    white-space: nowrap;
+}
+
+
+.rec-badge-dur,
+.rec-badge-avail {
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.rec-badge-dur {
+    background: rgba(255, 255, 255, 0.18);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.rec-badge-avail {
+    background: rgba(134, 239, 172, 0.22);
+    color: #bbf7d0;
+    border: 1px solid rgba(134, 239, 172, 0.4);
+}
+
+/* Hover — blue/pink glow */
+.rec-card:hover {
+    box-shadow: 0 12px 36px rgba(13, 110, 253, 0.20);
+    border-color: #b6d0fe;
+}
+
+/* Enroll button — same gradient as live */
+.rec-card .enroll-btn {
+    background: linear-gradient(135deg, #0f4c81 0%, #0d6efd 100%);
+    box-shadow: 0 3px 10px rgba(13, 110, 253, 0.30);
+}
+
+.rec-card .enroll-btn:hover {
+    background: linear-gradient(135deg, #0f4c81 0%, #0d6efd 100%);
+    box-shadow: 0 6px 18px rgba(13, 110, 253, 0.35);
+}
+
+.rec-card .price-tag {
+    color: #0f4c81;
+}

@@ -1,0 +1,83 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block title %}Verify OTP - universalwebinars{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'home/css/login.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<style>
+.otp-container { display: flex; gap: 10px; justify-content: center; margin: 25px 0; }
+.otp-input { width: 50px; height: 55px; text-align: center; font-size: 24px; font-weight: bold; border: 2px solid #e2e8f0; border-radius: 10px; transition: all 0.3s; }
+.otp-input:focus { border-color: #0d6efd; outline: none; box-shadow: 0 0 0 3px rgba(13,110,253,0.1); }
+.resend-link { text-align: center; margin-top: 20px; color: #64748b; font-size: 14px; }
+.resend-link a { color: #0d6efd; text-decoration: none; font-weight: 600; }
+.resend-link a:hover { text-decoration: underline; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="login-page">
+  <div class="login-wrapper">
+
+    <!-- LEFT SECTION - VERIFY OTP FORM -->
+    <div class="login-form-section">
+      <div class="login-form-header">
+        <h2>Verify OTP</h2>
+        <p style="color: #64748b; font-size: 14px; margin-top: 8px;">Enter the 6-digit code sent to <strong>{{ email }}</strong></p>
+      </div>
+
+      <!-- Messages/Alerts -->
+      {% if messages %}
+        <div class="alert-container">
+          {% for message in messages %}
+            <div class="login-alert login-alert-{{ message.tags }}">
+              <i class="fas fa-{% if message.tags == 'error' %}exclamation-circle{% else %}check-circle{% endif %}"></i>
+              <span>{{ message }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- OTP Form -->
+      <form method="post" class="login-form" id="otpForm">
+        {% csrf_token %}
+
+        <div class="otp-container">
+          <input type="text" name="otp1" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+          <input type="text" name="otp2" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+          <input type="text" name="otp3" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+          <input type="text" name="otp4" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+          <input type="text" name="otp5" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+          <input type="text" name="otp6" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+        </div>
+
+        <button type="submit" class="btn-login">
+          <i class="fas fa-check-circle"></i> Verify OTP
+        </button>
+
+        <div class="resend-link">
+          Didn't receive the code? <a href="{% url 'accounts:resend_otp' %}">Resend OTP</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- RIGHT SECTION - INFO PANEL -->
+    <div class="toggle-section">
+      <div class="toggle-content">
+        <i class="fas fa-shield-alt" style="font-size: 64px; margin-bottom: 20px; opacity: 0.9;"></i>
+        <h2>Secure Verification</h2>
+        <p>Please enter the 6-digit OTP sent to your email to verify your identity.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="{% static 'home/js/verify_otp.js' %}">
+
+</script>
+
+{% endblock %}

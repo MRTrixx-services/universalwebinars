@@ -1,0 +1,624 @@
+{% extends "profile/base.html" %}
+
+{% block profile_content %}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #f0f4ff;
+    --surface: #ffffff;
+    --surface-2: #f8faff;
+    --border: #e2e8f8;
+    --text-primary: #0f1d3a;
+    --text-secondary: #5a6a8a;
+    --text-muted: #94a3c0;
+    --blue: #2563eb;
+    --blue-light: #eff6ff;
+    --green: #059669;
+    --green-light: #ecfdf5;
+    --amber: #d97706;
+    --amber-light: #fffbeb;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --purple: #7c3aed;
+    --purple-light: #f5f3ff;
+    --shadow-sm: 0 1px 3px rgba(15,29,58,0.06);
+    --shadow-md: 0 4px 16px rgba(15,29,58,0.09);
+    --shadow-lg: 0 12px 40px rgba(15,29,58,0.13);
+    --radius: 14px;
+    --radius-sm: 9px;
+    --radius-lg: 20px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .subs-page {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    padding: 28px 32px 56px;
+    color: var(--text-primary);
+  }
+
+  /* ── Page Header ── */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 26px;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .page-header h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--blue);
+    letter-spacing: -0.4px;
+  }
+  .page-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .btn-upgrade {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    background: var(--blue);
+    color: #fff;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-upgrade:hover {
+    background: #1d4ed8;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(37,99,235,0.3);
+  }
+
+  /* ── Active Subscription Hero ── */
+  .active-sub-hero {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #3b82f6 100%);
+    border-radius: var(--radius-lg);
+    padding: 28px 28px 26px;
+    margin-bottom: 20px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+  .active-sub-hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    pointer-events: none;
+  }
+  .active-sub-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 30%;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    pointer-events: none;
+  }
+  .hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .hero-plan-name {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+  }
+  .hero-plan-sub {
+    font-size: 13px;
+    opacity: 0.75;
+    margin-top: 3px;
+  }
+  .hero-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    font-weight: 700;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(4px);
+  }
+  .hero-status-badge .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #4ade80;
+    animation: pulse-dot 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .hero-stat {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 12px 14px;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .hero-stat-label {
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.65;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .hero-stat-value {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+  }
+
+  /* Progress bar */
+  .progress-section { margin-bottom: 6px; }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    opacity: 0.75;
+    margin-bottom: 7px;
+  }
+  .progress-bar-wrap {
+    height: 6px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4ade80, #86efac);
+    border-radius: 10px;
+    transition: width 1s ease;
+  }
+
+  /* ── Stats Row ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 18px 14px;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
+  .stat-card.blue::before   { background: linear-gradient(90deg,#2563eb,#60a5fa); }
+  .stat-card.green::before  { background: linear-gradient(90deg,#059669,#34d399); }
+  .stat-card.purple::before { background: linear-gradient(90deg,#7c3aed,#a78bfa); }
+  .stat-label-top {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .stat-card.blue   .stat-label-top { color: var(--blue); }
+  .stat-card.green  .stat-label-top { color: var(--green); }
+  .stat-card.purple .stat-label-top { color: var(--purple); }
+  .stat-icon-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .stat-icon {
+    width: 38px; height: 38px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+  }
+  .stat-card.blue   .stat-icon { background: var(--blue-light);   color: var(--blue); }
+  .stat-card.green  .stat-icon { background: var(--green-light);  color: var(--green); }
+  .stat-card.purple .stat-icon { background: var(--purple-light); color: var(--purple); }
+  .stat-value { font-size: 22px; font-weight: 800; letter-spacing: -0.4px; }
+  .stat-sub   { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  /* ── Sections ── */
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title i { color: var(--blue); font-size: 15px; }
+
+  /* ── Payment History ── */
+  .payment-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .payment-table { width: 100%; border-collapse: collapse; }
+  .payment-table th {
+    text-align: left;
+    padding: 11px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    background: var(--surface-2);
+    border-bottom: 1.5px solid var(--border);
+  }
+  .payment-table td {
+    padding: 14px 16px;
+    font-size: 13.5px;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  .payment-table tr:last-child td { border-bottom: none; }
+  .payment-table tr:hover td { background: var(--surface-2); }
+  .pay-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .pay-badge.paid    { background: var(--green-light);  color: var(--green); }
+  .pay-badge.pending { background: var(--amber-light);  color: var(--amber); }
+  .pay-badge.failed  { background: var(--red-light);    color: var(--red); }
+  .pay-id { font-family: 'Courier New', monospace; font-size: 12px; color: var(--text-muted); }
+  .pay-amount { font-weight: 700; }
+
+  /* ── Available Plans ── */
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .plan-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 20px 18px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .plan-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: #bfcfff; }
+  .plan-card.popular {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 1px var(--blue), var(--shadow-md);
+  }
+  .popular-badge {
+    position: absolute;
+    top: 14px; right: 14px;
+    background: var(--blue);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .plan-duration {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: 0.3px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .plan-name {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+    letter-spacing: -0.2px;
+  }
+  .plan-price {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 18px;
+  }
+  .plan-price .amount {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -1px;
+  }
+  .plan-price .currency {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+  }
+  .plan-price .period {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-left: 2px;
+  }
+  .plan-features {
+    list-style: none;
+    margin-bottom: 20px;
+  }
+  .plan-features li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .plan-features li:last-child { border-bottom: none; }
+  .plan-features li i { color: var(--green); font-size: 13px; }
+  .btn-plan {
+    width: 100%;
+    padding: 11px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    cursor: pointer;
+    border: 2px solid var(--blue);
+    background: transparent;
+    color: var(--blue);
+    transition: all 0.2s;
+  }
+  .btn-plan:hover, .plan-card.popular .btn-plan {
+    background: var(--blue);
+    color: #fff;
+  }
+
+  /* ── No Subscription ── */
+  .no-sub-state {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px 24px 32px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 20px;
+  }
+  .no-sub-icon {
+    width: 72px; height: 72px;
+    background: var(--blue-light);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 30px; color: var(--blue);
+    margin: 0 auto 16px;
+  }
+  .no-sub-state h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .no-sub-state p  { font-size: 14px; color: var(--text-secondary); max-width: 300px; margin: 0 auto 6px; line-height: 1.6; }
+
+  @media (max-width: 768px) {
+    .subs-page { padding: 16px 14px 40px; }
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    .stats-row  { grid-template-columns: repeat(2, 1fr); }
+    .plans-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .hero-stats { grid-template-columns: 1fr; }
+    .stats-row  { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="subs-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <h1><i class="bi bi-star-fill"></i> My Subscriptions</h1>
+      <p>Manage your active subscriptions and plans</p>
+    </div>
+    <a href="{% url 'subscriptions:plans' %}" class="btn-upgrade">
+      <i class="bi bi-lightning-fill"></i> Upgrade Plan
+    </a>
+  </div>
+
+  {% if active_subscription %}
+  <!-- ── Active Subscription Hero ── -->
+  <div class="active-sub-hero">
+    <div class="hero-top">
+      <div>
+        <div class="hero-plan-name">{{ active_subscription.plan.name }}</div>
+        <div class="hero-plan-sub">{{ active_subscription.plan.get_duration_months_display }}</div>
+      </div>
+      <span class="hero-status-badge">
+        <span class="dot"></span>
+        Active
+      </span>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-label">Plan Price</div>
+        <div class="hero-stat-value">${{ active_subscription.plan.price }}</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-label">Start Date</div>
+        <div class="hero-stat-value">{{ active_subscription.start_date|date:"M d, Y" }}</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-label">Expires</div>
+        <div class="hero-stat-value">{{ active_subscription.end_date|date:"M d, Y" }}</div>
+      </div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-label">
+        <span>Subscription Progress</span>
+        <span>{{ days_remaining }} days remaining</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" style="width: {{ progress_percent|default:'70' }}%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Stats Row ── -->
+  <div class="stats-row">
+    <div class="stat-card blue">
+      <div class="stat-label-top">Duration</div>
+      <div class="stat-icon-row">
+        <div class="stat-icon"><i class="bi bi-calendar3"></i></div>
+        <div>
+          <div class="stat-value">{{ active_subscription.plan.duration_months }}mo</div>
+          <div class="stat-sub">Total plan length</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-label-top">Status</div>
+      <div class="stat-icon-row">
+        <div class="stat-icon"><i class="bi bi-shield-check"></i></div>
+        <div>
+          <div class="stat-value">Active</div>
+          <div class="stat-sub">{{ active_subscription.get_status_display }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card purple">
+      <div class="stat-label-top">Payments</div>
+      <div class="stat-icon-row">
+        <div class="stat-icon"><i class="bi bi-credit-card"></i></div>
+        <div>
+          <div class="stat-value">{{ payment_count|default:"0" }}</div>
+          <div class="stat-sub">Total payments</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% else %}
+  <!-- No Active Subscription -->
+  <div class="no-sub-state">
+    <div class="no-sub-icon"><i class="bi bi-star"></i></div>
+    <h3>No active subscription</h3>
+    <p>Subscribe to a plan to unlock full access to all webinars and recordings.</p>
+  </div>
+  {% endif %}
+
+  <!-- ── Available Plans ── -->
+  {% if available_plans %}
+  <div class="section-title"><i class="bi bi-grid-1x2"></i> Available Plans</div>
+  <div class="plans-grid">
+    {% for plan in available_plans %}
+    <div class="plan-card {% if plan.is_popular %}popular{% endif %}">
+      {% if plan.is_popular %}<span class="popular-badge">⭐ Popular</span>{% endif %}
+      <div class="plan-duration">
+        <i class="bi bi-clock"></i> {{ plan.get_duration_months_display }}
+      </div>
+      <div class="plan-name">{{ plan.name }}</div>
+      <div class="plan-price">
+        <span class="currency">$</span>
+        <span class="amount">{{ plan.price }}</span>
+        <span class="period">/ {{ plan.get_duration_months_display|lower }}</span>
+      </div>
+      <ul class="plan-features">
+        <li><i class="bi bi-check-circle-fill"></i> Full webinar access</li>
+        <li><i class="bi bi-check-circle-fill"></i> All recordings included</li>
+        <li><i class="bi bi-check-circle-fill"></i> Priority support</li>
+        {% if plan.duration_months == 12 %}
+        <li><i class="bi bi-check-circle-fill"></i> 2 months free</li>
+        {% endif %}
+      </ul>
+      <a href="{% url 'subscriptions:plans' %}" class="btn-plan">
+        Get Started
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- ── Payment History ── -->
+  {% if payments %}
+  <div class="section-title"><i class="bi bi-clock-history"></i> Payment History</div>
+  <div class="payment-panel">
+    <table class="payment-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Plan</th>
+          <th>PayPal ID</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for payment in payments %}
+        <tr>
+          <td class="pay-id">#{{ payment.id }}</td>
+          <td><strong>{{ payment.plan.name }}</strong></td>
+          <td class="pay-id">{{ payment.paypal_id|default:"—" }}</td>
+          <td>
+            <span class="pay-badge {{ payment.status|lower }}">
+              {% if payment.status == 'PAID' %}<i class="bi bi-check-circle-fill"></i>{% endif %}
+              {% if payment.status == 'PENDING' %}<i class="bi bi-clock-fill"></i>{% endif %}
+              {% if payment.status == 'FAILED' %}<i class="bi bi-x-circle-fill"></i>{% endif %}
+              {{ payment.get_status_display }}
+            </span>
+          </td>
+          <td>{{ payment.created_at|date:"M d, Y" }}</td>
+          <td class="pay-amount">${{ payment.plan.price }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+
+</div>
+
+{% endblock %}

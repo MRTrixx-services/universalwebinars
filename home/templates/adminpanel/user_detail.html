@@ -1,0 +1,455 @@
+{% extends "adminpanel/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+.user-detail-container {
+    background: #f8f9fa;
+    min-height: 100vh;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    font-size: 14px;
+}
+
+.breadcrumb a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.breadcrumb span {
+    color: #94a3b8;
+}
+
+.detail-header {
+    background: white;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.user-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.user-main-info h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 8px 0;
+}
+
+.user-main-info p {
+    font-size: 16px;
+    color: #64748b;
+    margin: 0 0 16px 0;
+}
+
+.user-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge.active { background: #d1fae5; color: #065f46; }
+.badge.inactive { background: #fee2e2; color: #991b1b; }
+.badge.verified { background: #dbeafe; color: #1e40af; }
+.badge.staff { background: #fef3c7; color: #92400e; }
+
+.action-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    color: white;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.detail-card {
+    background: white;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-title i {
+    color: #4f46e5;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.info-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 15px;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.stat-box {
+    background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    border: 2px solid #c7d2fe;
+}
+
+.stat-box h3 {
+    font-size: 36px;
+    font-weight: 800;
+    color: #4f46e5;
+    margin: 0 0 8px 0;
+}
+
+.stat-box p {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.webinar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.webinar-item {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s;
+}
+
+.webinar-item:hover {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.webinar-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 8px 0;
+}
+
+.webinar-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.order-item {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-info h4 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 4px 0;
+}
+
+.order-info p {
+    font-size: 12px;
+    color: #64748b;
+    margin: 0;
+}
+
+.order-status {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.order-status.paid {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #94a3b8;
+}
+
+.empty-state i {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 1024px) {
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<div class="user-detail-container">
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+    <a href="{% url 'adminpanel:dashboard' %}"><i class="fas fa-home"></i> Dashboard</a>
+    <span>/</span>
+    <a href="{% url 'adminpanel:user_management' %}">User Management</a>
+    <span>/</span>
+    <span>{{ user_obj.first_name }} {{ user_obj.last_name }}</span>
+</div>
+
+<!-- HEADER -->
+<div class="detail-header">
+    <div class="user-header-content">
+        <div class="user-main-info">
+            <h1>{{ user_obj.first_name }} {{ user_obj.last_name }}</h1>
+            <p>{{ user_obj.email }}</p>
+            <div class="user-badges">
+                {% if user_obj.is_active %}
+                <span class="badge active"><i class="fas fa-check-circle"></i> Active</span>
+                {% else %}
+                <span class="badge inactive"><i class="fas fa-times-circle"></i> Inactive</span>
+                {% endif %}
+                
+                {% if user_obj.is_verified %}
+                <span class="badge verified"><i class="fas fa-certificate"></i> Verified</span>
+                {% endif %}
+                
+                {% if user_obj.is_staff %}
+                <span class="badge staff"><i class="fas fa-user-shield"></i> Staff</span>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <a href="{% url 'adminpanel:user_edit' user_obj.id %}" class="btn btn-primary">
+                <i class="fas fa-edit"></i> Edit User
+            </a>
+            <a href="{% url 'adminpanel:user_delete' user_obj.id %}" class="btn btn-danger" onclick="return confirm('Delete this user?')">
+                <i class="fas fa-trash"></i> Delete
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- DETAIL GRID -->
+<div class="detail-grid">
+    
+    <!-- LEFT COLUMN -->
+    <div>
+        <!-- USER INFORMATION -->
+        <div class="detail-card" style="margin-bottom: 24px;">
+            <h2 class="card-title">
+                <i class="fas fa-user"></i> User Information
+            </h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">First Name</span>
+                    <span class="info-value">{{ user_obj.first_name|default:"—" }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Last Name</span>
+                    <span class="info-value">{{ user_obj.last_name|default:"—" }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Email</span>
+                    <span class="info-value">{{ user_obj.email }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Phone</span>
+                    <span class="info-value">{{ user_obj.phone_number|default:"—" }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Company</span>
+                    <span class="info-value">{{ user_obj.company|default:"—" }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Country</span>
+                    <span class="info-value">{{ user_obj.country.name|default:"—" }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Joined Date</span>
+                    <span class="info-value">{{ user_obj.created_at|date:"M d, Y" }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Last Updated</span>
+                    <span class="info-value">{{ user_obj.updated_at|date:"M d, Y" }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ENROLLED WEBINARS -->
+        <div class="detail-card">
+            <h2 class="card-title">
+                <i class="fas fa-video"></i> Enrolled Webinars ({{ enrolled_webinars|length }})
+            </h2>
+            {% if enrolled_webinars %}
+            <div class="webinar-list">
+                {% for item in enrolled_webinars %}
+                <div class="webinar-item">
+                    <h3 class="webinar-title">{{ item.webinar.title }}</h3>
+                    <div class="webinar-meta">
+                        <span><i class="fas fa-tag"></i> {{ item.variant }}</span>
+                        <span><i class="fas fa-dollar-sign"></i> ${{ item.price }}</span>
+                        <span><i class="fas fa-calendar"></i> {{ item.date|date:"M d, Y" }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-video-slash"></i>
+                <p>No enrolled webinars</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- RIGHT COLUMN -->
+    <div>
+        <!-- STATISTICS -->
+        <div class="detail-card" style="margin-bottom: 24px;">
+            <h2 class="card-title">
+                <i class="fas fa-chart-bar"></i> Statistics
+            </h2>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+                <div class="stat-box">
+                    <h3>{{ total_orders }}</h3>
+                    <p>Total Orders</p>
+                </div>
+                <div class="stat-box">
+                    <h3>${{ total_spent }}</h3>
+                    <p>Total Spent</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- RECENT ORDERS -->
+        <div class="detail-card">
+            <h2 class="card-title">
+                <i class="fas fa-shopping-cart"></i> Recent Orders
+            </h2>
+            {% if orders %}
+            <div class="order-list">
+                {% for order in orders %}
+                <div class="order-item">
+                    <div class="order-info">
+                        <h4>{{ order.order_number }}</h4>
+                        <p>{{ order.created_at|date:"M d, Y h:i A" }}</p>
+                    </div>
+                    <span class="order-status paid">{{ order.status }}</span>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-shopping-cart"></i>
+                <p>No orders yet</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+</div>
+
+</div>
+
+{% endblock %}

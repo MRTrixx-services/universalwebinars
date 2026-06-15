@@ -1,0 +1,194 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'home/css/checkout.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="checkout-container">
+
+  <div class="checkout-heading">
+    <h1>Checkout</h1>
+  </div>
+
+  <div class="checkout-grid">
+
+    <!-- LEFT → BILLING -->
+    <div class="billing-card">
+
+      <h3>Billing Address</h3>
+      <p class="sub">Where should we send your order confirmation?</p>
+
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label>Street Address</label>
+          <input type="text" name="street" placeholder="123 Main street, apt 4B" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>City</label>
+            <input type="text" name="city" placeholder="New York" required>
+          </div>
+
+          <div class="form-group">
+            <label>State</label>
+            <input type="text" name="state" placeholder="NY" required>
+          </div>
+
+          <div class="form-group">
+            <label>ZIP</label>
+            <input type="text" name="zip" placeholder="10001" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Country</label>
+          <input type="text" name="country" placeholder="United States" required>
+        </div>
+
+        <div class="checkout-actions">
+          <a href="{% url 'cart:cart_page' %}" class="back-link">← Back to cart</a>
+
+        <button type="button" id="show-paypal" class="pay-btn">
+            Proceed to Secure Payment →
+          </button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- RIGHT → SUMMARY -->
+    <div class="summary-card">
+
+      <h3>Order Summary</h3>
+
+      <div class="summary-items">
+        {% for item in items %}
+        <div class="summary-item">
+          <div>
+  <strong class="checkout-title">{{ item.webinar.title }}</strong>
+
+  <div class="checkout-meta">
+    <div class="meta-item">
+      <i class="fas fa-user-tie"></i>
+      <span>{{ item.webinar.instructor.name }}</span>
+    </div>
+
+    <div class="meta-item">
+      <i class="fas fa-clock"></i>
+      <span>{{ item.webinar.duration_minutes }} min</span>
+    </div>
+  </div>
+
+  <small class="variant-text">{{ item.variant }}</small>
+</div>
+
+          <div>${{ item.price_snapshot }}</div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="summary-line">
+        <span>Subtotal</span>
+        <span>${{ total }}</span>
+      </div>
+
+      
+      <div class="summary-total">
+        <span>Total</span>
+        <strong>${{ total }}</strong>
+      </div>
+
+      <div id="paypal-button-container" style="margin-top:20px;"></div>
+
+      <!-- SUCCESS MODAL -->
+<div id="successModal" class="success-modal">
+  <div class="success-card">
+
+    <div class="tick">✓</div>
+
+    <h2>Payment Successful</h2>
+
+    <div id="successItems"></div>
+
+    <p class="amount">
+      Paid: <strong>$<span id="successTotal"></span></strong>
+    </p>
+
+    <button onclick="window.location.href='https://universalwebinars.com/profile/orders/'" class="continue-btn">
+      Continue
+    </button>
+
+  </div>
+</div>
+
+      <div class="help-box">
+        Need help?<br>
+        support@universalwebinars.com
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=USD&disable-funding=paylater"></script>
+<script>
+let paypalRendered = false;
+
+document.getElementById("show-paypal").addEventListener("click", function(e){
+    e.preventDefault();
+
+    
+    // Hide button and render PayPal only once
+    if(!paypalRendered){
+        this.style.display = "none";
+        paypalRendered = true;
+        
+        paypal.Buttons({
+
+            fundingSource: paypal.FUNDING.CARD,
+
+            createOrder: function(){
+                return fetch("/orders/paypal/create/{{ order.id }}/")
+                .then(res=>res.json())
+                .then(data=>data.id);
+            },
+
+            onApprove: function(data){
+                return fetch("/orders/paypal/capture/{{ order.id }}/")
+                .then(res=>res.json())
+                .then(d=>{
+                    if(d.success){
+                        const modal = document.getElementById("successModal");
+                        const itemsBox = document.getElementById("successItems");
+                        const totalBox = document.getElementById("successTotal");
+
+                        itemsBox.innerHTML = "";
+
+                        
+                        if(d.items && d.items.length > 0){
+                            d.items.forEach(i=>{
+                                itemsBox.innerHTML += `<p>${i.variant} — $${i.price}</p>`;
+                            });
+                        }
+
+                        totalBox.innerText = d.total || "{{ total }}";
+                        modal.style.display = "flex";
+                    } else {
+                        alert("Payment failed: " + (d.error || "Unknown error"));
+                    }
+                });
+            }
+
+        }).render('#paypal-button-container');
+    }
+});
+</script>
+
+{% endblock %}

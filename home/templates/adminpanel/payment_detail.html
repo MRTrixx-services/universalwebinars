@@ -1,0 +1,224 @@
+{% extends "adminpanel/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'home/css/payment_detail.css' %}">
+
+<div class="payment-detail-page">
+
+<!-- Header Section -->
+<div class="detail-header">
+    <a href="{% url 'adminpanel:payment_history' %}" class="btn-back">
+        <i class="fas fa-arrow-left"></i> Back to Payments
+    </a>
+    
+    <div class="header-content">
+        <h1>Payment Details</h1>
+        <p class="header-subtitle">Order #{{ order.order_number }}</p>
+    </div>
+    
+    <div class="header-status">
+        <span class="status-badge status-completed 
+            {% if order.status == 'PAID' %}status-completed
+            {% elif order.status == 'PENDING' %}status-pending
+            {% else %}status-failed
+            {% endif %}">
+            {{ order.status }}
+        </span>
+    </div>
+</div>
+
+<!-- Summary Card -->
+<div class="summary-card-premium">
+    <div class="summary-left">
+        <div class="summary-item">
+            <label>Invoice Number</label>
+            <p class="summary-value">{{ order.invoice_number }}</p>
+        </div>
+        <div class="summary-item">
+            <label>Payment Method</label>
+            <p class="summary-value"><i class="fab fa-paypal"></i> PayPal</p>
+        </div>
+        <div class="summary-item">
+            <label>Transaction Date</label>
+            <p class="summary-value">{{ order.created_at|date:"M d, Y" }}</p>
+        </div>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-right">
+        <label>Total Amount</label>
+        <h2 class="summary-amount">${{ order.total_amount }}</h2>
+        <p class="summary-meta">Fully Paid</p>
+    </div>
+</div>
+
+
+<div class="grid-layout">
+
+<!-- LEFT SIDE -->
+<div class="left-column">
+
+<!-- Transaction Information -->
+<div class="card">
+    <div class="card-header">
+        <h3><i class="fas fa-exchange-alt"></i> Transaction Information</h3>
+    </div>
+    <div class="info-grid-premium">
+        <div class="info-item">
+            <label>Transaction ID</label>
+            <p class="info-value">{{ order.payment_id }}</p>
+        </div>
+        <div class="info-item">
+            <label>Gateway Transaction ID</label>
+            <p class="info-value">{{ order.gateway_transaction_id }}</p>
+        </div>
+        <div class="info-item">
+            <label>Gateway Order ID</label>
+            <p class="info-value">{{ order.gateway_order_id }}</p>
+        </div>
+        <div class="info-item">
+            <label>Transaction Date & Time</label>
+            <p class="info-value">{{ order.created_at|date:"M d, Y h:i A" }}</p>
+        </div>
+    </div>
+</div>
+
+<!-- Customer Information -->
+<div class="card">
+    <div class="card-header">
+        <h3><i class="fas fa-user-circle"></i> Customer Information</h3>
+    </div>
+    <div class="info-grid-premium">
+        <div class="info-item full-width">
+            <label>Full Name</label>
+            <p class="info-value">{{ order.user.get_full_name }}</p>
+        </div>
+        <div class="info-item full-width">
+            <label>Email Address</label>
+            <p class="info-value"><a href="mailto:{{ order.user.email }}">{{ order.user.email }}</a></p>
+        </div>
+        <div class="info-item full-width">
+            <label>Platform</label>
+            <p class="info-value">UniversalWebinars</p>
+        </div>
+    </div>
+</div>
+
+<!-- Purchased Items -->
+<div class="card">
+    <div class="card-header">
+        <h3><i class="fas fa-graduation-cap"></i> Purchased Webinars</h3>
+    </div>
+    
+    {% if items %}
+    <div class="webinar-list">
+        {% for item in items %}
+        <div class="webinar-item-premium">
+            <div class="webinar-content">
+                <h4 class="webinar-title">{{ item.title }}</h4>
+                <div class="webinar-meta">
+                    <span class="variant-badge">{{ item.variant }}</span>
+                    <span class="webinar-date">
+                        <i class="fas fa-calendar"></i> {{ item.date|date:"M d, Y" }}
+                    </span>
+                </div>
+            </div>
+            <div class="webinar-price">${{ item.price }}</div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <i class="fas fa-inbox"></i>
+        <p>No webinars purchased</p>
+    </div>
+    {% endif %}
+</div>
+
+</div>
+
+
+<!-- RIGHT SIDE -->
+<div class="right-column">
+
+<!-- Invoice Actions Card -->
+<div class="card">
+    <div class="card-header">
+        <h3><i class="fas fa-file-invoice"></i> Invoice Actions</h3>
+    </div>
+    <div class="action-list">
+        <a href="{% url 'orders:download_invoice' order.order_number %}" class="action-btn btn-download">
+            <i class="fas fa-download"></i>
+            <span>Download Invoice</span>
+        </a>
+        <a href="{% url 'adminpanel:resend_invoice' order.order_number %}" class="action-btn btn-resend">
+            <i class="fas fa-paper-plane"></i>
+            <span>Resend Invoice</span>
+        </a>
+    </div>
+</div>
+
+<!-- Order Timeline -->
+<div class="card">
+    <div class="card-header">
+        <h3><i class="fas fa-history"></i> Order Timeline</h3>
+    </div>
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-marker completed"></div>
+            <div class="timeline-content">
+                <h4>Order Placed</h4>
+                <p class="timeline-date">{{ order.created_at|date:"M d, Y h:i A" }}</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-marker completed"></div>
+            <div class="timeline-content">
+                <h4>Payment Confirmed</h4>
+                <p class="timeline-date">{{ order.created_at|date:"M d, Y h:i A" }}</p>
+            </div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-marker completed"></div>
+            <div class="timeline-content">
+                <h4>Order Completed</h4>
+                <p class="timeline-date">{{ order.created_at|date:"M d, Y h:i A" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Payment Summary Card -->
+<div class="card payment-summary-card">
+    <div class="card-header">
+        <h3><i class="fas fa-receipt"></i> Payment Summary</h3>
+    </div>
+    <div class="summary-breakdown">
+        <div class="summary-row">
+            <span class="summary-label">Subtotal</span>
+            <span class="summary-value">${{ order.total_amount }}</span>
+        </div>
+        <div class="summary-row">
+            <span class="summary-label">Tax</span>
+            <span class="summary-value">$0.00</span>
+        </div>
+        <div class="summary-row">
+            <span class="summary-label">Discount</span>
+            <span class="summary-value">$0.00</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-row total-row">
+            <span class="summary-label">Total Amount</span>
+            <span class="summary-value total-amount">${{ order.total_amount }}</span>
+        </div>
+    </div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

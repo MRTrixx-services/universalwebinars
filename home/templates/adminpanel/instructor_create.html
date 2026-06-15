@@ -1,0 +1,213 @@
+{% extends "adminpanel/base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'home/css/instructor_form.css' %}">
+<!-- Select2 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<!-- Intl Tel Input -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css"/>
+
+<style>
+
+.admin-container{
+max-width:900px;
+background:white;
+padding:40px;
+border-radius:16px;
+box-shadow:0 10px 40px rgba(0,0,0,0.08);
+margin:20px auto;
+}
+
+.admin-container h2{
+margin-bottom:10px;
+font-weight:700;
+font-size:28px;
+color:#1a202c;
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.instructor-subtitle{
+color:#718096;
+font-size:14px;
+margin-bottom:30px;
+font-weight:400;
+}
+
+.select2-container{
+width:100% !important;
+}
+
+.select2-container--default .select2-selection--single{
+border:1px solid #e2e8f0 !important;
+border-radius:8px !important;
+height:42px !important;
+padding:4px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+line-height:34px !important;
+color:#4a5568 !important;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--single{
+border-color:#4f46e5 !important;
+box-shadow:0 0 0 3px rgba(79, 70, 229, 0.1) !important;
+}
+
+.iti{
+width:100%;
+}
+
+.iti input{
+height:42px;
+border-radius:8px;
+font-size:14px;
+}
+
+</style>
+
+<div class="admin-container">
+
+<h2><i class="fas fa-user-plus"></i> Add Instructor</h2>
+<p class="instructor-subtitle">Create and manage instructor profiles</p>
+
+<form method="POST" enctype="multipart/form-data" id="instructorForm" class="instructor-form">
+
+{% csrf_token %}
+
+<div class="form-row">
+<!-- Name -->
+<div class="form-group">
+<label class="form-label">Full Name <span class="required-star">*</span></label>
+<input type="text" name="name" class="form-control" required placeholder="Enter instructor name">
+<small class="form-hint">Enter complete name for display</small>
+</div>
+
+<!-- Designation -->
+<div class="form-group">
+<label class="form-label">Designation <span class="required-star">*</span></label>
+<input type="text" name="designation" class="form-control" required placeholder="e.g., Senior Developer, Product Manager">
+<small class="form-hint">Professional title or role</small>
+</div>
+</div>
+
+<div class="form-row">
+<!-- Company -->
+<div class="form-group">
+<label class="form-label">Company/Organization</label>
+<input type="text" name="organization" class="form-control" placeholder="e.g., Tech Company Inc.">
+<small class="form-hint">Current employer or company</small>
+</div>
+
+<!-- Email -->
+<div class="form-group">
+<label class="form-label">Email Address</label>
+<input type="email" name="email" class="form-control" placeholder="instructor@example.com">
+<small class="form-hint">Contact email address</small>
+</div>
+</div>
+
+<div class="form-row">
+<!-- Country -->
+<div class="form-group">
+<label class="form-label">Country</label>
+<select name="country" id="id_country" class="form-control select2-field">
+<option value="US">United States</option>
+<option value="IN">India</option>
+<option value="GB">United Kingdom</option>
+<option value="CA">Canada</option>
+<option value="AU">Australia</option>
+<option value="SG">Singapore</option>
+<option value="AE">United Arab Emirates</option>
+<option value="DE">Germany</option>
+<option value="FR">France</option>
+<option value="JP">Japan</option>
+</select>
+<small class="form-hint">Select country of residence</small>
+</div>
+
+<!-- Phone -->
+<div class="form-group">
+<label class="form-label">Mobile Number</label>
+<input type="tel" id="id_phone_number" name="phone_number" class="form-control" placeholder="+1 (555) 123-4567">
+<small class="form-hint">International phone number</small>
+</div>
+</div>
+<!-- Bio -->
+<div class="form-group">
+<label class="form-label">Bio/Description</label>
+<textarea name="bio" id="id_bio" rows="6" class="form-control" placeholder="Write a brief biography about the instructor..."></textarea>
+<small class="form-hint">Tell us about the instructor's experience and expertise</small>
+</div>
+
+<!-- Photo -->
+<div class="form-group">
+<label class="form-label">Profile Photo</label>
+<div class="photo-upload-wrapper">
+<input type="file" name="photo" class="photo-input" id="photoInput" accept="image/*">
+<div class="photo-upload-area" id="photoArea" onclick="document.getElementById('photoInput').click()">
+<div class="upload-icon">
+<i class="fas fa-cloud-upload-alt"></i>
+</div>
+<p class="upload-text">Drag your photo here or click to browse</p>
+<small class="upload-hint">JPG, PNG or GIF (Max 2MB)</small>
+</div>
+<div class="photo-preview" id="photoPreview" style="display:none;">
+<img id="photoImage" src="" alt="Preview">
+<button type="button" class="remove-photo-btn" onclick="removePhoto()">
+<i class="fas fa-times"></i>
+</button>
+</div>
+</div>
+</div>
+
+<div class="form-actions">
+<button type="submit" class="btn btn-create">
+<i class="fas fa-save"></i> Create Instructor
+</button>
+<a href="#" class="btn btn-cancel">
+<i class="fas fa-times"></i> Cancel
+</a>
+</div>
+
+</form>
+
+</div>
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<!-- Intl Tel -->
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+
+<script src="{% static 'home/js/instructor_create.js' %}"></script>
+
+<script>
+
+CKEDITOR.replace("id_bio",{
+
+height:200,
+contentsCss:[CKEDITOR.getUrl('contents.css')],
+toolbar:[
+{ name:'basicstyles', items:['Bold','Italic','Underline','Strike'] },
+{ name:'paragraph', items:['NumberedList','BulletedList'] },
+{ name:'links', items:['Link','Unlink'] },
+{ name:'clipboard', items:['Undo','Redo'] },
+{ name:'styles', items:['Format'] },
+{ name:'insert', items:['Table'] }
+],
+disableNativeSpellChecker: false
+
+})
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice {{ order.invoice_number }}</title>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; font-size: 11pt; color: #1e293b; line-height: 1.4; }
+        
+        .header { display: table; width: 100%; margin-bottom: 20px; border-bottom: 3px solid #0d6efd; padding-bottom: 15px; }
+        .header-left { display: table-cell; width: 70%; vertical-align: middle; }
+        .header-right { display: table-cell; width: 30%; text-align: right; vertical-align: middle; }
+        .company-name { font-size: 24pt; font-weight: bold; color: #0d6efd; }
+        .company-tagline { font-size: 9pt; color: #64748b; margin-top: 3px; }
+        .qr-code { width: 50px; height: 50px; }
+        
+        .invoice-title { text-align: center; margin: 20px 0; }
+        .invoice-title h1 { font-size: 28pt; color: #0f172a; margin-bottom: 5px; }
+        .invoice-number { font-size: 11pt; color: #64748b; }
+        .status-badge { display: inline-block; background: #22c55e; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 10pt; margin-top: 5px; }
+        
+        .info-grid { display: table; width: 100%; margin: 20px 0; }
+        .info-col { display: table-cell; width: 50%; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; vertical-align: top; }
+        .info-col h3 { font-size: 11pt; color: #0f172a; margin-bottom: 10px; border-bottom: 2px solid #0d6efd; padding-bottom: 5px; }
+        .info-col p { margin: 3px 0; font-size: 10pt; }
+        .info-col .name { font-weight: bold; font-size: 11pt; }
+        
+        .details-row { display: table; width: 100%; margin: 15px 0; background: #f8fafc; padding: 10px; border-radius: 5px; }
+        .detail-item { display: table-cell; width: 25%; padding: 5px; }
+        .detail-label { font-size: 8pt; color: #64748b; text-transform: uppercase; }
+        .detail-value { font-size: 10pt; font-weight: bold; color: #0f172a; margin-top: 2px; }
+        
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th { background: #0f172a; color: white; padding: 10px 8px; text-align: left; font-size: 10pt; }
+        td { padding: 10px 8px; border-bottom: 1px solid #e2e8f0; }
+        tr:last-child td { border-bottom: none; }
+        .item-title { font-weight: bold; color: #0f172a; }
+        .item-meta { font-size: 9pt; color: #64748b; }
+        .text-right { text-align: right; }
+        .amount { font-weight: bold; }
+        
+        .summary { width: 300px; margin: 20px 0 20px auto; border: 1px solid #e2e8f0; }
+        .summary-row { display: table; width: 100%; padding: 10px 15px; border-bottom: 1px solid #e2e8f0; }
+        .summary-row.total { background: #0f172a; color: white; font-weight: bold; font-size: 12pt; border-bottom: none; }
+        .summary-label { display: table-cell; }
+        .summary-value { display: table-cell; text-align: right; }
+        
+        .payment-info { background: #f0f9ff; border: 1px solid #bae6fd; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .payment-info h4 { color: #0369a1; font-size: 11pt; margin-bottom: 10px; }
+        .payment-info p { font-size: 10pt; color: #0f172a; }
+        
+        .access-info { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 5px; margin: 20px 0; }
+        .access-info h4 { color: #16a34a; font-size: 11pt; margin-bottom: 8px; }
+        .access-info p { font-size: 10pt; color: #166534; margin: 5px 0; }
+        
+        .terms { margin: 30px 0; padding: 20px; border: 1px solid #000; page-break-before: always; }
+        .terms h3 { font-size: 16pt; font-weight: bold; margin-bottom: 15px; text-transform: uppercase; }
+        .terms h4 { font-size: 12pt; font-weight: bold; margin: 12px 0 8px 0; }
+        .terms p { font-size: 10pt; margin: 6px 0; line-height: 1.6; text-align: justify; }
+        .terms ul { margin: 6px 0 12px 20px; }
+        .terms li { font-size: 10pt; margin: 4px 0; line-height: 1.5; }
+        .terms a { color: #0d6efd; text-decoration: none; }
+        .terms a:hover { text-decoration: underline; }
+        
+        .footer { text-align: center; margin-top: 30px; padding-top: 15px; border-top: 1px solid #e2e8f0; font-size: 9pt; color: #64748b; }
+        .footer p { margin: 2px 0; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="company-name">universalwebinars</div>
+            <div class="company-tagline">{{ company.address }}</div>
+            <div class="company-tagline">{{ company.website }}</div>
+        </div>
+        <div class="header-right">
+            <img src="data:image/png;base64,{{ qr_code }}" class="qr-code">
+            <div style="font-size: 7pt; color: #64748b; margin-top: 2px;">Scan to verify</div>
+        </div>
+    </div>
+    
+    <div class="invoice-title">
+        <h1>INVOICE</h1>
+        <div class="invoice-number">{{ order.invoice_number }}</div>
+        <div class="status-badge">{{ order.status }}</div>
+    </div>
+    
+    <div class="details-row">
+        <div class="detail-item">
+            <div class="detail-label">Invoice Number</div>
+            <div class="detail-value">{{ order.invoice_number }}</div>
+        </div>
+        <div class="detail-item">
+            <div class="detail-label">Transaction ID</div>
+            <div class="detail-value" style="font-size: 8pt;">{{ order.payment_id|default:"-" }}</div>
+        </div>
+        <div class="detail-item">
+            <div class="detail-label">Issue Date</div>
+            <div class="detail-value">{{ order.created_at|date:"M d, Y" }}</div>
+        </div>
+        <div class="detail-item">
+            <div class="detail-label">Payment Date</div>
+            <div class="detail-value">{{ order.created_at|date:"M d, Y" }}</div>
+        </div>
+    </div>
+    
+    <div class="info-grid">
+        <div class="info-col">
+            <h3>Bill To</h3>
+            <p class="name">{{ order.user.get_full_name|default:order.user.email }}</p>
+            <p>{{ order.user.email }}</p>
+            {% if order.user.phone_number %}
+            <p>{{ order.user.phone_number }}</p>
+            {% endif %}
+        </div>
+        <div class="info-col">
+            <h3>Issued By</h3>
+            <p class="name">{{ company.name }}</p>
+            <p>{{ company.address }}</p>
+            <p>{{ company.website }}</p>
+            <p>{{ company.email }}</p>
+        </div>
+    </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Type</th>
+                <th class="text-right">Qty</th>
+                <th class="text-right">Price</th>
+                <th class="text-right">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+    <td>
+        <div class="item-title">{{ item.webinar_title }}</div>
+        <div class="item-meta">
+            Webinar Access
+            {% if item.instructor_name %}
+                • {{ item.instructor_name }}
+            {% endif %}
+            {% if item.category_name %}
+                • {{ item.category_name }}
+            {% endif %}
+        </div>
+    </td>
+    <td>{{ item.variant }}</td>
+    <td class="text-right">1</td>
+    <td class="text-right amount">${{ item.price|floatformat:2 }}</td>
+    <td class="text-right amount">${{ item.price|floatformat:2 }}</td>
+</tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="summary">
+        <div class="summary-row">
+            <div class="summary-label">Subtotal</div>
+            <div class="summary-value">${{ order.total_amount|floatformat:2 }}</div>
+        </div>
+        <div class="summary-row total">
+            <div class="summary-label">Total (USD)</div>
+            <div class="summary-value">${{ order.total_amount|floatformat:2 }}</div>
+        </div>
+    </div>
+    
+    <div class="payment-info">
+        <h4>Payment Details</h4>
+        <p><strong>Method:</strong> PayPal &nbsp;&nbsp;|&nbsp;&nbsp; <strong>Currency:</strong> USD &nbsp;&nbsp;|&nbsp;&nbsp; <strong>Gateway ID:</strong> {{ order.payment_id|default:"-" }} &nbsp;&nbsp;|&nbsp;&nbsp; <strong>Date:</strong> {{ order.created_at|date:"M d, Y" }}</p>
+    </div>
+    
+    <div class="access-info">
+        <h4>Access Instructions</h4>
+        <p><strong>Live Webinar:</strong> Joining instructions will be emailed to you 24 hours before the scheduled session.</p>
+        <p><strong>Recorded Webinar:</strong> Access link will be available immediately in your account dashboard.</p>
+    </div>
+    
+    <div class="terms">
+        <h3>Terms & Policies</h3>
+        
+        <h4>Refund Policy</h4>
+        <p>Refunds may be approved only under the following circumstances:</p>
+        <ul>
+            <li><strong>Duplicate Payment:</strong> If you are charged twice for the same course or service, the duplicate transaction will be refunded after verification.</li>
+            <li><strong>Technical Issues:</strong> If you are unable to access the course or live session due to a verified technical issue on our platform (not due to user error, poor internet, or device incompatibility).</li>
+            <li><strong>Event or Session Cancelled by Organizer:</strong> If a scheduled live event, webinar, or session is cancelled by universalwebinars, participants will be eligible for a full refund or credit transfer to another program.</li>
+            <li><strong>Participant Cancellation with Prior Notice:</strong> If a participant cannot attend a live session and provides at least 48 hours' prior notice before the scheduled start time, a refund or credit transfer may be approved.</li>
+        </ul>
+        <p>No refunds will be issued for change of mind after content has been accessed. Subscription cancellation is available anytime. <a href="https://universalwebinars.com/refund-policy/">View Full Refund Policy</a></p>
+        
+        <h4>License & Use Policy</h4>
+        <p>Recorded content is licensed for personal use only for a period of 6 months from purchase date. Content must not be redistributed, shared, or used for commercial purposes without written permission from universalwebinars.</p>
+        
+        <h4>Support</h4>
+        <p>For questions or assistance, contact our support team at <a href="mailto:{{ company.email }}">{{ company.email }}</a>.</p>
+        
+        <p style="margin-top: 15px; text-align: center;">This is a computer generated invoice. No signature required.</p>
+        <p style="text-align: center;">{{ order.invoice_number }} | {{ order.created_at|date:"Y-m-d" }}</p>
+        <p style="text-align: center;">For queries, contact <a href="mailto:{{ company.email }}">{{ company.email }}</a></p>
+    </div>
+</body>
+</html>

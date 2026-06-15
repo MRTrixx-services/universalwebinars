@@ -1,0 +1,280 @@
+/* ================================================
+   UniversalWebinars — NAVBAR (BLUE ONLY)
+================================================ */
+
+.ws-navbar {
+  min-height: 70px;
+  padding: 0;
+  box-shadow: 0 2px 12px rgba(13,110,253,0.08);
+  border-bottom: 1px solid #e8f1ff !important;
+  z-index: 1030;
+}
+
+.ws-navbar.scrolled {
+  background: rgba(255,255,255,0.97) !important;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(13,110,253,0.12);
+}
+
+/* ── BRAND ── */
+.ws-logo-img {
+  height: 46px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover .ws-logo-img {
+  transform: scale(1.06) rotate(2deg);
+}
+
+.ws-brand-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.3px;
+}
+
+.ws-brand-sub {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* ── NAV LINKS ── */
+.ws-navbar .nav-link {
+  color: #334155;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  position: relative;
+  transition: color 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+}
+
+.ws-navbar .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #0d6efd, #1a7ed9);
+  border-radius: 2px;
+  transition: width 0.25s ease;
+}
+
+.ws-navbar .nav-link:hover {
+  color: #0d6efd;
+  background: #e8f1ff;
+}
+
+.ws-navbar .nav-link:hover::after {
+  width: 60%;
+}
+
+.ws-navbar .nav-link.active {
+  color: #0d6efd;
+  font-weight: 700;
+}
+
+.ws-navbar .nav-link.active::after {
+  width: 60%;
+}
+
+/* ── CART ── */
+.cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: linear-gradient(135deg, #0d6efd, #1a7ed9);
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 5px;
+  border-radius: 50px;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.ws-navbar .bi-cart3 {
+  font-size: 1.2rem;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.ws-navbar .nav-link:hover .bi-cart3 {
+  transform: scale(1.15) rotate(-5deg);
+  color: #0d6efd;
+}
+
+/* ── BUTTONS ── */
+.ws-navbar .btn {
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 8px 20px;
+  transition: all 0.25s ease;
+  border-radius: 50px !important;
+}
+
+.ws-navbar .btn-outline-primary {
+  border: 2px solid #0d6efd;
+  color: #0d6efd;
+}
+
+.ws-navbar .btn-outline-primary:hover {
+  background: #0d6efd;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(13,110,253,0.25);
+}
+
+.ws-navbar .btn-primary {
+  background: linear-gradient(135deg, #0a3d62, #0d6efd);
+  border: none;
+  box-shadow: 0 4px 12px rgba(13,110,253,0.25);
+}
+
+.ws-navbar .btn-primary:hover {
+  background: linear-gradient(135deg, #0d6efd, #1a7ed9);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(13,110,253,0.3);
+}
+
+/* ── TOGGLER ── */
+.navbar-toggler {
+  border: 1.5px solid #b6d0fe;
+  padding: 7px 10px;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+}
+
+.navbar-toggler:hover {
+  border-color: #0d6efd;
+  background: #e8f1ff;
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 3px rgba(13,110,253,0.15);
+}
+
+/* ── DROPDOWN ── */
+.dropdown-menu {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(13,110,253,0.12);
+  padding: 6px;
+  animation: ddSlide 0.2s ease;
+  min-width: 180px;
+}
+
+@keyframes ddSlide {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-item {
+  border-radius: 8px;
+  padding: 9px 14px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #334155;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: #e8f1ff;
+  color: #0d6efd;
+  transform: translateX(3px);
+}
+
+.dropdown-item.text-danger:hover {
+  background: #fef2f2;
+  color: #dc2626 !important;
+}
+
+.dropdown-divider { border-color: #f1f5f9; margin: 4px 0; }
+
+/* ── UNDERLINE for text-primary span - BLUE ONLY ── */
+.ws-brand-title .text-primary {
+  background: linear-gradient(90deg, #0d6efd, #1a7ed9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ================================================
+   RESPONSIVE
+================================================ */
+
+/* Tablet & Mobile collapse */
+@media (max-width: 991.98px) {
+
+  .navbar-collapse {
+    background: #fff;
+    border-top: 1px solid #e8f1ff;
+    padding: 16px 8px 20px;
+    margin-top: 4px;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 8px 24px rgba(13,110,253,0.08);
+  }
+
+  .ws-navbar .nav-link {
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+  }
+
+  .ws-navbar .nav-link::after { display: none; }
+
+  .ws-navbar .nav-link:hover,
+  .ws-navbar .nav-link.active {
+    background: #e8f1ff;
+    color: #0d6efd;
+  }
+
+  /* Center links on mobile */
+  .navbar-nav.mx-auto {
+    align-items: flex-start !important;
+    width: 100%;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+  }
+
+  .navbar-nav.mx-auto .nav-item {
+    width: 100%;
+  }
+
+  /* Right side on mobile */
+  .navbar-nav:last-child {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .ws-navbar .btn {
+    padding: 8px 18px;
+    font-size: 0.88rem;
+  }
+
+  .dropdown-menu {
+    position: static !important;
+    box-shadow: none;
+    border: 1px solid #e8f1ff;
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .ws-navbar .container-fluid {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .ws-brand-title { font-size: 1.1rem; }
+  .ws-logo-img { height: 38px; }
+}

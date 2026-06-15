@@ -1,0 +1,117 @@
+{% load static %}
+
+<footer class="ft-footer">
+
+  <!-- TOP GRADIENT BAR -->
+  <div class="ft-top-bar"></div>
+
+  <div class="ft-inner">
+
+    <!-- ═══════════════════════════════
+         ROW 1: Brand | Links | Newsletter
+    ═══════════════════════════════ -->
+    <div class="ft-main-grid">
+
+      <!-- BRAND -->
+      <div class="ft-brand-col">
+        <div class="ft-brand">
+          <img src="{% static 'home/images/logoo.png' %}" alt="UniversalWebinars Logo" class="ft-logo">
+          <div>
+            <h5 class="ft-brand-name">Daily<span>Respond</span></h5>
+            <small><i class="bi bi-mortarboard-fill"></i> The webinar expert</small>
+          </div>
+        </div>
+        <p class="ft-desc">
+          Your trusted platform for expert-led webinars and professional learning experiences across the United States.
+        </p>
+        <div class="ft-trust-badges">
+          <span><i class="bi bi-shield-check"></i> Secure</span>
+          <span><i class="bi bi-headset"></i> 24/7 Support</span>
+          <span><i class="bi bi-people"></i> 50K+ Users</span>
+        </div>
+      </div>
+
+      <!-- TRAINING -->
+      <div class="ft-links-col">
+        <h6 class="ft-heading"><i class="bi bi-mortarboard-fill"></i> Training</h6>
+        <ul class="ft-links">
+          <li><a href="{% url 'live_webinars:list' %}"><i class="bi bi-broadcast"></i> Live Webinars</a></li>
+          <li><a href="{% url 'recorded_webinars:list' %}"><i class="bi bi-collection-play-fill"></i> Recorded Webinars</a></li>
+          <!-- <li><a href="{% url 'accounts:register' %}"><i class="bi bi-people-fill"></i> Join With Us</a></li> -->
+          <li><a href="{% url 'home:about' %}"><i class="bi bi-info-circle-fill"></i> About Us</a></li>
+          <li><a href="{% url 'home:contact' %}"><i class="bi bi-envelope-fill"></i> Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- LEGAL -->
+      <div class="ft-links-col">
+        <h6 class="ft-heading"><i class="bi bi-shield-shaded"></i> Legal</h6>
+        <ul class="ft-links">
+          <li><a href="{% url 'home:terms' %}"><i class="bi bi-file-text-fill"></i> Terms & Conditions</a></li>
+          <li><a href="{% url 'home:privacy' %}"><i class="bi bi-lock-fill"></i> Privacy Policy</a></li>
+          <li><a href="{% url 'home:refund' %}"><i class="bi bi-arrow-return-left"></i> Refund Policy</a></li>
+          <li><a href="{% url 'home:shipping' %}"><i class="bi bi-truck"></i> Shipping & Return</a></li>
+        </ul>
+      </div>
+
+      <!-- NEWSLETTER -->
+      <div class="ft-newsletter-col">
+        <h6 class="ft-heading"><i class="bi bi-envelope-paper-fill"></i> Stay Updated</h6>
+        <p class="ft-newsletter-desc">Get the latest webinars and exclusive offers delivered to your inbox.</p>
+        <form class="ft-newsletter-form" id="newsletterForm" data-url="{% url 'home:newsletter_subscribe' %}">
+          {% csrf_token %}
+          <div class="ft-input-wrap">
+            <input type="email" id="newsletterEmail" placeholder="Your email address" required>
+            <button type="submit"><i class="bi bi-send-fill"></i></button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- ═══════════════════════════════
+         DIVIDER
+    ═══════════════════════════════ -->
+    <div class="ft-divider"></div>
+
+    <!-- ═══════════════════════════════
+         BOTTOM ROW
+    ═══════════════════════════════ -->
+    <div class="ft-bottom">
+      <div class="ft-copyright">
+        <i class="bi bi-c-circle"></i> {{ year|default:2026 }} UniversalWebinars. All rights reserved.
+      </div>
+
+      <a href="#" class="ft-top-btn" id="backToTop">
+        <i class="bi bi-arrow-up"></i>
+      </a>
+    </div>
+
+  </div>
+
+</footer>
+
+<script src="{% static 'home/js/footer.js' %}"></script>
+
+<style>
+.toast-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.toast-notification.show { opacity: 1; transform: translateX(0); }
+.toast-notification.success { background: linear-gradient(135deg, #28a745, #20c997); }
+.toast-notification.error { background: linear-gradient(135deg, #dc3545, #fd7e14); }
+</style>
