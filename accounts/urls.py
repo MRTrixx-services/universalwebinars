@@ -6,7 +6,8 @@ from .views import (
     forgot_password_view,
     verify_otp_view,
     resend_otp_view,
-    reset_password_view
+    reset_password_view,
+    activate_account,
 )
 
 app_name = "accounts"
@@ -19,4 +20,9 @@ urlpatterns = [
     path("verify-otp/", verify_otp_view, name="verify_otp"),
     path("resend-otp/", resend_otp_view, name="resend_otp"),
     path("reset-password/", reset_password_view, name="reset_password"),
+    path(
+    "activate/<uidb64>/<token>/",
+    activate_account,
+    name="activate_account",
+),
 ]

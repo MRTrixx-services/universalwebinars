@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Activate Your UniversalWebinars Account</title>
+</head>
+<body style="margin:0;padding:0;background:#f5f7fb;font-family:Arial,sans-serif;">
+
+<table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 0;background:#f5f7fb;">
+    <tr>
+        <td align="center">
+
+            <table width="650" cellpadding="0" cellspacing="0"
+                   style="background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.08);">
+
+                <!-- HEADER -->
+                <tr>
+                    <td align="center"
+                        style="background:linear-gradient(135deg,#0d6efd,#4f46e5);padding:40px 30px;color:#ffffff;">
+
+                        <h1 style="margin:0;font-size:32px;">
+                            UniversalWebinars
+                        </h1>
+
+                        <p style="margin-top:12px;font-size:16px;opacity:0.95;">
+                            Learn From Industry Experts Worldwide
+                        </p>
+
+                    </td>
+                </tr>
+
+                <!-- BODY -->
+                <tr>
+                    <td style="padding:50px 45px;">
+
+                        <h2 style="margin-top:0;color:#222;font-size:28px;">
+                            Welcome to UniversalWebinars 🚀
+                        </h2>
+
+                        <p style="font-size:16px;color:#555;line-height:1.8;">
+                            Hi <strong>{{ user.first_name|default:user.email }}</strong>,
+                        </p>
+
+                        <p style="font-size:16px;color:#555;line-height:1.8;">
+                            Thank you for joining UniversalWebinars.
+                        </p>
+
+                        <p style="font-size:16px;color:#555;line-height:1.8;">
+                            Your account has been created successfully. To start accessing live webinars,
+                            recorded sessions, certificates, and premium learning content,
+                            please activate your account.
+                        </p>
+
+                        <div style="text-align:center;margin:45px 0;">
+
+                            <a href="{{ activation_link }}"
+                               style="
+                               background:#0d6efd;
+                               color:#ffffff;
+                               text-decoration:none;
+                               padding:16px 40px;
+                               border-radius:8px;
+                               display:inline-block;
+                               font-size:16px;
+                               font-weight:700;">
+                                Activate My Account
+                            </a>
+
+                        </div>
+
+                        <p style="font-size:15px;color:#666;line-height:1.8;">
+                            If the button above doesn't work, copy and paste the following link into your browser:
+                        </p>
+
+                        <div style="
+                            background:#f7f8fc;
+                            padding:15px;
+                            border-radius:8px;
+                            word-break:break-all;
+                            color:#0d6efd;
+                            font-size:14px;">
+                            {{ activation_link }}
+                        </div>
+
+                        <hr style="margin:40px 0;border:none;border-top:1px solid #ececec;">
+
+                        <h3 style="margin-bottom:15px;color:#222;">
+                            What You Can Access
+                        </h3>
+
+                        <ul style="color:#555;line-height:2;">
+                            <li>🎓 Expert-Led Live Webinars</li>
+                            <li>📺 Recorded Webinar Library</li>
+                            <li>📜 Professional Certificates</li>
+                            <li>🌎 Global Industry Experts</li>
+                            <li>💡 Career & Skill Development Sessions</li>
+                        </ul>
+
+                        <p style="margin-top:35px;font-size:14px;color:#777;">
+                            If you did not create this account, you can safely ignore this email.
+                        </p>
+
+                    </td>
+                </tr>
+
+                <!-- FOOTER -->
+                <tr>
+                    <td align="center"
+                        style="background:#fafafa;padding:25px;color:#888;font-size:13px;">
+
+                        <p style="margin:0;">
+                            © 2026 UniversalWebinars. All Rights Reserved.
+                        </p>
+
+                        <p style="margin-top:8px;">
+                            Empowering Professionals Through Online Learning
+                        </p>
+
+                    </td>
+                </tr>
+
+            </table>
+
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
