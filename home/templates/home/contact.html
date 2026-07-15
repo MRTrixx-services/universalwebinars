@@ -44,30 +44,25 @@
 
         <div class="ct-info-card">
   <div class="ct-info-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0L6.343 16.657a8 8 0 1111.314 0z"/>
-      <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none"
+      viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0L6.343 16.657a8 8 0 1111.314 0z"/>
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
     </svg>
   </div>
 
   <div class="ct-info-text">
     <span class="ct-info-label">Office Address</span>
 
-    <span class="ct-info-value">
-      8506 Madison Ave,<br>
-      Suite A<br>
-      Fair Oaks, CA 95628,<br>
-      United States
-    </span>
+    <span id="office-address" class="ct-info-value"></span>
 
     <span class="ct-info-note">
       Corporate Office
     </span>
   </div>
 </div>
-
-        
-
         <div class="ct-info-card">
           <div class="ct-info-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -193,5 +188,18 @@
     </div>
   </div>
 </section>
+{% endblock %}
+{% block extra_js %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const encoded =
+    "ODUwNiBNYWRpc29uIEF2ZSw8YnI+U3VpdGUgQTxicj5GYWlyIE9ha3MsIENBIDk1NjI4LDxicj5Vbml0ZWQgU3RhdGVz";
+
+    document.getElementById("office-address").innerHTML = atob(encoded);
+
+});
+</script>
 
 {% endblock %}
