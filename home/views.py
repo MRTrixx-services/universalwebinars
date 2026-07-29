@@ -79,96 +79,96 @@ def about_view(request):
 
 def contact_view(request):
 
-    if request.method == "POST":
+    # if request.method == "POST":
 
-        full_name = request.POST.get("full_name", "").strip()
-        email = request.POST.get("email", "").strip()
-        company = request.POST.get("company", "").strip()
-        phone = request.POST.get("phone", "").strip()
-        subject = request.POST.get("subject", "").strip()
-        message = request.POST.get("message", "").strip()
+    #     full_name = request.POST.get("full_name", "").strip()
+    #     email = request.POST.get("email", "").strip()
+    #     company = request.POST.get("company", "").strip()
+    #     phone = request.POST.get("phone", "").strip()
+    #     subject = request.POST.get("subject", "").strip()
+    #     message = request.POST.get("message", "").strip()
 
-        # Validation
-        if not all([full_name, email, subject, message]):
-            messages.error(
-                request,
-                "Please fill in all required fields."
-            )
-            return render(request, "home/contact.html")
+      
+    #     if not all([full_name, email, subject, message]):
+    #         messages.error(
+    #             request,
+    #             "Please fill in all required fields."
+    #         )
+    #         return render(request, "home/contact.html")
 
-        try:
+    #     try:
 
-            # Save contact
-            Contact.objects.create(
-                full_name=full_name,
-                email=email,
-                company=company,
-                phone=phone,
-                subject=subject,
-                message=message
-            )
+     
+    #         Contact.objects.create(
+    #             full_name=full_name,
+    #             email=email,
+    #             company=company,
+    #             phone=phone,
+    #             subject=subject,
+    #             message=message
+    #         )
 
-            # Admin email
-            admin_context = {
-                "full_name": full_name,
-                "email": email,
-                "company": company,
-                "phone": phone,
-                "subject": subject,
-                "message": message,
-            }
+           
+    #         admin_context = {
+    #             "full_name": full_name,
+    #             "email": email,
+    #             "company": company,
+    #             "phone": phone,
+    #             "subject": subject,
+    #             "message": message,
+    #         }
 
-            admin_html = render_to_string(
-                "emails/contact_admin.html",
-                admin_context
-            )
+    #         admin_html = render_to_string(
+    #             "emails/contact_admin.html",
+    #             admin_context
+    #         )
 
-            admin_msg = EmailMultiAlternatives(
-                subject=f"New Contact Form Submission: {subject}",
-                body="",
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                to=[settings.EMAIL_HOST_USER],
-            )
+    #         admin_msg = EmailMultiAlternatives(
+    #             subject=f"New Contact Form Submission: {subject}",
+    #             body="",
+    #             from_email=settings.DEFAULT_FROM_EMAIL,
+    #             to=[settings.EMAIL_HOST_USER],
+    #         )
 
-            admin_msg.attach_alternative(admin_html, "text/html")
-            admin_msg.send()
+    #         admin_msg.attach_alternative(admin_html, "text/html")
+    #         admin_msg.send()
 
-            # User confirmation email
-            user_context = {
-                "full_name": full_name,
-                "subject": subject,
-            }
+           
+    #         user_context = {
+    #             "full_name": full_name,
+    #             "subject": subject,
+    #         }
 
-            user_html = render_to_string(
-                "emails/contact_confirmation.html",
-                user_context
-            )
+    #         user_html = render_to_string(
+    #             "emails/contact_confirmation.html",
+    #             user_context
+    #         )
 
-            user_msg = EmailMultiAlternatives(
-                subject="We received your message",
-                body="",
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                to=[email],
-            )
+    #         user_msg = EmailMultiAlternatives(
+    #             subject="We received your message",
+    #             body="",
+    #             from_email=settings.DEFAULT_FROM_EMAIL,
+    #             to=[email],
+    #         )
 
-            user_msg.attach_alternative(user_html, "text/html")
-            user_msg.send()
+    #         user_msg.attach_alternative(user_html, "text/html")
+    #         user_msg.send()
 
-            messages.success(
-                request,
-                "Thank you for reaching out! We'll get back to you soon."
-            )
+    #         messages.success(
+    #             request,
+    #             "Thank you for reaching out! We'll get back to you soon."
+    #         )
 
-            return redirect("home:contact")
+    #         return redirect("home:contact")
 
-        except Exception as e:
+    #     except Exception as e:
 
-            messages.error(
-                request,
-                f"An error occurred. Please try again. Error: {str(e)}"
-            )
+    #         messages.error(
+    #             request,
+    #             f"An error occurred. Please try again. Error: {str(e)}"
+    #         )
 
-            return render(request, "home/contact.html")
+    #         return render(request, "home/contact.html")
 
     return render(request, "home/contact.html")
 
@@ -295,43 +295,43 @@ def search_webinars(request):
     )
 
 
-@require_POST
-def newsletter_subscribe(request):
+# @require_POST
+# def newsletter_subscribe(request):
 
-    email = request.POST.get("email", "").strip()
+#     email = request.POST.get("email", "").strip()
 
-    if not email:
-        return JsonResponse({
-            "success": False,
-            "message": "Email is required"
-        })
+#     if not email:
+#         return JsonResponse({
+#             "success": False,
+#             "message": "Email is required"
+#         })
 
-    try:
+#     try:
 
-        subscriber, created = (
-            NewsletterSubscriber.objects
-            .get_or_create(email=email)
-        )
+#         subscriber, created = (
+#             NewsletterSubscriber.objects
+#             .get_or_create(email=email)
+#         )
 
-        if created:
-            return JsonResponse({
-                "success": True,
-                "message": (
-                    "Thank you for subscribing! "
-                    "Stay updated with our latest webinars and offers."
-                )
-            })
+#         if created:
+#             return JsonResponse({
+#                 "success": True,
+#                 "message": (
+#                     "Thank you for subscribing! "
+#                     "Stay updated with our latest webinars and offers."
+#                 )
+#             })
 
-        return JsonResponse({
-            "success": False,
-            "message": "This email is already subscribed"
-        })
+#         return JsonResponse({
+#             "success": False,
+#             "message": "This email is already subscribed"
+#         })
 
-    except Exception:
-        return JsonResponse({
-            "success": False,
-            "message": "An error occurred. Please try again."
-        })
+#     except Exception:
+#         return JsonResponse({
+#             "success": False,
+#             "message": "An error occurred. Please try again."
+#         })
 
 
 @require_POST

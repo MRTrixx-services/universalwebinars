@@ -273,11 +273,17 @@ Continue <i class="fas fa-arrow-right"></i>
 <div id="recordedPricingFields" class="price-grid" style="display:none">
 <div class="price-field">
 <label>Single User</label>
-<input name="recorded_single_price_only" placeholder="$">
+<input
+    name="recorded_single_price_only"
+    value="{{ pricing.recorded_single_price }}"
+    placeholder="$">
 </div>
 <div class="price-field">
 <label>Multi User</label>
-<input name="recorded_multi_price_only" placeholder="$">
+<input
+    name="recorded_multi_price_only"
+    value="{{ pricing.recorded_multi_price }}"
+    placeholder="$">
 </div>
 </div>
 </div>

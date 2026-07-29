@@ -58,11 +58,11 @@
       <div class="ft-newsletter-col">
         <h6 class="ft-heading"><i class="bi bi-envelope-paper-fill"></i> Stay Updated</h6>
         <p class="ft-newsletter-desc">Get the latest webinars and exclusive offers delivered to your inbox.</p>
-        <form class="ft-newsletter-form" id="newsletterForm" data-url="{% url 'home:newsletter_subscribe' %}">
+        <form class="ft-newsletter-form">
           {% csrf_token %}
           <div class="ft-input-wrap">
             <input type="email" id="newsletterEmail" placeholder="Your email address" required>
-            <button type="submit"><i class="bi bi-send-fill"></i></button>
+            <button><i class="bi bi-send-fill"></i></button>
           </div>
         </form>
       </div>

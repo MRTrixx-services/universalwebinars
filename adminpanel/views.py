@@ -410,14 +410,23 @@ def create_webinar(request):
 
    
 
-            single_price = request.POST.get("recorded_single_price_only")
+            pricing = GlobalPricing.get_pricing()
 
-            if single_price:
-                RecordedWebinarPricing.objects.create(
-                    webinar=webinar,
-                    single_price=single_price,
-                    multi_user_price=request.POST.get("recorded_multi_price_only"),
-                )
+            single_price = (
+                request.POST.get("recorded_single_price_only")
+                or pricing.recorded_single_price
+            )
+
+            multi_price = (
+                request.POST.get("recorded_multi_price_only")
+                or pricing.recorded_multi_price
+            )
+
+            RecordedWebinarPricing.objects.create(
+                webinar=webinar,
+                single_price=single_price,
+                multi_user_price=multi_price,
+            )
 
         return redirect("adminpanel:webinar_management")
 
