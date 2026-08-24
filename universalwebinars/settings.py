@@ -37,15 +37,10 @@ ALLOWED_HOSTS = [
 
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://universalwebinars.com",
-    "https://www.universalwebinars.com",
-    
+    "https://hrtrusts.com",
+    "https://www.hrtrusts.com",
 ]
 
-# CSRF_TRUSTED_ORIGINS = [
-#     "https://dailyrespond.com",
-#     "https://www.dailyrespond.com",
-# ]
 
 # Application definition
 
@@ -238,7 +233,7 @@ STATICFILES_DIRS = [
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 
-CKEDITOR_UPLOAD_PATH = "uploads/"
+
 
 CKEDITOR_CONFIGS = {
     "default": {
@@ -329,12 +324,12 @@ else:
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_SAMESITE = "Lax"
-    SESSION_COOKIE_DOMAIN = ".universalwebinars.com"
+    SESSION_COOKIE_DOMAIN = ".hrtrusts.com"
 
     CSRF_COOKIE_SECURE = True
     CSRF_COOKIE_HTTPONLY = False
     CSRF_COOKIE_SAMESITE = "Lax"
-    CSRF_COOKIE_DOMAIN = ".universalwebinars.com"
+    CSRF_COOKIE_DOMAIN = ".hrtrusts.com"
 
     # HTTPS is enforced by Nginx/Cloudflare.
     # Keep Django redirect disabled to avoid proxy redirect loops.
