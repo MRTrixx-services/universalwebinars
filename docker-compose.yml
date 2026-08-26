@@ -21,7 +21,7 @@ services:
     build: .
     container_name: uw_web
     restart: unless-stopped
-    command: gunicorn universalwebinars.wsgi:application --bind 0.0.0.0:8000 --workers 3 --threads 2 --timeout 120
+    command: gunicorn universalwebinars.wsgi:application --bind 0.0.0.0:8000 --workers 3 --threads 2 --worker-class gthread --timeout 120 --keep-alive 5 --max-requests 2000 --max-requests-jitter 200
     volumes:
       - .:/app
       - ./media:/app/media
