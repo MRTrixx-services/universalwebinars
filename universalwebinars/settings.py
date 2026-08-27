@@ -136,55 +136,55 @@ PAYPAL_BASE = "https://api-m.paypal.com"
 
 
 
-if DEBUG:
+# if DEBUG:
 
-    STATIC_URL = "/static/"
-    STATIC_ROOT = BASE_DIR / "staticfiles"
+#     STATIC_URL = "/static/"
+#     STATIC_ROOT = BASE_DIR / "staticfiles"
 
-    MEDIA_URL = "/media/"
-    MEDIA_ROOT = BASE_DIR / "media"
+#     MEDIA_URL = "/media/"
+#     MEDIA_ROOT = BASE_DIR / "media"
 
-    STATICFILES_DIRS = [
-        BASE_DIR / "static",
-    ]
+#     STATICFILES_DIRS = [
+#         BASE_DIR / "static",
+#     ]
 
-else:
+# else:
 
-    AWS_ACCESS_KEY_ID = os.getenv("R2_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = os.getenv("R2_SECRET_ACCESS_KEY")
+#     AWS_ACCESS_KEY_ID = os.getenv("R2_ACCESS_KEY_ID")
+#     AWS_SECRET_ACCESS_KEY = os.getenv("R2_SECRET_ACCESS_KEY")
 
-    AWS_STORAGE_BUCKET_NAME = os.getenv("R2_BUCKET_NAME")
+#     AWS_STORAGE_BUCKET_NAME = os.getenv("R2_BUCKET_NAME")
 
-    AWS_S3_ENDPOINT_URL = os.getenv("R2_ENDPOINT_URL")
+#     AWS_S3_ENDPOINT_URL = os.getenv("R2_ENDPOINT_URL")
 
-    AWS_S3_REGION_NAME = "auto"
-    AWS_S3_SIGNATURE_VERSION = "s3v4"
-    AWS_S3_ADDRESSING_STYLE = "path"
+#     AWS_S3_REGION_NAME = "auto"
+#     AWS_S3_SIGNATURE_VERSION = "s3v4"
+#     AWS_S3_ADDRESSING_STYLE = "path"
 
-    AWS_DEFAULT_ACL = None
-    AWS_QUERYSTRING_AUTH = False
-    AWS_S3_FILE_OVERWRITE = False
-    AWS_S3_VERIFY = True
+#     AWS_DEFAULT_ACL = None
+#     AWS_QUERYSTRING_AUTH = False
+#     AWS_S3_FILE_OVERWRITE = False
+#     AWS_S3_VERIFY = True
 
-    AWS_S3_CUSTOM_DOMAIN = os.getenv("R2_CUSTOM_DOMAIN").replace(
-        "https://", ""
-    )
+#     AWS_S3_CUSTOM_DOMAIN = os.getenv("R2_CUSTOM_DOMAIN").replace(
+#         "https://", ""
+#     )
 
-    AWS_S3_OBJECT_PARAMETERS = {
-        "CacheControl": "max-age=86400",
-    }
+#     AWS_S3_OBJECT_PARAMETERS = {
+#         "CacheControl": "max-age=86400",
+#     }
 
-    STORAGES = {
-        "default": {
-            "BACKEND": "universalwebinars.storage_backends.MediaStorage",
-        },
-        "staticfiles": {
-            "BACKEND": "universalwebinars.storage_backends.StaticStorage",
-        },
-    }
+#     STORAGES = {
+#         "default": {
+#             "BACKEND": "universalwebinars.storage_backends.MediaStorage",
+#         },
+#         "staticfiles": {
+#             "BACKEND": "universalwebinars.storage_backends.StaticStorage",
+#         },
+#     }
 
-    STATIC_URL = f"{os.getenv('R2_CUSTOM_DOMAIN')}/static/"
-    MEDIA_URL = f"{os.getenv('R2_CUSTOM_DOMAIN')}/media/"
+#     STATIC_URL = f"{os.getenv('R2_CUSTOM_DOMAIN')}/static/"
+#     MEDIA_URL = f"{os.getenv('R2_CUSTOM_DOMAIN')}/media/"
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -228,6 +228,13 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 # MEDIA_URL = "/media/"
 # MEDIA_ROOT = BASE_DIR / "media"
 CKEDITOR_UPLOAD_PATH = "uploads/"
