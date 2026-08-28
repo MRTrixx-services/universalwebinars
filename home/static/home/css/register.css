@@ -14,7 +14,7 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  background: linear-gradient(135deg, #e8f1ff 0%, #f0f4ff 50%, #e8f0fe 100%);
+  background: linear-gradient(135deg, #fff3e6 0%, #fff7ed 50%, #ffedd5 100%);
   padding: 40px 20px;
 }
 
@@ -27,7 +27,7 @@ body {
   min-height: 600px;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 10px 60px rgba(13,110,253,0.15);
+  box-shadow: 0 10px 60px rgba(249,115,22,0.15);
 }
 
 /* ==================== LEFT SECTION - REGISTER FORM ==================== */
@@ -65,17 +65,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0d6efd;
+  color: #ff8500;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-size: 16px;
 }
 
 .social-icon:hover {
-  border-color: #0d6efd;
-  background: linear-gradient(135deg, #0a3d62 0%, #0d6efd 100%);
+  border-color: #ff8500;
+  background: linear-gradient(135deg, #f97316 0%, #ff8500 100%);
   color: white;
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(13,110,253,0.3);
+  box-shadow: 0 5px 15px rgba(249,115,22,0.3);
 }
 
 /* ==================== ERROR ALERT ==================== */
@@ -182,15 +182,15 @@ body {
 .register-form input[type="tel"]:focus,
 .register-form select:focus {
   outline: none;
-  border-color: #0d6efd;
+  border-color: #ff8500;
   background: white;
-  box-shadow: 0 0 0 4px rgba(13,110,253,0.1);
+  box-shadow: 0 0 0 4px rgba(249,115,22,0.1);
 }
 
 .register-form select {
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230d6efd' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ff8500' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
   padding-right: 36px;
@@ -209,9 +209,9 @@ body {
 
 .select2-search__field:focus {
   outline: none !important;
-  border-color: #0d6efd !important;
+  border-color: #ff8500 !important;
   background: white !important;
-  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1) !important;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1) !important;
 }
 
 /* ==================== SELECT2 OVERRIDE ==================== */
@@ -240,8 +240,8 @@ body {
 }
 
 .select2-container--default.select2-container--open .select2-selection--single {
-  border-color: #0d6efd !important;
-  box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1) !important;
+  border-color: #ff8500 !important;
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1) !important;
 }
 
 .select2-dropdown {
@@ -257,7 +257,7 @@ body {
 }
 
 .select2-results__option--highlighted[aria-selected] {
-  background: linear-gradient(135deg, #0a3d62 0%, #0d6efd 100%) !important;
+  background: linear-gradient(135deg, #f97316 0%, #ff8500 100%) !important;
   color: white !important;
 }
 
@@ -284,9 +284,9 @@ body {
 }
 
 .iti input:focus {
-  border-color: #0d6efd !important;
+  border-color: #ff8500 !important;
   background: white !important;
-  box-shadow: 0 0 0 4px rgba(13,110,253,0.1) !important;
+  box-shadow: 0 0 0 4px rgba(249,115,22,0.1) !important;
   outline: none !important;
 }
 
@@ -315,14 +315,14 @@ body {
 }
 
 .terms-section a {
-  color: #0d6efd;
+  color: #ff8500;
   text-decoration: none;
   font-weight: 600;
   transition: all 0.3s;
 }
 
 .terms-section a:hover {
-  color: #1a7ed9;
+  color: #ff9d1a;
   text-decoration: underline;
 }
 
@@ -330,7 +330,7 @@ body {
 .btn-register {
   width: 100%;
   padding: 13px;
-  background: linear-gradient(135deg, #0a3d62 0%, #0d6efd 55%, #1a7ed9 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ff8500 55%, #ff9d1a 100%);
   border: none;
   color: white;
   font-weight: 700;
@@ -339,14 +339,14 @@ body {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: 'Inter', sans-serif;
-  box-shadow: 0 4px 15px rgba(13,110,253,0.25);
+  box-shadow: 0 4px 15px rgba(249,115,22,0.25);
   text-transform: capitalize;
 }
 
 .btn-register:hover {
-  background: linear-gradient(135deg, #0d6efd 0%, #1a7ed9 100%);
+  background: linear-gradient(135deg, #ff8500 0%, #ff9d1a 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 22px rgba(13,110,253,0.35);
+  box-shadow: 0 6px 22px rgba(249,115,22,0.35);
 }
 
 .btn-register:active {
@@ -355,7 +355,7 @@ body {
 
 /* ==================== RIGHT SECTION - TOGGLE PANEL - BLUE ONLY ==================== */
 .toggle-section {
-  background: linear-gradient(135deg, #0a3d62 0%, #0d6efd 55%, #1a7ed9 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ff8500 55%, #ff9d1a 100%);
   color: white;
   padding: 50px 45px;
   display: flex;
@@ -426,7 +426,7 @@ body {
 
 .btn-signin:hover {
   background: white;
-  color: #0d6efd;
+  color: #ff8500;
   transform: translateY(-2px);
   box-shadow: 0 5px 20px rgba(255,255,255,0.3);
 }
