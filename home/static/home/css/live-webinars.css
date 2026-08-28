@@ -5,12 +5,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-    --blue-primary:   #0f4c81;
-    --blue-mid:       #0d6efd;
-    --blue-light:     #3b82f6;
-    --blue-pale:      #e8f1ff;
-    --blue-border:    #b6d0fe;
-    --pink:           #ff0066;
+    --blue-primary:   #f97316;
+    --blue-mid:       #ff8500;
+    --blue-light:     #ff9d1a;
+    --blue-pale:      #fff3e6;
+    --blue-border:    #ffd2a6;
+    --pink:           #111827;
     --green-badge:    #16a34a;
     --green-pale:     #dcfce7;
     --text-dark:      #0f172a;
@@ -19,8 +19,8 @@
     --text-muted:     #94a3b8;
     --surface:        #ffffff;
     --bg:             #f0f4fb;
-    --shadow-card:    0 2px 12px rgba(13,110,253,0.10);
-    --shadow-hover:   0 12px 36px rgba(13,110,253,0.20);
+    --shadow-card:    0 2px 12px rgba(249,115,22,0.10);
+    --shadow-hover:   0 12px 36px rgba(249,115,22,0.20);
     --radius-card:    14px;
 }
 
@@ -37,7 +37,12 @@ body { font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
    HERO TITLE SECTION
 ══════════════════════════════════════════ */
 .lw-hero {
-    background: linear-gradient(135deg, #0f4c81 0%, #0d6efd 55%, #1a56db 100%);
+    background: linear-gradient(
+        135deg,
+        #ff8500 0%,
+        #ff8500 55%,
+        #ff8500 100%
+    );
     padding: 16px 24px 20px;
     text-align: center;
     position: relative;
@@ -72,7 +77,7 @@ body { font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
 
 .lw-live-dot {
     font-size: 8px;
-    color: #ff0066;
+    color: #111827;
     animation: livePulse 1.2s infinite;
 }
 
@@ -86,7 +91,7 @@ body { font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
 }
 
 .lw-hero-title span {
-    background: linear-gradient(90deg, #7dd3fc, #ff80ab);
+    background: linear-gradient(90deg, #fff7ed, #ffb347);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -231,7 +236,7 @@ body { font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
 /* Filter button */
 .lw-filter-btn {
     flex-shrink: 0;
-    background: linear-gradient(135deg, #0f4c81, #0d6efd);
+    background: linear-gradient(135deg, #f97316, #ff8500);
     color: white;
     border: none;
     padding: 10px 22px;
@@ -248,15 +253,15 @@ body { font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
 }
 
 .lw-filter-btn:hover {
-    background: linear-gradient(135deg, #0f4c81, #0d6efd);
+    background: linear-gradient(135deg, #f97316, #ff8500);
     transform: translateY(-1px);
-    box-shadow: 0 5px 14px rgba(13,110,253,0.35);
+    box-shadow: 0 5px 14px rgba(249,115,22,0.35);
 }
 
 .lw-filter-dot {
     width: 8px;
     height: 8px;
-    background: #ff0066;
+    background: #111827;
     border-radius: 50%;
     border: 2px solid #fff;
     position: absolute;
@@ -377,13 +382,13 @@ body { font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
     padding: 9px 22px;
     border-radius: 8px;
     border: none;
-    background: linear-gradient(135deg, #0f4c81, #0d6efd);
+    background: linear-gradient(135deg, #f97316, #ff8500);
     cursor: pointer;
     transition: all .28s;
 }
 .lw-filter-apply:hover {
-    background: linear-gradient(135deg, #0f4c81, #0d6efd);
-    box-shadow: 0 5px 14px rgba(13,110,253,0.35);
+    background: linear-gradient(135deg, #f97316, #ff8500);
+    box-shadow: 0 5px 14px rgba(249,115,22,0.35);
     transform: translateY(-1px);
 }
 
@@ -420,7 +425,7 @@ body { font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
 
 .webinar-card-header {
     position: relative;
-    background: linear-gradient(135deg, #0f4c81 0%, #0d6efd 100%);
+    background: linear-gradient(135deg, #f97316 0%, #ff8500 100%);
     padding: 20px 18px 16px;
     display: flex;
     align-items: center;
@@ -593,7 +598,7 @@ body { font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
 
 .enroll-btn {
     display: inline-block;
-    background: linear-gradient(135deg, #0f4c81 0%, #0d6efd 100%);
+    background: linear-gradient(135deg, #f97316 0%, #ff8500 100%);
     color: white;
     border: none;
     padding: 9px 18px;
@@ -605,13 +610,13 @@ body { font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
     text-decoration: none;
     white-space: nowrap;
     transition: all .28s;
-    box-shadow: 0 3px 10px rgba(13,110,253,0.3);
+    box-shadow: 0 3px 10px rgba(249,115,22,0.30);
 }
 
 .enroll-btn:hover {
-    background: linear-gradient(135deg, #0f4c81 0%, #0d6efd 100%);
+    background: linear-gradient(135deg, #f97316 0%, #ff8500 100%);
     transform: translateY(-1px);
-    box-shadow: 0 6px 18px rgba(13,110,253,0.35);
+    box-shadow: 0 6px 18px rgba(249,115,22,0.35);
     color: white;
     text-decoration: none;
 }
@@ -678,7 +683,7 @@ body { font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
 .lw-perpage-form select:focus {
     outline: none;
     border-color: var(--blue-mid);
-    box-shadow: 0 0 0 3px rgba(13,110,253,0.1);
+    box-shadow: 0 0 0 3px rgba(249,115,22,0.10);
 }
 
 .lw-pag-center {
@@ -710,19 +715,19 @@ body { font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
 }
 
 .lw-pag-btn:hover:not(.disabled):not(.active) {
-    background: linear-gradient(135deg, #0d6efd, #0f4c81);
+    background: linear-gradient(135deg, #ff8500, #f97316);
     color: white;
     border-color: transparent;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(13,110,253,0.3);
+    box-shadow: 0 4px 12px rgba(249,115,22,0.30);
     text-decoration: none;
 }
 
 .lw-pag-btn.active {
-    background: linear-gradient(135deg, #0f4c81, #0d6efd);
+    background: linear-gradient(135deg, #f97316, #ff8500);
     color: white;
     border-color: transparent;
-    box-shadow: 0 4px 12px rgba(13,110,253,0.35);
+    box-shadow: 0 4px 12px rgba(249,115,22,0.35);
     cursor: default;
 }
 
@@ -777,7 +782,7 @@ body { font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: #0d6efd;
+    background: #ff8500;
     color: #ffffff;
     font-size: 10px;
     font-weight: 700;
@@ -791,5 +796,5 @@ body { font-family: 'Plus Jakarta Sans', 'Segoe UI', sans-serif; }
 }
 
 .lw-filter-label:hover .filter-count {
-    background: #ff0066;
+    background: #111827;
 }

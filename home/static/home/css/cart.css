@@ -132,7 +132,7 @@
 .cart-header h2 {
   font-size: 2.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #0a3d62 0%, #0d6efd 55%, #1a7ed9 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ff8500 55%, #ff9d1a 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -163,7 +163,7 @@
   left: 0;
   width: 4px;
   height: 100%;
-  background: linear-gradient(180deg, #0a3d62 0%, #0d6efd 55%, #1a7ed9 100%);
+  background: linear-gradient(180deg, #f97316 0%, #ff8500 55%, #ff9d1a 100%);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -173,8 +173,8 @@
 }
 
 .cart-card:hover {
-  box-shadow: 0 8px 30px rgba(13,110,253,0.12);
-  border-color: #b6d0fe;
+  box-shadow: 0 8px 30px rgba(249,115,22,0.12);
+  border-color: #ffd2a6;
   transform: translateY(-2px);
 }
 
@@ -222,7 +222,7 @@
 
 .instructor-name i,
 .duration-info i {
-  color: #0d6efd;
+  color: #ff8500;
   font-size: 0.85rem;
 }
 
@@ -235,8 +235,8 @@
 }
 
 .variant-pill {
-  background: linear-gradient(135deg, #e8f1ff 0%, #e0eaff 100%);
-  color: #0a3d62;
+  background: linear-gradient(135deg, #fff3e6 0%, #fff3e6 100%);
+  color: #f97316;
   padding: 6px 14px;
   border-radius: 100px;
   font-size: 0.8rem;
@@ -244,7 +244,7 @@
   letter-spacing: 0.02em;
   display: inline-flex;
   align-items: center;
-  border: 1px solid #b6d0fe;
+  border: 1px solid #ffd2a6;
 }
 
 .credit-badge {
@@ -285,7 +285,7 @@
 }
 
 .cart-features span i {
-  color: #0d6efd;
+  color: #ff8500;
   font-size: 0.85rem;
 }
 
@@ -365,17 +365,17 @@
 }
 
 .tip-item i {
-  color: #0d6efd;
+  color: #ff8500;
   font-size: 1rem;
 }
 
 /* Summary Card - BLUE ONLY */
 .summary-card {
-  background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #fff7ed 100%);
   border-radius: 24px;
   padding: 28px;
-  box-shadow: 0 10px 40px rgba(13,110,253,0.1);
-  border: 2px solid #b6d0fe;
+  box-shadow: 0 10px 40px rgba(249,115,22,0.1);
+  border: 2px solid #ffd2a6;
   position: sticky;
   top: 20px;
 }
@@ -500,7 +500,7 @@
 
 /* Buttons - BLUE ONLY */
 .btn-checkout {
-  background: linear-gradient(135deg, #0a3d62 0%, #0d6efd 55%, #1a7ed9 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ff8500 55%, #ff9d1a 100%);
   color: white;
   padding: 16px 24px;
   border-radius: 14px;
@@ -515,13 +515,13 @@
   gap: 12px;
   transition: all 0.3s ease;
   text-decoration: none;
-  box-shadow: 0 4px 16px rgba(13,110,253,0.3);
+  box-shadow: 0 4px 16px rgba(249,115,22,0.3);
 }
 
 .btn-checkout:hover {
-  background: linear-gradient(135deg, #0d6efd 0%, #1a7ed9 100%);
+  background: linear-gradient(135deg, #ff8500 0%, #ff9d1a 100%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(13,110,253,0.35);
+  box-shadow: 0 8px 24px rgba(249,115,22,0.35);
   color: white;
 }
 
@@ -584,7 +584,7 @@
 }
 
 .help-card i {
-  color: #0d6efd;
+  color: #ff8500;
   font-size: 1.5rem;
 }
 
@@ -602,7 +602,7 @@
 }
 
 .help-content a {
-  color: #0d6efd;
+  color: #ff8500;
   text-decoration: none;
   font-weight: 500;
 }
@@ -625,7 +625,7 @@
 .empty-cart-icon {
   width: 100px;
   height: 100px;
-  background: linear-gradient(135deg, #e8f1ff, #e8f1ff);
+  background: linear-gradient(135deg, #fff3e6, #fff3e6);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -635,7 +635,7 @@
 
 .empty-cart-icon i {
   font-size: 40px;
-  color: #0d6efd;
+  color: #ff8500;
 }
 
 .empty-cart h3 {
@@ -658,38 +658,38 @@
 }
 
 .btn-browse {
-  background: linear-gradient(135deg, #0a3d62 0%, #0d6efd 55%, #1a7ed9 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ff8500 55%, #ff9d1a 100%);
   color: white;
   padding: 14px 28px;
   border-radius: 100px;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 14px rgba(13,110,253,0.3);
+  box-shadow: 0 4px 14px rgba(249,115,22,0.3);
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
 
 .btn-browse:hover {
-  background: linear-gradient(135deg, #0d6efd 0%, #1a7ed9 100%);
+  background: linear-gradient(135deg, #ff8500 0%, #ff9d1a 100%);
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(13,110,253,0.35);
+  box-shadow: 0 8px 22px rgba(249,115,22,0.35);
   color: white;
 }
 
 .btn-browse-outline {
   background: white;
-  color: #0d6efd;
-  border: 2px solid #0d6efd;
+  color: #ff8500;
+  border: 2px solid #ff8500;
   box-shadow: none;
 }
 
 .btn-browse-outline:hover {
-  background: linear-gradient(135deg, #0a3d62 0%, #0d6efd 55%, #1a7ed9 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ff8500 55%, #ff9d1a 100%);
   color: white;
   border-color: transparent;
-  box-shadow: 0 8px 22px rgba(13,110,253,0.3);
+  box-shadow: 0 8px 22px rgba(249,115,22,0.3);
 }
 
 /* Toast Message Styles */
