@@ -1,573 +1,1628 @@
-/* ================================================
-   CONTACT PAGE — PROFESSIONAL REDESIGN
-   ORANGE / LIGHT THEME
-================================================ */
+/* ================================================================
+   HRTrusts — CONTACT PAGE
+   Professional Corporate Contact Design
+   Orange / Light Theme
+================================================================ */
 
-/* ================================
-   HERO — COMPACT
-================================ */
 
-.ct-hero {
-  background: linear-gradient(
-    135deg,
-    #fffaf3 0%,
-    #fff3e0 50%,
-    #ffefd6 100%
-  );
-  padding: 42px 0 38px;
-  text-align: center;
+/* ================================================================
+   GLOBAL
+================================================================ */
+
+.ct-main,
+.ct-bottom-strip,
+.ct-final-cta {
   position: relative;
   overflow: hidden;
-  border-bottom: 1px solid #f3dcc0;
 }
 
-.ct-hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f59e0b' fill-opacity='0.07'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  pointer-events: none;
-}
-
-.ct-hero .container {
+.ct-main .container,
+.ct-bottom-strip .container,
+.ct-final-cta .container {
   position: relative;
   z-index: 1;
 }
 
+
+/* ================================================================
+   HERO
+================================================================ */
+
+.ct-hero {
+  position: relative;
+  overflow: hidden;
+
+  padding: 58px 0 54px;
+
+  text-align: center;
+
+  background:
+    radial-gradient(
+      circle at 15% 30%,
+      rgba(255, 179, 92, 0.18),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 70%,
+      rgba(255, 122, 0, 0.10),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      #fffaf3 0%,
+      #fff3e0 52%,
+      #ffefd6 100%
+    );
+
+  border-bottom: 1px solid #f3dcc0;
+}
+
+
+/* Decorative pattern */
+
+.ct-hero::before {
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    radial-gradient(
+      rgba(245, 158, 11, 0.12) 1px,
+      transparent 1px
+    );
+
+  background-size: 26px 26px;
+
+  opacity: 0.55;
+
+  pointer-events: none;
+}
+
+
+/* Soft glow */
+
+.ct-hero::after {
+  content: '';
+
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  right: -180px;
+  top: -220px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 153, 51, 0.10);
+
+  filter: blur(10px);
+
+  pointer-events: none;
+}
+
+
+.ct-hero .container {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* ================================================================
+   HERO BADGE
+================================================================ */
+
 .ct-badge {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.7);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 7px 18px;
+
+  margin-bottom: 15px;
+
+  border-radius: 999px;
+
+  border: 1px solid #f2c98d;
+
+  background: rgba(255, 255, 255, 0.72);
+
   color: #c96a00;
+
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 1.4px;
+
+  letter-spacing: 1.5px;
+
   text-transform: uppercase;
-  padding: 7px 18px;
-  border-radius: 50px;
-  border: 1px solid #f2c98d;
-  margin-bottom: 12px;
+
+  box-shadow:
+    0 4px 14px rgba(190, 110, 20, 0.05);
+
+  backdrop-filter: blur(6px);
 }
+
+
+/* ================================================================
+   HERO TITLE
+================================================================ */
 
 .ct-title {
-  font-size: clamp(2rem, 4vw, 3.1rem);
-  font-weight: 800;
+  margin: 0 0 12px;
+
   color: #2f3640;
-  margin: 0 0 10px;
-  letter-spacing: -0.8px;
-  line-height: 1.15;
+
+  font-size: clamp(2.15rem, 4vw, 3.25rem);
+
+  font-weight: 800;
+
+  line-height: 1.12;
+
+  letter-spacing: -1px;
 }
+
+
+/* ================================================================
+   HERO SUBTITLE
+================================================================ */
 
 .ct-sub {
-  font-size: 1rem;
-  color: #64707c;
-  max-width: 620px;
+  max-width: 680px;
+
   margin: 0 auto;
-  line-height: 1.6;
+
+  color: #64707c;
+
+  font-size: 1rem;
+
+  line-height: 1.7;
 }
 
 
-/* ================================
-   MAIN SECTION
-================================ */
+/* ================================================================
+   MAIN CONTACT SECTION
+================================================================ */
 
 .ct-main {
-  background: #fffdf9;
-  padding: 60px 0 70px;
+  padding: 72px 0 78px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fffdf9 0%,
+      #fffaf4 100%
+    );
 }
+
+
+/* ================================================================
+   MAIN GRID
+================================================================ */
 
 .ct-grid {
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 40px;
-  align-items: start;
+
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+
+  gap: 54px;
+
+  align-items: stretch;
 }
 
 
-/* ================================
-   INFO PANEL
-================================ */
+/* ================================================================
+   SECTION LABEL
+================================================================ */
+
+.ct-section-label {
+  display: inline-block;
+
+  margin-bottom: 10px;
+
+  color: #df7600;
+
+  font-size: 0.72rem;
+
+  font-weight: 750;
+
+  letter-spacing: 1.4px;
+
+  text-transform: uppercase;
+}
+
+
+/* ================================================================
+   LEFT INFO PANEL
+================================================================ */
 
 .ct-info-panel {
   display: flex;
+
   flex-direction: column;
-  gap: 0;
+
+  min-width: 0;
 }
+
 
 .ct-info-header {
   margin-bottom: 28px;
 }
 
+
 .ct-info-header h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
+  margin: 0 0 10px;
+
   color: #2f3640;
-  margin-bottom: 8px;
+
+  font-size: 1.75rem;
+
+  font-weight: 750;
+
+  line-height: 1.25;
+
+  letter-spacing: -0.35px;
 }
+
 
 .ct-info-header p {
-  color: #64707c;
-  font-size: 0.95rem;
-  line-height: 1.6;
+  max-width: 540px;
+
   margin: 0;
+
+  color: #687480;
+
+  font-size: 0.94rem;
+
+  line-height: 1.72;
 }
 
 
-/* ================================
+/* ================================================================
    CONTACT INFO CARDS
-================================ */
+================================================================ */
 
 .ct-info-card {
   display: flex;
+
   align-items: flex-start;
-  gap: 16px;
+
+  gap: 17px;
+
+  padding: 21px 22px;
+
+  margin-bottom: 13px;
+
   background: #ffffff;
+
   border: 1px solid #f0dfc8;
-  border-radius: 16px;
-  padding: 22px 24px;
-  margin-bottom: 14px;
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 3px 14px rgba(120, 75, 25, 0.025);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
 }
+
 
 .ct-info-card:hover {
-  box-shadow: 0 8px 24px rgba(230, 126, 0, 0.12);
   transform: translateY(-3px);
+
+  border-color: #efc98f;
+
+  box-shadow:
+    0 12px 28px rgba(180, 105, 25, 0.09);
 }
 
+
+/* ================================================================
+   INFO ICON
+================================================================ */
+
 .ct-info-icon {
-  flex-shrink: 0;
-  width: 46px;
-  height: 46px;
-  background: linear-gradient(135deg, #ffb35c, #ff7a00);
-  border-radius: 12px;
   display: flex;
+
   align-items: center;
   justify-content: center;
+
+  flex: 0 0 46px;
+
+  width: 46px;
+  height: 46px;
+
   color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffb35c 0%,
+      #ff7a00 100%
+    );
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 7px 16px rgba(239, 126, 0, 0.17);
 }
+
+
+.ct-info-icon svg {
+  display: block;
+}
+
+
+/* ================================================================
+   INFO TEXT
+================================================================ */
 
 .ct-info-text {
   display: flex;
+
   flex-direction: column;
+
+  min-width: 0;
+
   gap: 3px;
 }
 
+
 .ct-info-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
   color: #9b7b59;
+
+  font-size: 0.70rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.9px;
+
+  text-transform: uppercase;
 }
 
+
 .ct-info-value {
-  font-size: 0.97rem;
-  font-weight: 600;
+  display: block;
+
   color: #2f3640;
+
+  font-size: 0.96rem;
+
+  font-weight: 650;
+
+  line-height: 1.5;
+
   text-decoration: none;
-  transition: color 0.2s;
+
+  overflow-wrap: anywhere;
+
+  transition: color 0.2s ease;
 }
+
 
 a.ct-info-value:hover {
   color: #e87500;
 }
 
+
 .ct-info-note {
-  font-size: 0.82rem;
-  color: #8a96a3;
+  color: #89939d;
+
+  font-size: 0.79rem;
+
+  line-height: 1.45;
 }
 
 
-/* ================================
+/* ================================================================
    TRUST STRIP
-================================ */
+================================================================ */
 
 .ct-trust-strip {
   display: flex;
+
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(
-    135deg,
-    #ffb35c 0%,
-    #ff8a16 50%,
-    #ff7600 100%
-  );
+
+  margin-top: 8px;
+
+  padding: 22px 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffb35c 0%,
+      #ff8a16 50%,
+      #ff7600 100%
+    );
+
   border-radius: 16px;
-  padding: 22px 24px;
-  margin-top: 6px;
+
+  box-shadow:
+    0 12px 28px rgba(230, 126, 0, 0.16);
 }
+
 
 .ct-trust-item {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
+
   flex: 1;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 4px;
+
+  min-width: 0;
 }
+
 
 .ct-trust-item strong {
-  font-size: 1.4rem;
-  font-weight: 800;
   color: #ffffff;
+
+  font-size: 1.35rem;
+
+  font-weight: 800;
+
+  line-height: 1;
 }
+
 
 .ct-trust-item span {
-  font-size: 0.72rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.92);
+
+  font-size: 0.70rem;
+
+  font-weight: 550;
+
+  line-height: 1.35;
+
   text-align: center;
-  font-weight: 500;
 }
+
 
 .ct-trust-divider {
+  flex: 0 0 1px;
+
   width: 1px;
-  height: 36px;
-  background: rgba(255, 255, 255, 0.35);
+  height: 38px;
+
+  background: rgba(255, 255, 255, 0.32);
 }
 
 
-/* ================================
-   FORM PANEL
-================================ */
+/* ================================================================
+   RIGHT CONTACT PANEL
+================================================================ */
 
-.ct-form-panel {
-  background: #ffffff;
+.ct-contact-panel {
+  position: relative;
+
+  display: flex;
+
+  min-height: 100%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #fffaf4 100%
+    );
+
   border: 1px solid #f0dfc8;
-  border-radius: 20px;
-  padding: 40px 44px;
-  box-shadow: 0 4px 24px rgba(120, 75, 25, 0.06);
-}
 
-.ct-form-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #2f3640;
-  margin-bottom: 28px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid #f3e7d8;
+  border-radius: 22px;
+
+  box-shadow:
+    0 10px 38px rgba(100, 65, 25, 0.07);
+
+  overflow: hidden;
 }
 
 
-/* ================================
-   FORM
-================================ */
+.ct-contact-panel::before {
+  content: '';
 
-.ct-form {
+  position: absolute;
+
+  width: 230px;
+  height: 230px;
+
+  right: -100px;
+  top: -110px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 166, 66, 0.18) 0%,
+      rgba(255, 166, 66, 0) 70%
+    );
+
+  pointer-events: none;
+}
+
+
+.ct-contact-panel::after {
+  content: '';
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  left: -100px;
+  bottom: -100px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 122, 0, 0.08) 0%,
+      rgba(255, 122, 0, 0) 70%
+    );
+
+  pointer-events: none;
+}
+
+
+.ct-contact-panel-inner {
+  position: relative;
+
+  z-index: 2;
+
   display: flex;
+
   flex-direction: column;
-  gap: 18px;
-}
 
-.ct-form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.ct-field {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
-
-.ct-field label {
-  font-size: 0.83rem;
-  font-weight: 600;
-  color: #374151;
-  letter-spacing: 0.2px;
-}
-
-.ct-field label span {
-  color: #ef4444;
-  margin-left: 2px;
-}
-
-.ct-field input,
-.ct-field select,
-.ct-field textarea {
   width: 100%;
-  padding: 11px 15px;
-  border: 1.5px solid #ead9c2;
-  border-radius: 10px;
-  font-size: 0.92rem;
+
+  padding: 42px 42px 38px;
+}
+
+
+.ct-contact-panel-inner > h2 {
+  max-width: 570px;
+
+  margin: 0 0 13px;
+
   color: #2f3640;
-  background: #fffdfa;
-  outline: none;
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s,
-    background 0.2s;
-  font-family: inherit;
-  resize: none;
-}
 
-.ct-field input::placeholder,
-.ct-field textarea::placeholder {
-  color: #a7a19a;
-}
+  font-size: clamp(1.65rem, 2.4vw, 2.15rem);
 
-.ct-field input:focus,
-.ct-field select:focus,
-.ct-field textarea:focus {
-  border-color: #ff8a16;
-  background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(255, 138, 22, 0.13);
+  font-weight: 780;
+
+  line-height: 1.22;
+
+  letter-spacing: -0.55px;
 }
 
 
-/* ================================
-   SELECT
-================================ */
+.ct-contact-panel-inner > p {
+  max-width: 590px;
 
-.ct-field select {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24' stroke='%238a7966' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  padding-right: 40px;
-  cursor: pointer;
+  margin: 0;
+
+  color: #687480;
+
+  font-size: 0.93rem;
+
+  line-height: 1.72;
 }
 
 
-/* ================================
-   SUBMIT BUTTON
-================================ */
+/* ================================================================
+   SUPPORT LIST
+================================================================ */
 
-.ct-submit-btn {
-  display: inline-flex;
+.ct-support-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0;
+
+  margin-top: 30px;
+}
+
+
+.ct-support-item {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 15px;
+
+  padding: 17px 0;
+
+  border-top: 1px solid #f1e3d2;
+}
+
+
+.ct-support-item:last-child {
+  border-bottom: 1px solid #f1e3d2;
+}
+
+
+.ct-support-icon {
+  display: flex;
+
   align-items: center;
   justify-content: center;
-  gap: 10px;
 
-  background: linear-gradient(
-    135deg,
-    #ff9d32 0%,
-    #ff8200 55%,
-    #f57600 100%
-  );
+  flex: 0 0 40px;
+
+  width: 40px;
+  height: 40px;
+
+  color: #e87500;
+
+  background: #fff1df;
+
+  border: 1px solid #f6d8ae;
+
+  border-radius: 10px;
+}
+
+
+.ct-support-item h4 {
+  margin: 0 0 4px;
+
+  color: #343b44;
+
+  font-size: 0.92rem;
+
+  font-weight: 700;
+}
+
+
+.ct-support-item p {
+  margin: 0;
+
+  color: #7a858f;
+
+  font-size: 0.81rem;
+
+  line-height: 1.55;
+}
+
+
+/* ================================================================
+   CONTACT CTA
+================================================================ */
+
+.ct-contact-cta {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  margin-top: 30px;
+
+  padding: 20px 21px;
+
+  background: #ffffff;
+
+  border: 1px solid #efdcc3;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 5px 18px rgba(120, 75, 25, 0.045);
+}
+
+
+.ct-cta-content {
+  min-width: 0;
+}
+
+
+.ct-cta-label {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #df7600;
+
+  font-size: 0.69rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.9px;
+
+  text-transform: uppercase;
+}
+
+
+.ct-cta-content h3 {
+  margin: 0 0 3px;
+
+  color: #303740;
+
+  font-size: 1rem;
+
+  font-weight: 720;
+}
+
+
+.ct-cta-content p {
+  margin: 0;
+
+  color: #7d8790;
+
+  font-size: 0.77rem;
+
+  line-height: 1.5;
+}
+
+
+/* ================================================================
+   EMAIL BUTTON
+================================================================ */
+
+.ct-email-btn {
+  display: inline-flex;
+
+  flex: 0 0 auto;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 11px 18px;
 
   color: #ffffff;
-  font-size: 0.95rem;
-  font-weight: 600;
-  padding: 13px 32px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff9d32 0%,
+      #ff8200 55%,
+      #f57600 100%
+    );
+
+  border-radius: 9px;
+
+  font-size: 0.82rem;
+
+  font-weight: 650;
+
+  text-decoration: none;
+
+  white-space: nowrap;
+
+  box-shadow:
+    0 6px 15px rgba(255, 119, 0, 0.19);
 
   transition:
-    transform 0.2s,
-    box-shadow 0.2s;
-
-  align-self: flex-start;
-  letter-spacing: 0.2px;
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.ct-submit-btn:hover {
+
+.ct-email-btn:hover {
+  color: #ffffff;
+
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 119, 0, 0.35);
-}
 
-.ct-submit-btn:active {
-  transform: translateY(0);
-}
-
-
-/* ================================
-   ALERT
-================================ */
-
-.ct-alert {
-  padding: 14px 18px;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  margin-bottom: 20px;
-  font-weight: 500;
-}
-
-.ct-alert-success {
-  background: #f0fdf4;
-  color: #166534;
-  border: 1px solid #bbf7d0;
-}
-
-.ct-alert-error {
-  background: #fef2f2;
-  color: #991b1b;
-  border: 1px solid #fecaca;
+  box-shadow:
+    0 9px 22px rgba(255, 119, 0, 0.28);
 }
 
 
-/* ================================
-   BOTTOM STRIP
-================================ */
+.ct-email-btn svg {
+  transition: transform 0.2s ease;
+}
+
+
+.ct-email-btn:hover svg {
+  transform: translateX(3px);
+}
+
+
+/* ================================================================
+   BOTTOM SUPPORT SECTION
+================================================================ */
 
 .ct-bottom-strip {
+  padding: 72px 0 78px;
+
   background: #ffffff;
+
   border-top: 1px solid #f3e7d8;
-  padding: 60px 0;
 }
+
+
+.ct-strip-header {
+  max-width: 680px;
+
+  margin: 0 auto 38px;
+
+  text-align: center;
+}
+
+
+.ct-strip-header h2 {
+  margin: 0 0 10px;
+
+  color: #2f3640;
+
+  font-size: 1.75rem;
+
+  font-weight: 750;
+
+  line-height: 1.25;
+
+  letter-spacing: -0.35px;
+}
+
+
+.ct-strip-header p {
+  max-width: 620px;
+
+  margin: 0 auto;
+
+  color: #687480;
+
+  font-size: 0.91rem;
+
+  line-height: 1.7;
+}
+
+
+/* ================================================================
+   SUPPORT CARDS GRID
+================================================================ */
 
 .ct-strip-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 24px;
 }
+
 
 .ct-strip-card {
+  position: relative;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  min-height: 285px;
+
+  padding: 32px 27px 28px;
+
   text-align: center;
-  padding: 36px 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fffdf9 0%,
+      #ffffff 100%
+    );
+
   border: 1px solid #f0dfc8;
-  border-radius: 18px;
+
+  border-radius: 17px;
+
   transition:
+    transform 0.25s ease,
     box-shadow 0.25s ease,
-    transform 0.25s ease;
-  background: #fffdf9;
+    border-color 0.25s ease;
 }
+
 
 .ct-strip-card:hover {
-  box-shadow: 0 12px 32px rgba(230, 126, 0, 0.12);
   transform: translateY(-5px);
+
+  border-color: #efc98f;
+
+  box-shadow:
+    0 14px 32px rgba(170, 100, 25, 0.10);
 }
+
+
+/* ================================================================
+   STRIP ICON
+================================================================ */
 
 .ct-strip-icon {
-  width: 54px;
-  height: 54px;
-  background: linear-gradient(
-    135deg,
-    #ffb35c,
-    #ff7a00
-  );
-  border-radius: 14px;
   display: flex;
+
   align-items: center;
   justify-content: center;
+
+  width: 54px;
+  height: 54px;
+
+  margin-bottom: 19px;
+
   color: #ffffff;
-  margin: 0 auto 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffb35c,
+      #ff7a00
+    );
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 8px 18px rgba(239, 126, 0, 0.16);
 }
+
+
+/* ================================================================
+   STRIP CARD CONTENT
+================================================================ */
 
 .ct-strip-card h5 {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #2f3640;
-  margin-bottom: 10px;
+  margin: 0 0 9px;
+
+  color: #303740;
+
+  font-size: 1.03rem;
+
+  font-weight: 720;
 }
+
 
 .ct-strip-card p {
-  font-size: 0.88rem;
-  color: #64707c;
-  line-height: 1.6;
-  margin: 0;
+  max-width: 290px;
+
+  margin: 0 auto;
+
+  color: #6d7882;
+
+  font-size: 0.83rem;
+
+  line-height: 1.65;
 }
 
 
-/* ================================
+/* ================================================================
+   CARD LINK
+================================================================ */
+
+.ct-card-link {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin-top: auto;
+  padding-top: 20px;
+
+  color: #df7600;
+
+  font-size: 0.79rem;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition:
+    color 0.2s ease,
+    gap 0.2s ease;
+}
+
+
+.ct-card-link:hover {
+  color: #bd5f00;
+
+  gap: 11px;
+}
+
+
+.ct-card-link span {
+  font-size: 1rem;
+
+  line-height: 1;
+}
+
+
+/* ================================================================
+   FINAL CTA
+================================================================ */
+
+.ct-final-cta {
+  padding: 68px 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff4e5 0%,
+      #fff0d9 48%,
+      #ffe8c8 100%
+    );
+
+  border-top: 1px solid #f2dcc1;
+}
+
+
+.ct-final-inner {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 50px;
+
+  padding: 42px 46px;
+
+  background:
+    rgba(255, 255, 255, 0.68);
+
+  border: 1px solid rgba(235, 195, 145, 0.75);
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 10px 32px rgba(150, 90, 20, 0.06);
+
+  backdrop-filter: blur(8px);
+}
+
+
+.ct-final-content {
+  max-width: 650px;
+}
+
+
+.ct-final-content h2 {
+  margin: 0 0 12px;
+
+  color: #2f3640;
+
+  font-size: clamp(1.65rem, 3vw, 2.25rem);
+
+  font-weight: 800;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.55px;
+}
+
+
+.ct-final-content p {
+  max-width: 590px;
+
+  margin: 0;
+
+  color: #687480;
+
+  font-size: 0.9rem;
+
+  line-height: 1.7;
+}
+
+
+/* ================================================================
+   FINAL CTA BUTTON
+================================================================ */
+
+.ct-final-btn {
+  display: inline-flex;
+
+  flex: 0 0 auto;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  min-width: 205px;
+
+  padding: 14px 23px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff9d32 0%,
+      #ff8200 55%,
+      #f57600 100%
+    );
+
+  border-radius: 10px;
+
+  font-size: 0.87rem;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 8px 20px rgba(255, 119, 0, 0.22);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.ct-final-btn:hover {
+  color: #ffffff;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 27px rgba(255, 119, 0, 0.31);
+}
+
+
+.ct-final-btn svg {
+  transition: transform 0.2s ease;
+}
+
+
+.ct-final-btn:hover svg {
+  transform: translateX(3px);
+}
+
+
+/* ================================================================
    TABLET
-================================ */
+================================================================ */
 
 @media (max-width: 991px) {
 
-  .ct-grid {
-    grid-template-columns: 1fr;
+  .ct-main {
+    padding: 60px 0 65px;
   }
 
-  .ct-form-panel {
-    padding: 32px;
+
+  .ct-grid {
+    grid-template-columns: 1fr;
+
+    gap: 38px;
+  }
+
+
+  .ct-contact-panel {
+    min-height: auto;
+  }
+
+
+  .ct-strip-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+
+  .ct-strip-card:last-child {
+    grid-column: 1 / -1;
+
+    max-width: calc(50% - 12px);
+
+    width: 100%;
+
+    justify-self: center;
+  }
+
+
+  .ct-final-inner {
+    padding: 36px;
   }
 
 }
 
 
-/* ================================
+/* ================================================================
    MOBILE
-================================ */
+================================================================ */
 
 @media (max-width: 768px) {
 
   .ct-hero {
-    padding: 34px 0 30px;
+    padding: 45px 0 40px;
   }
 
-  .ct-badge {
-    margin-bottom: 10px;
-  }
 
   .ct-title {
-    font-size: 2rem;
-    margin-bottom: 8px;
+    font-size: 2.05rem;
+
+    letter-spacing: -0.7px;
   }
+
 
   .ct-sub {
-    font-size: 0.92rem;
-    padding: 0 10px;
+    padding: 0 12px;
+
+    font-size: 0.91rem;
   }
+
 
   .ct-main {
-    padding: 45px 0 55px;
+    padding: 48px 0 55px;
   }
 
-  .ct-form-row {
-    grid-template-columns: 1fr;
+
+  .ct-grid {
+    gap: 30px;
   }
 
-  .ct-strip-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+
+  .ct-info-header {
+    margin-bottom: 22px;
   }
 
-  .ct-form-panel {
-    padding: 24px 20px;
+
+  .ct-info-header h2 {
+    font-size: 1.5rem;
   }
 
-  .ct-trust-strip {
-    flex-direction: column;
-    gap: 16px;
-    text-align: center;
-  }
-
-  .ct-trust-divider {
-    width: 60px;
-    height: 1px;
-  }
-
-  .ct-submit-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-}
-
-
-/* ================================
-   SMALL MOBILE
-================================ */
-
-@media (max-width: 576px) {
-
-  .ct-title {
-    font-size: 1.9rem;
-  }
 
   .ct-info-card {
     padding: 18px;
+
+    gap: 14px;
   }
+
 
   .ct-info-icon {
-    width: 42px;
-    height: 42px;
+    flex-basis: 43px;
+
+    width: 43px;
+    height: 43px;
   }
 
-  .ct-info-value {
-    font-size: 0.9rem;
+
+  .ct-trust-strip {
+    padding: 20px 16px;
+  }
+
+
+  .ct-contact-panel-inner {
+    padding: 30px 24px 27px;
+  }
+
+
+  .ct-contact-panel-inner > h2 {
+    font-size: 1.65rem;
+  }
+
+
+  .ct-contact-cta {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 16px;
+  }
+
+
+  .ct-email-btn {
+    width: 100%;
+  }
+
+
+  .ct-bottom-strip {
+    padding: 52px 0 58px;
+  }
+
+
+  .ct-strip-header {
+    margin-bottom: 28px;
+  }
+
+
+  .ct-strip-header h2 {
+    font-size: 1.55rem;
+  }
+
+
+  .ct-strip-grid {
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+  }
+
+
+  .ct-strip-card {
+    min-height: auto;
+
+    padding: 29px 24px;
+  }
+
+
+  .ct-strip-card:last-child {
+    grid-column: auto;
+
+    max-width: none;
+  }
+
+
+  .ct-final-cta {
+    padding: 48px 0;
+  }
+
+
+  .ct-final-inner {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 26px;
+
+    padding: 30px 24px;
+
+    text-align: center;
+  }
+
+
+  .ct-final-content {
+    max-width: none;
+  }
+
+
+  .ct-final-content p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+  .ct-final-btn {
+    width: 100%;
   }
 
 }
 
 
-/* ================================
-   REDUCED MOTION
-================================ */
+/* ================================================================
+   SMALL MOBILE
+================================================================ */
+
+@media (max-width: 576px) {
+
+  .ct-hero {
+    padding: 38px 0 35px;
+  }
+
+
+  .ct-badge {
+    padding: 6px 15px;
+
+    font-size: 0.67rem;
+  }
+
+
+  .ct-title {
+    font-size: 1.85rem;
+
+    margin-bottom: 10px;
+  }
+
+
+  .ct-sub {
+    font-size: 0.87rem;
+
+    line-height: 1.6;
+  }
+
+
+  .ct-main {
+    padding: 42px 0 48px;
+  }
+
+
+  .ct-info-header h2 {
+    font-size: 1.4rem;
+  }
+
+
+  .ct-info-header p {
+    font-size: 0.87rem;
+  }
+
+
+  .ct-info-card {
+    padding: 17px 16px;
+  }
+
+
+  .ct-info-icon {
+    flex-basis: 40px;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 10px;
+  }
+
+
+  .ct-info-label {
+    font-size: 0.66rem;
+  }
+
+
+  .ct-info-value {
+    font-size: 0.88rem;
+  }
+
+
+  .ct-info-note {
+    font-size: 0.74rem;
+  }
+
+
+  .ct-trust-strip {
+    flex-direction: column;
+
+    gap: 14px;
+
+    padding: 19px 15px;
+  }
+
+
+  .ct-trust-divider {
+    width: 55px;
+    height: 1px;
+  }
+
+
+  .ct-trust-item strong {
+    font-size: 1.2rem;
+  }
+
+
+  .ct-trust-item span {
+    font-size: 0.67rem;
+  }
+
+
+  .ct-contact-panel-inner {
+    padding: 27px 19px 23px;
+  }
+
+
+  .ct-contact-panel-inner > h2 {
+    font-size: 1.48rem;
+
+    letter-spacing: -0.35px;
+  }
+
+
+  .ct-contact-panel-inner > p {
+    font-size: 0.85rem;
+  }
+
+
+  .ct-support-list {
+    margin-top: 23px;
+  }
+
+
+  .ct-support-item {
+    gap: 12px;
+
+    padding: 15px 0;
+  }
+
+
+  .ct-support-icon {
+    flex-basis: 36px;
+
+    width: 36px;
+    height: 36px;
+  }
+
+
+  .ct-support-item h4 {
+    font-size: 0.86rem;
+  }
+
+
+  .ct-support-item p {
+    font-size: 0.75rem;
+  }
+
+
+  .ct-contact-cta {
+    margin-top: 23px;
+
+    padding: 17px;
+  }
+
+
+  .ct-bottom-strip {
+    padding: 45px 0 50px;
+  }
+
+
+  .ct-strip-header h2 {
+    font-size: 1.4rem;
+  }
+
+
+  .ct-strip-header p {
+    font-size: 0.84rem;
+  }
+
+
+  .ct-strip-card {
+    padding: 26px 20px;
+  }
+
+
+  .ct-strip-icon {
+    width: 50px;
+    height: 50px;
+
+    margin-bottom: 16px;
+  }
+
+
+  .ct-strip-card h5 {
+    font-size: 0.98rem;
+  }
+
+
+  .ct-strip-card p {
+    font-size: 0.79rem;
+  }
+
+
+  .ct-final-cta {
+    padding: 40px 0;
+  }
+
+
+  .ct-final-inner {
+    padding: 27px 19px;
+
+    border-radius: 17px;
+  }
+
+
+  .ct-final-content h2 {
+    font-size: 1.5rem;
+  }
+
+
+  .ct-final-content p {
+    font-size: 0.82rem;
+  }
+
+
+  .ct-final-btn {
+    min-width: 0;
+
+    font-size: 0.82rem;
+
+    padding: 13px 18px;
+  }
+
+}
+
+
+/* ================================================================
+   ACCESSIBILITY / REDUCED MOTION
+================================================================ */
 
 @media (prefers-reduced-motion: reduce) {
 
-  * {
+  .ct-info-card,
+  .ct-strip-card,
+  .ct-email-btn,
+  .ct-final-btn,
+  .ct-card-link,
+  .ct-email-btn svg,
+  .ct-final-btn svg {
     transition: none !important;
   }
 
