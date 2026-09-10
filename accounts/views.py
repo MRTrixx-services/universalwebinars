@@ -33,38 +33,21 @@ def register_view(request):
         if form.is_valid():
             user = form.save(commit=False)
 
+            # Account should be active immediately
             user.set_password(form.cleaned_data["password"])
-            user.is_active = False
+            user.is_active = True
             user.save()
 
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            token = account_activation_token.make_token(user)
-
-            activation_link = request.build_absolute_uri(
-                f"/accounts/activate/{uid}/{token}/"
-            )
-
-            html_message = render_to_string(
-                "accounts/activation_email.html",
-                {
-                    "user": user,
-                    "activation_link": activation_link,
-                }
-            )
-
-            email = EmailMessage(
-                subject="Activate Your UniversalWebinars Account",
-                body=html_message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                to=[user.email],
-            )
-
-            email.content_subtype = "html"
-            email.send()
+            # Send welcome email.
+            # Email failure should NOT affect registration.
+            try:
+                send_welcome_email(user)
+            except Exception as e:
+                print("Welcome email error:", e)
 
             messages.success(
                 request,
-                "Account created successfully. Please check your email and activate your account."
+                "Account created successfully. You can now login."
             )
 
             return redirect("accounts:login")
@@ -75,8 +58,11 @@ def register_view(request):
     else:
         form = RegisterForm()
 
-    return render(request, "accounts/register.html", {"form": form})
-
+    return render(
+        request,
+        "accounts/register.html",
+        {"form": form}
+    )
 # ----------------------------
 # LOGIN VIEW
 # ----------------------------
