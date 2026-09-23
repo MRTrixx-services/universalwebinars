@@ -71,15 +71,15 @@
     <div class="header">
         <div class="header-left">
             <div class="company-name">HRTrusts</div>
-            <div class="company-tagline">{{ company.address }}</div>
-            <div class="company-tagline">{{ company.website }}</div>
+            <div class="company-tagline">YOUR TRUSTED WEBINAR PLATFORM</div>
+            <div class="company-tagline">https://hrtrusts.com/</div>
         </div>
         <div class="header-right">
             <img src="data:image/png;base64,{{ qr_code }}" class="qr-code">
             <div style="font-size: 7pt; color: #64748b; margin-top: 2px;">Scan to verify</div>
         </div>
     </div>
-    
+
     <div class="invoice-title">
         <h1>INVOICE</h1>
         <div class="invoice-number">{{ order.invoice_number }}</div>
@@ -116,10 +116,10 @@
         </div>
         <div class="info-col">
             <h3>Issued By</h3>
-            <p class="name">{{ company.name }}</p>
-            <p>{{ company.address }}</p>
-            <p>{{ company.website }}</p>
-            <p>{{ company.email }}</p>
+            <p class="name">HRTrusts</p>
+            <p>YOUR TRUSTED WEBINAR PLATFORM</p>
+            <p>https://hrtrusts.com/</p>
+            <p>cs@hrtrusts.com</p>
         </div>
     </div>
     
@@ -196,11 +196,11 @@
         <p>Recorded content is licensed for personal use only for a period of 6 months from purchase date. Content must not be redistributed, shared, or used for commercial purposes without written permission from HRTrusts.</p>
         
         <h4>Support</h4>
-        <p>For questions or assistance, contact our support team at <a href="mailto:{{ company.email }}">{{ company.email }}</a>.</p>
+        <p>For questions or assistance, contact our support team at <a href="mailto:cs@hrtrusts.com">cs@hrtrusts.com</a>.</p>
         
         <p style="margin-top: 15px; text-align: center;">This is a computer generated invoice. No signature required.</p>
         <p style="text-align: center;">{{ order.invoice_number }} | {{ order.created_at|date:"Y-m-d" }}</p>
-        <p style="text-align: center;">For queries, contact <a href="mailto:{{ company.email }}">{{ company.email }}</a></p>
+        <p style="text-align: center;">For queries, contact <a href="mailto:cs@hrtrusts.com">cs@hrtrusts.com</a></p>
     </div>
 </body>
 </html>

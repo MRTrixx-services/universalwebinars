@@ -1610,6 +1610,17 @@ a.ct-info-value:hover {
 }
 
 
+.ct-phone-link {
+    display: inline-block;
+    margin-top: 8px;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.ct-phone-link:hover {
+    opacity: 0.8;
+}
+
 /* ================================================================
    ACCESSIBILITY / REDUCED MOTION
 ================================================================ */

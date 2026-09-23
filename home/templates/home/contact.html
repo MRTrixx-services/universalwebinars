@@ -81,7 +81,6 @@
               <path stroke-linecap="round"
                     stroke-linejoin="round"
                     d="M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-
             </svg>
           </div>
 
@@ -95,6 +94,11 @@
                class="ct-info-value">
               cs@hrtrusts.com
             </a>
+
+            <a href="tel:+18066028491"
+       class="ct-info-value ct-phone-link">
+        +1 (806)-602-8491
+    </a>
 
             <span class="ct-info-note">
               General inquiries and customer support
@@ -132,19 +136,25 @@
 
           <div class="ct-info-text">
 
-            <span class="ct-info-label">
-              Office Address
-            </span>
+    <span class="ct-info-label">
+        Office Address
+    </span>
 
-            <span id="office-address"
-                  class="ct-info-value">
-            </span>
+    <span class="ct-info-value">
+        8506 Madison Ave,
+        Suite A
+        Fair Oaks, CA 95628,
+        United States
+    </span>
 
-            <span class="ct-info-note">
-              Corporate Office
-            </span>
+    <!-- PHONE -->
+    
 
-          </div>
+    <span class="ct-info-note">
+        Corporate Office
+    </span>
+
+</div>
 
         </div>
 
@@ -447,7 +457,6 @@
   </div>
 </section>
 
-
 <!-- =========================================================
      BOTTOM SUPPORT SECTION
 ========================================================= -->
@@ -679,21 +688,3 @@
 {% endblock %}
 
 
-{% block extra_js %}
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-    const encoded =
-    "ODUwNiBNYWRpc29uIEF2ZSw8YnI+U3VpdGUgQTxicj5GYWlyIE9ha3MsIENBIDk1NjI4LDxicj5Vbml0ZWQgU3RhdGVz";
-
-    const officeAddress = document.getElementById("office-address");
-
-    if (officeAddress) {
-        officeAddress.innerHTML = atob(encoded);
-    }
-
-});
-</script>
-
-{% endblock %}
