@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from orders.models import Order
-
+from live_webinars.models import LiveWebinar
 from django.core.cache import cache
 
 @login_required
@@ -18,36 +18,72 @@ def enrollments_view(request):
     cached_data = cache.get(cache_key)
 
     if cached_data:
-        return render(request, 'profile/enrollments.html', cached_data)
+        return render(request, "profile/enrollments.html", cached_data)
 
     paid_orders = (
         Order.objects
-        .filter(user=request.user, status="PAID")
-        .prefetch_related("items")
-        .only("id", "total_amount", "created_at")
+        .filter(
+            user=request.user,
+            status="PAID"
+        )
+        .prefetch_related(
+            "items__content_type"
+        )
+        .only(
+            "id",
+            "total_amount",
+            "created_at"
+        )
+        .order_by("-created_at")
     )
 
     purchased_items = []
+
     total_spent = 0
     upcoming_count = 0
     recorded_count = 0
     categories = set()
 
     for order in paid_orders:
+
         total_spent += float(order.total_amount)
 
         for item in order.items.all():
 
             variant = item.variant.upper()
 
+            # ---------------------------------
+            # LIVE WEBINAR ONLY
+            # ---------------------------------
             if variant.startswith("LIVE"):
+
                 webinar_type = "LIVE"
                 upcoming_count += 1
-            elif variant.startswith("REC"):
-                webinar_type = "RECORDED"
-                recorded_count += 1
+
+                webinar = None
+                join_link = None
+
+                # Get actual LiveWebinar from GenericForeignKey
+                try:
+                    if (
+                        item.content_type
+                        and item.content_type.model_class() == LiveWebinar
+                    ):
+                        webinar = LiveWebinar.objects.select_related(
+                            "zoom_meeting"
+                        ).filter(
+                            pk=item.object_id
+                        ).first()
+                except Exception:
+                    webinar = None
+
+                # Existing Zoom join URL
+                if webinar and hasattr(webinar, "zoom_meeting"):
+                    join_link = webinar.zoom_meeting.join_url
+
             else:
-                webinar_type = "UNKNOWN"
+                # For now we are focusing only on Live Webinars
+                continue
 
             if item.category_name:
                 categories.add(item.category_name)
@@ -60,40 +96,51 @@ def enrollments_view(request):
                 "instructor": item.instructor_name or "N/A",
                 "category": item.category_name or "N/A",
                 "date": order.created_at.strftime("%b %d, %Y"),
-                "join_link": None,
-                "watch_link": None
+
+                # Existing Zoom link
+                "join_link": join_link,
+
+                # Not using recorded webinar now
+                "watch_link": None,
+
+                # Useful later
+                "webinar_id": webinar.webinar_id if webinar else None,
             })
 
     total_enrollments = len(purchased_items)
 
     completion_rate = (
-        "0%" if total_enrollments == 0
+        "0%"
+        if total_enrollments == 0
         else f"{min(100, int((recorded_count / total_enrollments) * 100))}%"
     )
 
     context = {
-        'active_tab': 'enrollments',
-        'purchased_items': purchased_items,
+        "active_tab": "enrollments",
+        "purchased_items": purchased_items,
 
-        'total_enrollments': total_enrollments,
-        'completion_rate': completion_rate,
-        'total_spent': f"{total_spent:.2f}",
+        "total_enrollments": total_enrollments,
+        "completion_rate": completion_rate,
+        "total_spent": f"{total_spent:.2f}",
 
-        'upcoming_count': upcoming_count,
-        'recordings_count': recorded_count,
-        'recorded_count': recorded_count,
+        "upcoming_count": upcoming_count,
+        "recordings_count": recorded_count,
+        "recorded_count": recorded_count,
 
-        'completed_count': 0,
-        'missed_count': 0,
+        "completed_count": 0,
+        "missed_count": 0,
 
-        'categories': sorted(categories)
+        "categories": sorted(categories),
     }
 
-    # 🔥 CACHE SAVE (IMPORTANT)
+    # Cache
     cache.set(cache_key, context, 120)
 
-    return render(request, 'profile/enrollments.html', context)
-
+    return render(
+        request,
+        "profile/enrollments.html",
+        context
+    )
 
 @login_required
 def subscriptions_view(request):

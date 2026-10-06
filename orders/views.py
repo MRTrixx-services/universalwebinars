@@ -64,6 +64,8 @@ def checkout_view(request):
                 category_name = webinar.category.name
         OrderItem.objects.create(
             order=order,
+            content_type=item.content_type,
+            object_id=item.object_id,
             webinar_title=webinar.title if webinar else "Unknown Webinar",
             webinar_ref_id=str(item.object_id),
             variant=item.variant,
@@ -325,6 +327,8 @@ def create_order_before_payment(request):
 
         OrderItem.objects.create(
             order=order,
+            content_type=item.content_type,
+            object_id=item.object_id,
             webinar_title=webinar.title if webinar else "Unknown Webinar",
             webinar_ref_id=str(item.object_id),
             variant=item.variant,
