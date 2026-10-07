@@ -138,119 +138,238 @@ def logout_view(request):
 # ----------------------------
 # FORGOT PASSWORD VIEWS
 # ----------------------------
+# @require_http_methods(["GET", "POST"])
+# def forgot_password_view(request):
+#     if request.method == "POST":
+#         email = request.POST.get("email")
+        
+#         try:
+#             user = User.objects.get(email=email)
+#             otp = str(random.randint(100000, 999999))
+#             request.session["reset_otp"] = otp
+#             request.session["reset_email"] = email
+#             request.session.set_expiry(600)  # 10 min
+            
+#             try:
+#                 send_mail(
+#                     "Password Reset OTP - dailyrespond",
+#                     f"Your OTP for password reset is: {otp}\n\nValid for 10 minutes.",
+#                     settings.DEFAULT_FROM_EMAIL,
+#                     [email],
+#                     fail_silently=False,
+#                 )
+#             except Exception as e:
+#                 print("Email error:", e)
+#                 messages.error(request, "Email service temporarily unavailable.")
+#                 return redirect("accounts:forgot_password")
+            
+#             messages.success(request, "OTP sent to your email!")
+#             return redirect("accounts:verify_otp")
+#         except User.DoesNotExist:
+#             messages.error(request, "No account found with this email.")
+    
+#     return render(request, "accounts/forgot_password.html")
+# ----------------------------
+# FORGOT PASSWORD
+# ----------------------------
 @require_http_methods(["GET", "POST"])
 def forgot_password_view(request):
+
     if request.method == "POST":
-        email = request.POST.get("email")
-        
+
+        email = request.POST.get("email", "").strip()
+
         try:
-            user = User.objects.get(email=email)
-            otp = str(random.randint(100000, 999999))
-            request.session["reset_otp"] = otp
-            request.session["reset_email"] = email
-            request.session.set_expiry(600)  # 10 min
-            
-            try:
-                send_mail(
-                    "Password Reset OTP - dailyrespond",
-                    f"Your OTP for password reset is: {otp}\n\nValid for 10 minutes.",
-                    settings.DEFAULT_FROM_EMAIL,
-                    [email],
-                    fail_silently=False,
-                )
-            except Exception as e:
-                print("Email error:", e)
-                messages.error(request, "Email service temporarily unavailable.")
-                return redirect("accounts:forgot_password")
-            
-            messages.success(request, "OTP sent to your email!")
-            return redirect("accounts:verify_otp")
+            user = User.objects.get(email__iexact=email)
+
         except User.DoesNotExist:
-            messages.error(request, "No account found with this email.")
-    
-    return render(request, "accounts/forgot_password.html")
+            messages.error(
+                request,
+                "No account found with this email address."
+            )
+            return render(
+                request,
+                "accounts/forgot_password.html"
+            )
 
+        # Store the user ID temporarily in session
+        request.session["password_reset_user_id"] = user.id
 
-@require_http_methods(["GET", "POST"])
-def verify_otp_view(request):
-    if "reset_email" not in request.session:
-        return redirect("accounts:forgot_password")
-    
-    if request.method == "POST":
-        otp_input = "".join([
-            request.POST.get(f"otp{i}", "").strip() for i in range(1, 7)
-        ])
-        
-        stored_otp = str(request.session.get("reset_otp", ""))
-        
-        # Debug - remove after testing
-        print(f"Input OTP: '{otp_input}' (len={len(otp_input)})")
-        print(f"Stored OTP: '{stored_otp}' (len={len(stored_otp)})")
-        print(f"Match: {otp_input == stored_otp}")
-        
-        if otp_input == stored_otp:
-            request.session["otp_verified"] = True
-            return redirect("accounts:reset_password")
-        else:
-            messages.error(request, f"Invalid OTP. Please try again.")
-    
-    return render(request, "accounts/verify_otp.html")
+        # Reset session expires after 10 minutes
+        request.session.set_expiry(600)
 
+        return redirect("accounts:reset_password")
 
-@require_http_methods(["GET", "POST"])
-def resend_otp_view(request):
-    email = request.session.get("reset_email")
-    
-    if not email:
-        return redirect("accounts:forgot_password")
-    
-    otp = str(random.randint(100000, 999999))
-    request.session["reset_otp"] = otp
-    request.session.set_expiry(600)
-    
-    send_mail(
-        "Password Reset OTP - dailyrespond",
-        f"Your OTP for password reset is: {otp}\n\nThis OTP is valid for 10 minutes.\n\nIf you didn't request this, please ignore this email.",
-        settings.DEFAULT_FROM_EMAIL,
-        [email],
-        fail_silently=False,
+    return render(
+        request,
+        "accounts/forgot_password.html"
     )
-    
-    messages.success(request, "New OTP sent to your email!")
-    return redirect("accounts:verify_otp")
 
 
+# ----------------------------
+# RESET PASSWORD
+# ----------------------------
 @require_http_methods(["GET", "POST"])
 def reset_password_view(request):
-    if not request.session.get("otp_verified"):
+
+    user_id = request.session.get("password_reset_user_id")
+
+    if not user_id:
+        messages.error(
+            request,
+            "Password reset session expired. Please try again."
+        )
         return redirect("accounts:forgot_password")
-    
+
+    try:
+        user = User.objects.get(id=user_id)
+
+    except User.DoesNotExist:
+        request.session.pop("password_reset_user_id", None)
+
+        messages.error(
+            request,
+            "Invalid password reset request."
+        )
+
+        return redirect("accounts:forgot_password")
+
     if request.method == "POST":
-        password = request.POST.get("password")
-        confirm_password = request.POST.get("confirm_password")
-        
+
+        password = request.POST.get("password", "")
+        confirm_password = request.POST.get(
+            "confirm_password",
+            ""
+        )
+
+        # Check password match
         if password != confirm_password:
-            messages.error(request, "Passwords do not match.")
-            return render(request, "accounts/reset_password.html")
-        
+
+            messages.error(
+                request,
+                "Passwords do not match."
+            )
+
+            return render(
+                request,
+                "accounts/reset_password.html"
+            )
+
+        # Minimum password length
         if len(password) < 8:
-            messages.error(request, "Password must be at least 8 characters.")
-            return render(request, "accounts/reset_password.html")
-        
-        email = request.session.get("reset_email")
-        user = User.objects.get(email=email)
+
+            messages.error(
+                request,
+                "Password must be at least 8 characters."
+            )
+
+            return render(
+                request,
+                "accounts/reset_password.html"
+            )
+
+        # Set new password
         user.set_password(password)
-        user.save()
-        
-        # Clear session
-        del request.session["reset_otp"]
-        del request.session["reset_email"]
-        del request.session["otp_verified"]
-        
-        messages.success(request, "Password reset successful! Please login.")
+        user.save(update_fields=["password"])
+
+        # Clear reset session
+        request.session.pop(
+            "password_reset_user_id",
+            None
+        )
+
+        messages.success(
+            request,
+            "Password reset successful! Please login."
+        )
+
         return redirect("accounts:login")
+
+    return render(
+        request,
+        "accounts/reset_password.html"
+    )
+
+# @require_http_methods(["GET", "POST"])
+# def verify_otp_view(request):
+#     if "reset_email" not in request.session:
+#         return redirect("accounts:forgot_password")
     
-    return render(request, "accounts/reset_password.html")
+#     if request.method == "POST":
+#         otp_input = "".join([
+#             request.POST.get(f"otp{i}", "").strip() for i in range(1, 7)
+#         ])
+        
+#         stored_otp = str(request.session.get("reset_otp", ""))
+        
+#         # Debug - remove after testing
+#         print(f"Input OTP: '{otp_input}' (len={len(otp_input)})")
+#         print(f"Stored OTP: '{stored_otp}' (len={len(stored_otp)})")
+#         print(f"Match: {otp_input == stored_otp}")
+        
+#         if otp_input == stored_otp:
+#             request.session["otp_verified"] = True
+#             return redirect("accounts:reset_password")
+#         else:
+#             messages.error(request, f"Invalid OTP. Please try again.")
+    
+#     return render(request, "accounts/verify_otp.html")
+
+
+# @require_http_methods(["GET", "POST"])
+# def resend_otp_view(request):
+#     email = request.session.get("reset_email")
+    
+#     if not email:
+#         return redirect("accounts:forgot_password")
+    
+#     otp = str(random.randint(100000, 999999))
+#     request.session["reset_otp"] = otp
+#     request.session.set_expiry(600)
+    
+#     send_mail(
+#         "Password Reset OTP - dailyrespond",
+#         f"Your OTP for password reset is: {otp}\n\nThis OTP is valid for 10 minutes.\n\nIf you didn't request this, please ignore this email.",
+#         settings.DEFAULT_FROM_EMAIL,
+#         [email],
+#         fail_silently=False,
+#     )
+    
+#     messages.success(request, "New OTP sent to your email!")
+#     return redirect("accounts:verify_otp")
+
+
+# @require_http_methods(["GET", "POST"])
+# def reset_password_view(request):
+#     if not request.session.get("otp_verified"):
+#         return redirect("accounts:forgot_password")
+    
+#     if request.method == "POST":
+#         password = request.POST.get("password")
+#         confirm_password = request.POST.get("confirm_password")
+        
+#         if password != confirm_password:
+#             messages.error(request, "Passwords do not match.")
+#             return render(request, "accounts/reset_password.html")
+        
+#         if len(password) < 8:
+#             messages.error(request, "Password must be at least 8 characters.")
+#             return render(request, "accounts/reset_password.html")
+        
+#         email = request.session.get("reset_email")
+#         user = User.objects.get(email=email)
+#         user.set_password(password)
+#         user.save()
+        
+#         # Clear session
+#         del request.session["reset_otp"]
+#         del request.session["reset_email"]
+#         del request.session["otp_verified"]
+        
+#         messages.success(request, "Password reset successful! Please login.")
+#         return redirect("accounts:login")
+    
+#     return render(request, "accounts/reset_password.html")
 
 
 def activate_account(request, uidb64, token):
