@@ -263,7 +263,7 @@ def download_invoice(request, order_number):
     return FileResponse(
         pdf,
         as_attachment=True,
-        filename=f"Workforce_{filename}.pdf"
+        filename=f"HRT_{filename}.pdf"
     )
 
 @login_required
