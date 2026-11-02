@@ -59,7 +59,7 @@ class Order(models.Model):
             super().save(*args, **kwargs)  # Get the ID first
 
         if not self.order_number:
-            self.order_number = f"WFS{self.id:04d}"
+            self.order_number = f"HRT{self.id:04d}"
 
         if self.status == "PAID" and not self.invoice_number:
             year = self.created_at.year if self.created_at else datetime.now().year
