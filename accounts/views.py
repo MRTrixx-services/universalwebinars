@@ -30,16 +30,18 @@ def register_view(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
 
+        
         if form.is_valid():
             user = form.save(commit=False)
 
-            # Account should be active immediately
             user.set_password(form.cleaned_data["password"])
             user.is_active = True
             user.save()
 
-            # Send welcome email.
-            # Email failure should NOT affect registration.
+            # Automatically login after registration
+            login(request, user)
+
+            # Send welcome email
             try:
                 send_welcome_email(user)
             except Exception as e:
@@ -47,10 +49,11 @@ def register_view(request):
 
             messages.success(
                 request,
-                "Account created successfully. You can now login."
+                "Account created successfully. Welcome!"
             )
 
-            return redirect("accounts:login")
+            return redirect("cart:cart_page")
+
 
         else:
             messages.error(request, "Please correct the errors below.")
@@ -119,7 +122,7 @@ def login_view(request):
             if next_url:
                 return redirect(next_url)
 
-            return redirect("home:home")
+            return redirect("cart:cart_page")
         else:
             messages.error(request, "Invalid email or password.")
 
